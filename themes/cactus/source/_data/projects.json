@@ -1,0 +1,12 @@
+[
+	{
+		"name":"repositories",
+		"url":"https://github.com/xiaoxuez?tab=repositories",
+		"desc":"all repositories"
+	},
+	{
+		"name":"code",
+		"url":"https://github.com/xiaoxuez/go-hello-world",
+		"desc":"code in go"
+	}
+]

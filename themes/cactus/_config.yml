@@ -5,7 +5,7 @@
 # Link to a page that gives an overview of all your projects.
 # This can be an external link (e.g., to you GitHub profile) or to another
 # page within your website.
-projects_url: http://github.com/probberechts
+projects_url: https://github.com/xiaoxuez/xiaoxuez.github.io
 
 # Set the page direction to RTL or LTR. default is LTR. (if you set it 'rtl', the 'vazir' font will be loaded.)
 direction: ltr
@@ -15,21 +15,20 @@ direction: ltr
 # languages/*.yml
 nav:
   home: /
-  about: /about/
-  articles: /archives/
+  categories: /categories/
   projects: projects_url
-
+  search: /search/
 
 # Links to your social media accounts.
 # The keys should correspond to Fontawesome icon names
 # (see https://fontawesome.com/icons?d=gallery&s=brands);
 # only 'mail' is an exception.
 social_links:
-  github: http://github.com/probberechts/cactus-dark
+  github: https://github.com/xiaoxuez/xiaoxuez.github.io
   twitter: /
   facebook: /
   linkedin: /
-  mail: mailto:name@email.com
+  mail: mailto:xiaoxuez@163.com
 
 # Customize the overview with displaying a tagcloud on the index page.
 # Options: https://hexo.io/docs/helpers.html#tagcloud
@@ -41,10 +40,10 @@ tags_overview: false
 #   - post_count: whether to show only the x most recent posts.
 #   - sort_updated: sort posts by last modification date instead of creation date.
 posts_overview:
-  show_all_posts: false
-  post_count: 5
-  sort_updated: false
-
+#  show_all_posts: false
+#  post_count: 5
+#  sort_updated: false
+  show_all_posts: true
 # Customize the archive view.
 # Options:
 #   - sort_updated: sort posts by last modification date instead of creation date.
