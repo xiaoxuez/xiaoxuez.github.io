@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="EOS 源码学习之项目结构分析(plugins)整体的代码位置主要位于plugins、libraries。 eos项目采用了插件管理的结构。 入口programs的文件夹结构如下，在eos官方wiki中可以查看具体每个目录的含义及作用。这里仅备注几个示例。 123456789101112.. eos/programs:├── CMakeLists.txt├── cleos //命令行工具，如果把e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eos_code">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/eos-code/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="EOS 源码学习之项目结构分析(plugins)整体的代码位置主要位于plugins、libraries。 eos项目采用了插件管理的结构。 入口programs的文件夹结构如下，在eos官方wiki中可以查看具体每个目录的含义及作用。这里仅备注几个示例。 123456789101112.. eos/programs:├── CMakeLists.txt├── cleos //命令行工具，如果把e">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eos_code">
+<meta name="twitter:description" content="EOS 源码学习之项目结构分析(plugins)整体的代码位置主要位于plugins、libraries。 eos项目采用了插件管理的结构。 入口programs的文件夹结构如下，在eos官方wiki中可以查看具体每个目录的含义及作用。这里仅备注几个示例。 123456789101112.. eos/programs:├── CMakeLists.txt├── cleos //命令行工具，如果把e">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>eos_code</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/eth-code-tx-event/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/eos/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eos-code/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&text=eos_code"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&is_video=false&description=eos_code"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eos_code&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eos-code/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&name=eos_code&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#EOS-源码学习之项目结构分析-plugins"><span class="toc-number">1.</span> <span class="toc-text">EOS 源码学习之项目结构分析(plugins)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#入口"><span class="toc-number">1.1.</span> <span class="toc-text">入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#插件"><span class="toc-number">1.2.</span> <span class="toc-text">插件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eos-nodeos学习"><span class="toc-number">2.</span> <span class="toc-text">eos/nodeos学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#main-cpp"><span class="toc-number">2.1.</span> <span class="toc-text">main.cpp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Chain-plugin"><span class="toc-number">2.2.</span> <span class="toc-text">Chain_plugin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Producer-plugin"><span class="toc-number">2.3.</span> <span class="toc-text">Producer_plugin</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#producer源码学习"><span class="toc-number">3.</span> <span class="toc-text">producer源码学习</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        eos_code
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:44:30.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eos/">eos</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="EOS-源码学习之项目结构分析-plugins"><a href="#EOS-源码学习之项目结构分析-plugins" class="headerlink" title="EOS 源码学习之项目结构分析(plugins)"></a>EOS 源码学习之项目结构分析(plugins)</h3><p>整体的代码位置主要位于plugins、libraries。</p>
+<p><strong>eos项目采用了插件管理的结构</strong>。</p>
+<h4 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h4><p>programs的文件夹结构如下，在<a href="https://github.com/EOSIO/eos/wiki/Programs-&-Tools">eos官方wiki</a>中可以查看具体每个目录的含义及作用。这里仅备注几个示例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.. eos/programs:</span><br><span class="line"></span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── cleos //命令行工具，如果把eos比作操作系统的话，cleos就类似终端作用  </span><br><span class="line">├── debug_node</span><br><span class="line">├── eosio-abigen</span><br><span class="line">├── eosio-applesedemo</span><br><span class="line">├── eosio-launcher</span><br><span class="line">├── genesis</span><br><span class="line">├── keosd  //钱包</span><br><span class="line">├── nodeos  //节点核心进程</span><br><span class="line">└── snapshot</span><br></pre></td></tr></table></figure>
+
+<p>要启动一个节点，需要用到的便是nodeos，cleos中可使用的REST API便是nodeos中暴露出来的。那么，我们看看nodeos。</p>
+<p>源代码main.cpp中，代码仅有105行。主要看看main方法吧（不想看代码可以略过代码部分 = =），通过代码可以看到，main方法作用包括设置版本、工作路径等基本信息，以及log的初始化，另外就是startup方法看起来就是关键！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">   try &#123;</span><br><span class="line">      app().set_version(eosio::nodeos::config::version);</span><br><span class="line">      auto root = fc::app_path();</span><br><span class="line">      app().set_default_data_dir(root / &quot;eosio/nodeos/data&quot; );</span><br><span class="line">      app().set_default_config_dir(root / &quot;eosio/nodeos/config&quot; );</span><br><span class="line">      if(!app().initialize&lt;chain_plugin, http_plugin, net_plugin, producer_plugin&gt;(argc, argv))</span><br><span class="line">         return -1;</span><br><span class="line">      initialize_logging();</span><br><span class="line">      ilog(&quot;nodeos version $&#123;ver&#125;&quot;, (&quot;ver&quot;, eosio::utilities::common::itoh(static_cast&lt;uint32_t&gt;(app().version()))));</span><br><span class="line">      ilog(&quot;eosio root is $&#123;root&#125;&quot;, (&quot;root&quot;, root.string()));</span><br><span class="line">      //重要的代码!!!</span><br><span class="line">      app().startup();</span><br><span class="line">      app().exec();</span><br><span class="line">   &#125; catch (const fc::exception&amp; e) &#123;</span><br><span class="line">   &#125; .....(此处省略多个catch)</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>app()位置位于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./libraries/appbase/application.cpp</span><br><span class="line">//app()方法返回application的实例(对c++的类的机制不了解，这个实例像是静态对象，反正就是通过返回的实例可以调用相关方法吧，包括startup这个看起来就跟关键的方法)</span><br></pre></td></tr></table></figure>
+
+<p>进入到application.cpp中，例举相关方法</p>
+<ul>
+<li><p>initialize_..: 初始化插件，功能包括调用各个插件设置命令行参数，以及初始化方法，还有app自身对应初始化操作</p>
+</li>
+<li><p>startup:  循环各插件，调用各插件的startup方法</p>
+</li>
+<li><p>exec:  表示完全看不懂= =!!。猜测一下，应该是监听io事件，例如结束进程系列..</p>
+</li>
+</ul>
+<p>从这里可以看出，主要的具体的重要的内容都在各插件内部。</p>
+<h4 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h4><p>eos项目采用了插件管理的结构。插件的目录如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.. eos/plugins:</span><br><span class="line"></span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── account_history_api_plugin</span><br><span class="line">├── account_history_plugin</span><br><span class="line">├── chain_api_plugin</span><br><span class="line">├── chain_plugin</span><br><span class="line">├── eosio-make_new_plugin.sh</span><br><span class="line">├── faucet_testnet_plugin</span><br><span class="line">├── http_plugin</span><br><span class="line">├── mongo_db_plugin</span><br><span class="line">├── net_api_plugin</span><br><span class="line">├── net_plugin</span><br><span class="line">├── producer_plugin</span><br><span class="line">├── template_plugin</span><br><span class="line">├── txn_test_gen_plugin</span><br><span class="line">├── wallet_api_plugin</span><br><span class="line">└── wallet_plugin</span><br></pre></td></tr></table></figure>
+
+<p>完全可以通过命名来理解各插件的含义。要分析的话，直接从相应plugins入手。逐一观察..</p>
+<h3 id="eos-nodeos学习"><a href="#eos-nodeos学习" class="headerlink" title="eos/nodeos学习"></a>eos/nodeos学习</h3><h4 id="main-cpp"><a href="#main-cpp" class="headerlink" title="main.cpp"></a>main.cpp</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//设置版本</span><br><span class="line">app().set_version(eosio::nodeos::config::version);</span><br><span class="line">auto root = fc::app_path();</span><br><span class="line">//设置工作路径</span><br><span class="line">app().set_default_data_dir(root / &quot;eosio/nodeos/data&quot; );</span><br><span class="line">app().set_default_config_dir(root / &quot;eosio/nodeos/config&quot; );</span><br><span class="line">//单节点需要的插件包括以下四个</span><br><span class="line">if(!app().initialize&lt;chain_plugin, http_plugin, net_plugin, producer_plugin&gt;(argc, argv))</span><br><span class="line">   return -1;</span><br><span class="line"></span><br><span class="line">initialize_logging();</span><br><span class="line">ilog(&quot;nodeos version $&#123;ver&#125;&quot;, (&quot;ver&quot;, eosio::nodeos::config::itoh(static_cast&lt;uint32_t&gt;(app().version()))));</span><br><span class="line">ilog(&quot;eosio root is $&#123;root&#125;&quot;, (&quot;root&quot;, root.string()));</span><br><span class="line">app().startup();</span><br><span class="line">app().exec();</span><br></pre></td></tr></table></figure>
+
+<p>主要是配置和app的一些调用。然后转到app中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./libraries/appbase/application.cpp</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>app:  返回application的实例（实例只是声明，木有初始化，对c++类机制不太了解，需进一步了解，目前就理解成这个实例就可访问application::method方法）</p>
+</li>
+<li><p>initialize_..: 初始化插件，功能包括调用各个插件设置命令行参数，以及初始化方法，还有app自身对应初始化操作</p>
+</li>
+<li><p>startup:  循环各插件，调用各插件的startup方法</p>
+</li>
+<li><p>exec:  表示完全看不懂= =!!。猜测一下，应该是监听io事件，例如结束进程系列..</p>
+</li>
+</ul>
+<p>那么针对单个节点启动必要的4个插件，进行逐个学习。</p>
+<p>首先是插件父方法：（在application中调用的方法名直接是start_up，没有plugin前缀，这个问题有待解决..）</p>
+<ul>
+<li><p>set_program_options //设置命令行参数</p>
+</li>
+<li><p>plugin_initialize //初始化操作</p>
+</li>
+<li><p>plugin_startup  //启动</p>
+</li>
+<li><p>plugin_shutdown  //退出</p>
+</li>
+</ul>
+<h4 id="Chain-plugin"><a href="#Chain-plugin" class="headerlink" title="Chain_plugin"></a>Chain_plugin</h4><h4 id="Producer-plugin"><a href="#Producer-plugin" class="headerlink" title="Producer_plugin"></a>Producer_plugin</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// dpos共识  地方 -&gt; get_scheduled_producer的定义在chain_controller</span><br><span class="line">auto scheduled_producer = chain.get_scheduled_producer( slot );</span><br><span class="line">  // we must control the producer scheduled to produce the next block.</span><br><span class="line">  if( _producers.find( scheduled_producer ) == _producers.end() )</span><br><span class="line">  &#123;</span><br><span class="line">     capture(&quot;scheduled_producer&quot;, scheduled_producer);</span><br><span class="line">     return block_production_condition::not_my_turn;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//chain_controller的一些相关producer方法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//大意猜测更新新区块，包括新区块和签名新区块的producer</span></span><br><span class="line">update_signing_producer(<span class="keyword">const</span> producer_object&amp; signing_producer, <span class="keyword">const</span> signed_block&amp; new_block)</span><br><span class="line"></span><br><span class="line"><span class="comment">//根据新的producers更新db表？疑问是代码中只有create，没有删除操作</span></span><br><span class="line">update_or_create_producers( <span class="keyword">const</span> producer_schedule_type&amp; producers)</span><br><span class="line"></span><br><span class="line"><span class="comment">//好像这个是关键！详细看一下，对方法的解释为，从投票排名中取出前m个producer,并排除block_signing_key是null的那些，m为配置中的producer_count。然而代码似乎没全..</span></span><br><span class="line">_calculate_producer_schedule() &#123;</span><br><span class="line">  <span class="comment">//get_global_properties返回为global_property_object对象，new_active_producers为对象的熟悉</span></span><br><span class="line">  <span class="comment">//据观察，new_active_producers的赋值目前只出现在wasm的api中，那是不是就可以得出结论new_active_producers是所有的参选producers..这个方法(_calculate_producer_schedule)要做的就是从所有参选者中按排名取前m个，然后去掉block_signing_key是null的那些</span></span><br><span class="line">   producer_schedule_type schedule = get_global_properties().new_active_producers;</span><br><span class="line">   <span class="keyword">const</span> auto&amp; hps = _head_producer_schedule();</span><br><span class="line">   schedule.version = hps.version;</span><br><span class="line">   <span class="keyword">if</span>( hps != schedule )</span><br><span class="line">      ++schedule.version;</span><br><span class="line">   <span class="keyword">return</span> schedule;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//没看懂..好像是给所有producers怎么搞了一下认证(更新到_db某表)</span></span><br><span class="line">_update_producers_authority()</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回当前区块头的producer</span></span><br><span class="line">head_block_producer()</span><br><span class="line"></span><br><span class="line"><span class="comment">//根据account_name/ownername获取对于producer</span></span><br><span class="line">get_producer(<span class="keyword">const</span> account_name&amp; ownername)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//这个方法也蛮重要的，根据slot_num获取已计划好的producer.其中，slot_num始终对应于未来的某一时刻；另外，对于slot_num的值，相对当前多少区块的间隔，例如，slot_num == 1 则为下一个producer, slot_num == 2，则为在一个区块间隔后的下一个producer。注意的是slot_num代表的是区块间隔，非producer间隔</span></span><br><span class="line">get_scheduled_producer(uint32_t slot_num) &#123;</span><br><span class="line">   <span class="keyword">const</span> dynamic_global_property_object&amp; dpo = get_dynamic_global_properties();</span><br><span class="line">  <span class="comment">//注意点1，最后用来计算位置的值是一个当前的绝对位置 + slot_num  ？具体回头再看</span></span><br><span class="line">   uint64_t current_aslot = dpo.current_absolute_slot + slot_num;</span><br><span class="line">   ...</span><br><span class="line">  <span class="comment">//位置对producer*重复次数的积取模</span></span><br><span class="line">   auto index = current_aslot % (number_of_active_producers * config::producer_repetitions);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算producer过去生产的参与率，代码未详</span></span><br><span class="line">producer_participation_rate()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//大概看了以上方法，有点乱。现在还不能连成线，只是点</span></span><br><span class="line">关键</span><br><span class="line">update_last_irreversible_block</span><br></pre></td></tr></table></figure>
+
+<h3 id="producer源码学习"><a href="#producer源码学习" class="headerlink" title="producer源码学习"></a>producer源码学习</h3><p>代码位置为..eos/plugins/producer_plugin/</p>
+<p>文件夹结构如下，producer_plugin.hpp为方法的声明， producer_plugin.cpp为具体实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">├── CMakeLists.txt</span><br><span class="line">├── include</span><br><span class="line">│   └── eosio</span><br><span class="line">│       └── producer_plugin</span><br><span class="line">│           └── producer_plugin.hpp</span><br><span class="line">└── producer_plugin.cpp</span><br></pre></td></tr></table></figure>
+
+<p>虽然producer_plugin.cpp的代码也只有不到400行，但节省时间和资源，就挑出块相关的说吧。方法调用如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugin_startup -&gt; schedule_production_loop(到没到出块时间，到了就出块,这个方法不断循环) -&gt; block_production_loop -&gt; maybe_produce_block</span><br></pre></td></tr></table></figure>
+
+<p>maybe_produce_block方法是最后决定是不是出块的。以下主要解释maybe_produce_block方法</p>
+<ul>
+<li><p>首先会检查区块是否同步到最新。</p>
+</li>
+<li><p>接下来这段代码会判断是否到达出块时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uint32_t slot = chain.get_slot_at_time( now );</span><br><span class="line">  if( slot == 0 )</span><br><span class="line">  &#123;</span><br><span class="line">     capture(&quot;next_time&quot;, chain.get_slot_time(1));</span><br><span class="line">     return block_production_condition::not_time_yet;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后就选择出块producer了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto scheduled_producer = chain.get_scheduled_producer( slot );</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>完了判断这个scheduled_producer是不是自己，是的话，再检查点别的(例如私钥啊等)，最后就出块了。</p>
+<p>那么，关键代码就是get_scheduled_producer方法。get_scheduled_producer的追踪要到chain_controller.cpp文件中了。位置位于./eos/libriaries/chain/chain_controller.cpp。以下代码未做特殊说明，都位于chain_controller.cpp中。</p>
+<p>首先看get_scheduled_producer的代码，可以看到，③通过从db中读出global_property_object对象gpo（下面会有介绍），gpo.active_producers为当前活跃的producers，然后④⑤为算得当前索引下标index，最后根据index在gpo.active_producers中取出相应producer即为返回值。下标计算的方式就是数学算式index=当前区块位置 % （producers总数 * 每个producer重复出多少块）。最后再除以每个producer重复出多少块。比较不理解的是当前区块位置(代码中的current_aslot)的计算方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//具体代码</span><br><span class="line">/*</span><br><span class="line">* 1. slot_num始终对应于未来的某一时刻</span><br><span class="line">* 2.对于slot_num的值，相对当前多少区块的间隔，</span><br><span class="line">*     例如，slot_num == 1 则为下一个区块的producer,</span><br><span class="line">*          slot_num == 2，则为在一个区块间隔后的下一个producer。slot_num即为区块间隔数</span><br><span class="line">* 3.使用方法get_slot_time和get_slot_at_time作为slot_num和时间戳的转换</span><br><span class="line">* 4.slot_num == 0，返回EOS_NULL_PRODUCER</span><br><span class="line">*/</span><br><span class="line">account_name chain_controller::get_scheduled_producer(uint32_t slot_num)const</span><br><span class="line">&#123;</span><br><span class="line">   const dynamic_global_property_object&amp; dpo = get_dynamic_global_properties(); //①</span><br><span class="line">   uint64_t current_aslot = dpo.current_absolute_slot + slot_num; //②</span><br><span class="line">   const auto&amp; gpo = _db.get&lt;global_property_object&gt;(); //③</span><br><span class="line">   auto number_of_active_producers = gpo.active_producers.producers.size();</span><br><span class="line">   auto index = current_aslot % (number_of_active_producers * config::producer_repetitions);  //④</span><br><span class="line">   index /= config::producer_repetitions; //⑤</span><br><span class="line">   FC_ASSERT( gpo.active_producers.producers.size() &gt; 0, &quot;no producers defined&quot; );</span><br><span class="line"></span><br><span class="line">   return gpo.active_producers.producers[index].producer_name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关于global_property_object主要属性有active_producers、new_active_producers、pending_active_producers。</p>
+<p>active_producers是当前轮的producers, pending_active_producers为满足排名等要求的producers, new_active_producers为所有可投票(或者是所有备选)的producer。</p>
+<p>在controller_chain.cpp中有如下几个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//从投票排名中取出前m个producer,并排除block_signing_key是null的那些，m为配置中的producer_count。然而代码似乎没全.</span><br><span class="line">_calculate_producer_schedule() &#123;...&#125;</span><br><span class="line"></span><br><span class="line">//更新global_properties</span><br><span class="line">update_global_properties()&#123;...&#125;</span><br><span class="line"></span><br><span class="line">//上面提到过的有可能更新active_producers的方法</span><br><span class="line">update_last_irreversible_block()&#123;...&#125;</span><br><span class="line"></span><br><span class="line"> /*</span><br><span class="line"> *  After applying all transactions successfully we can update</span><br><span class="line"> *  the current block time, block number, producer stats, etc</span><br><span class="line"> */</span><br><span class="line">_finalize_block()&#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主要通过上面列举的方法介绍active_producers、new_active_producers、pending_active_producers是如何关联的。下面一段如果觉得各个方法调用比较蒙的话，可以直接看三个加粗句子，可以了解到active_producers、new_active_producers、pending_active_producers之间的关联。</p>
+<p>在_finalize_block调用的时候，首先调用update_global_properties，在update_global_properties方法中调用了_calculate_producer_schedule方法，calculate_producer_schedule方法实现的是<strong>从new_active_producers中选出符合条件的producers</strong>，然后回到update_global_properties，<strong>根据选出的producers,更新pending_active_producers</strong>，然后回到_finalize_block方法，调用update_global_properties之后调用update_last_irreversible_block方法，<strong>通过pending_active_producers适当更新active_producers</strong>。</p>
+<p>然后，new_active_producers是通过wasm的api进行更新。这样就缕通了，通过投票客户端，进行投票，并控制更新new_active_producers参数选手，和相应票数。然后根据new_active_producers和票数决定blocker producers。</p>
+<p>那么，blocker producers的顺序呢？?? 不知道是被我疏忽了还是真的没看到。</p>
+<p>producer源码中，可以看到，上层逻辑在 producer_plugin.cpp中，基本的dpos等逻辑还是在chain_controller.cpp中。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#EOS-源码学习之项目结构分析-plugins"><span class="toc-number">1.</span> <span class="toc-text">EOS 源码学习之项目结构分析(plugins)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#入口"><span class="toc-number">1.1.</span> <span class="toc-text">入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#插件"><span class="toc-number">1.2.</span> <span class="toc-text">插件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eos-nodeos学习"><span class="toc-number">2.</span> <span class="toc-text">eos/nodeos学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#main-cpp"><span class="toc-number">2.1.</span> <span class="toc-text">main.cpp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Chain-plugin"><span class="toc-number">2.2.</span> <span class="toc-text">Chain_plugin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Producer-plugin"><span class="toc-number">2.3.</span> <span class="toc-text">Producer_plugin</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#producer源码学习"><span class="toc-number">3.</span> <span class="toc-text">producer源码学习</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eos-code/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&text=eos_code"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&is_video=false&description=eos_code"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eos_code&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eos-code/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&title=eos_code"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eos-code/&name=eos_code&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="btc dat数据重组Bitcoin core同步的数据是dat文件和index文件夹，index文件夹里是ldb  dat是向各个节点同步的数据，各个区块之间不保证有序。ldb里保存了如何去dat文件里查询区块/交易等的信息。  具体维基解释 https://en.bitcoin.it/wiki/Bitcoin_Core_0.11_(ch_2):_Data_Storage  其中ldb中区块信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="btc_data_dat">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/04/14/btc-data-dat/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="btc dat数据重组Bitcoin core同步的数据是dat文件和index文件夹，index文件夹里是ldb  dat是向各个节点同步的数据，各个区块之间不保证有序。ldb里保存了如何去dat文件里查询区块/交易等的信息。  具体维基解释 https://en.bitcoin.it/wiki/Bitcoin_Core_0.11_(ch_2):_Data_Storage  其中ldb中区块信息">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="btc_data_dat">
+<meta name="twitter:description" content="btc dat数据重组Bitcoin core同步的数据是dat文件和index文件夹，index文件夹里是ldb  dat是向各个节点同步的数据，各个区块之间不保证有序。ldb里保存了如何去dat文件里查询区块/交易等的信息。  具体维基解释 https://en.bitcoin.it/wiki/Bitcoin_Core_0.11_(ch_2):_Data_Storage  其中ldb中区块信息">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>btc_data_dat</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/12/how-to-set-up-a-blog/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/04/14/fabric-code-consensus-event/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&text=btc_data_dat"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&is_video=false&description=btc_data_dat"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=btc_data_dat&body=Check out this article: https://github.com/xiaoxuez/2019/04/14/btc-data-dat/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&name=btc_data_dat&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#btc-dat数据重组"><span class="toc-number">1.</span> <span class="toc-text">btc dat数据重组</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        btc_data_dat
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-14T15:16:51.000Z" itemprop="datePublished">2019-04-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/btc/">btc</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="btc-dat数据重组"><a href="#btc-dat数据重组" class="headerlink" title="btc dat数据重组"></a>btc dat数据重组</h2><p>Bitcoin core同步的数据是dat文件和index文件夹，index文件夹里是ldb </p>
+<p>dat是向各个节点同步的数据，各个区块之间不保证有序。ldb里保存了如何去dat文件里查询区块/交易等的信息。 </p>
+<p>具体维基解释 <a href="https://en.bitcoin.it/wiki/Bitcoin_Core_0.11_(ch_2):_Data_Storage" target="_blank" rel="noopener">https://en.bitcoin.it/wiki/Bitcoin_Core_0.11_(ch_2):_Data_Storage</a> </p>
+<p>其中ldb中区块信息为 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&apos;b&apos; + 32-byte block hash -&gt; block index record. Each record stores: </span><br><span class="line"></span><br><span class="line">     * The block header </span><br><span class="line"></span><br><span class="line">     * The height. </span><br><span class="line"></span><br><span class="line">     * The number of transactions. </span><br><span class="line"></span><br><span class="line">     * To what extent this block is validated. </span><br><span class="line"></span><br><span class="line">     * In which file, and where in that file, the block data is stored. </span><br><span class="line"></span><br><span class="line">     * In which file, and where in that file, the undo data is stored.</span><br></pre></td></tr></table></figure>
+
+<p>实现，重组为有序的dat文件 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">@Time : 2019/4/4 下午6:57</span><br><span class="line">@Author : xiaoxuez</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">   &quot;encoding/binary&quot;</span><br><span class="line">   &quot;encoding/hex&quot;</span><br><span class="line">   &quot;errors&quot;</span><br><span class="line">   &quot;flag&quot;</span><br><span class="line">   &quot;fmt&quot;</span><br><span class="line">   &quot;io&quot;</span><br><span class="line">   &quot;os&quot;</span><br><span class="line">   &quot;path&quot;</span><br><span class="line">   &quot;sync&quot;</span><br><span class="line"></span><br><span class="line">   &quot;git.wokoworks.com/blockchain/btc-explorer/db&quot;</span><br><span class="line">   &quot;git.wokoworks.com/blockchain/btc-explorer/log&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">type readBlockChain struct &#123;</span><br><span class="line">   height    uint64</span><br><span class="line">   blockHash [32]byte</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var indexLDB *db.LDBDatabase</span><br><span class="line">var blSourceDir string</span><br><span class="line">var blDirtyDir string</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">   log.InitHandler(log.Root(), log.LvlTrace, &quot;logs/reorder.log&quot;)</span><br><span class="line">   var err error</span><br><span class="line">   flag.StringVar(&amp;blSourceDir, &quot;old&quot;, &quot;/Users/xiaoxuez/btc_test_db/mainnet/&quot;, &quot;xx&quot;)</span><br><span class="line">   flag.StringVar(&amp;blDirtyDir, &quot;new&quot;, &quot;/Users/xiaoxuez/btc_test_db/reorder&quot;, &quot;xx&quot;)</span><br><span class="line">   flag.Parse()</span><br><span class="line">   //bmdb, err = db.NewLDBDatabase(&quot;/Users/xiaoxuez/btc_test_db/mainnet/index&quot;, 0, 0)</span><br><span class="line">   indexLDB, err = db.NewLDBDatabase(path.Join(blSourceDir, &quot;index&quot;), 0, 0)</span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      panic(err)</span><br><span class="line">   &#125;</span><br><span class="line">   //len must &lt; 24</span><br><span class="line">   var data = []readBlockChain&#123;</span><br><span class="line">      &#123;</span><br><span class="line">         height:    0,</span><br><span class="line">         blockHash: hexToHash(&quot;00000000000003a20def7a05a77361b9657ff954b2f2080e135ea6f5970da215&quot;), // 20万-1</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">         height:    20 * 10000,</span><br><span class="line">         blockHash: hexToHash(&quot;0000000000000009c2e82d884ec07b4aafb64ca3ef83baca2b6b0b5eb72c8f02&quot;), // 25万-1</span><br><span class="line">      &#125;,</span><br><span class="line">      //&#123;</span><br><span class="line">      // height:    25 * 10000,</span><br><span class="line">      // blockHash: hexToHash(&quot;000000000000000067ecc744b5ae34eebbde14d21ca4db51652e4d67e155f07e&quot;), // 30-1</span><br><span class="line">      //&#125;,</span><br><span class="line">      //&#123;</span><br><span class="line">      // height:    30 * 10000,</span><br><span class="line">      // blockHash: hexToHash(&quot;000000000000000002045664f89a1077d0c6c0aaa6dd89b485208cf92d6bbd30&quot;), // 35-1</span><br><span class="line">      //&#125;,</span><br><span class="line">      //&#123;</span><br><span class="line">      // height:    35 * 10000,</span><br><span class="line">      // blockHash: hexToHash(&quot;0000000000000000030034b661aed920a9bdf6bbfa6d2e7a021f78481882fa39&quot;), // 40-1</span><br><span class="line">      //&#125;,</span><br><span class="line">      //&#123;</span><br><span class="line">      // height:    40 * 10000,</span><br><span class="line">      // blockHash: hexToHash(&quot;0000000000000000024c4a35f0485bab79ce341cdd5cc6b15186d9b5b57bf3da&quot;), // 45-1</span><br><span class="line">      //&#125;,</span><br><span class="line">      //&#123;</span><br><span class="line">      // height:    45 * 10000,</span><br><span class="line">      // blockHash: hexToHash(&quot;0000000000000000007962066dcd6675830883516bcf40047d42740a85eb2919&quot;), // 50</span><br><span class="line">      //&#125;,</span><br><span class="line">      //&#123;</span><br><span class="line">      // height:    50 * 10000,</span><br><span class="line">      // blockHash: hexToHash(&quot;00000000000000000013dad60a42a3401a8f37ca02f1c00ac5923e674566a3ae&quot;), // 55</span><br><span class="line">      //&#125;,</span><br><span class="line">   &#125;</span><br><span class="line">   if len(data) &gt; 24 &#123;</span><br><span class="line">      log.Error(&quot;parallel number must &lt; 24&quot;, &quot;actual &quot;, len(data))</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line">   var wg sync.WaitGroup</span><br><span class="line">   for index, v := range data &#123;</span><br><span class="line">      wg.Add(1)</span><br><span class="line">      go func(index int, v readBlockChain) &#123;</span><br><span class="line">         rwBlocks(v.blockHash[:], v.height, fmt.Sprint(index), func() &#123; wg.Done() &#125;)</span><br><span class="line">      &#125;(index, v)</span><br><span class="line">   &#125;</span><br><span class="line">   wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func rwBlocks(startBlock []byte, endHeight uint64, prefix string, callback func()) &#123;</span><br><span class="line">   defer callback()</span><br><span class="line">   fileCache := make(map[uint64]*os.File, 0)</span><br><span class="line">   blockHash := startBlock</span><br><span class="line">   reverWriter := NewReverseWriter(blDirtyDir, 138*1024*1024, prefix)</span><br><span class="line">   defer reverWriter.Flush()</span><br><span class="line">   count := 0</span><br><span class="line">   for &#123;</span><br><span class="line">      content, height, err := rwBlock(fileCache, blockHash)</span><br><span class="line">      if err != nil &#123;</span><br><span class="line">         log.Error(&quot;rw block&quot;, &quot;err&quot;, err.Error())</span><br><span class="line">         return</span><br><span class="line">      &#125;</span><br><span class="line">      blockHash = content[12:44]</span><br><span class="line">      err = reverWriter.Insert(content)</span><br><span class="line">      if err != nil &#123;</span><br><span class="line">         fmt.Println(&quot;writer err&quot;, err)</span><br><span class="line">         return</span><br><span class="line">      &#125;</span><br><span class="line">      if height == endHeight &#123;</span><br><span class="line">         log.Info(&quot;finish to save block height&quot;, &quot;height&quot;, height)</span><br><span class="line">         return</span><br><span class="line">      &#125;</span><br><span class="line">      if height%3000 == 0 &#123;</span><br><span class="line">         log.Trace(&quot;====&gt;&quot;, &quot;height&quot;, height, &quot;parent block hash&quot;, hashToHex(blockHash))</span><br><span class="line">      &#125;</span><br><span class="line">      count++</span><br><span class="line">   &#125;</span><br><span class="line">   log.Info(&quot;write file end&quot;, &quot;count&quot;, count)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func rwBlock(fileCache map[uint64]*os.File, block []byte) ([]byte, uint64, error) &#123;</span><br><span class="line">   value, err := indexLDB.Get(append([]byte(&quot;b&quot;), block...))</span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      return []byte&#123;&#125;, 0, errors.New(fmt.Sprintf(&quot;%s%s&quot;, err.Error(), hashToHex(block)))</span><br><span class="line">   &#125;</span><br><span class="line">   bm := parseBlockMeta(value)</span><br><span class="line">   file, ok := fileCache[bm.file]</span><br><span class="line">   if !ok &#123;</span><br><span class="line">      file, err = os.Open(idx2fname(blSourceDir, uint32(bm.file)))</span><br><span class="line">      if err != nil &#123;</span><br><span class="line">         return []byte&#123;&#125;, 0, err</span><br><span class="line">      &#125;</span><br><span class="line">      fileCache[bm.file] = file</span><br><span class="line">   &#125;</span><br><span class="line">   file.Seek(int64(bm.dataPos-8), io.SeekStart)</span><br><span class="line">   res, err := readBlockFromFile(file)</span><br><span class="line"></span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      return []byte&#123;&#125;, 0, err</span><br><span class="line">   &#125;</span><br><span class="line">   binary.LittleEndian.PutUint32(res[:4], uint32(bm.height))</span><br><span class="line">   return res, bm.height, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func readBlockFromFile(f *os.File) (res []byte, e error) &#123;</span><br><span class="line">   var buf [4]byte</span><br><span class="line">   _, e = f.Read(buf[:])</span><br><span class="line">   _, e = f.Read(buf[:])</span><br><span class="line">   if e != nil &#123;</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line">   le := uint32(lsb2uint(buf[:]))</span><br><span class="line">   if le &lt; 81 &#123;</span><br><span class="line">      e = errors.New(fmt.Sprintf(&quot;Incorrect block size %d&quot;, le))</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   res = make([]byte, le+8)</span><br><span class="line">   copy(res[4:8], buf[:])</span><br><span class="line">   _, e = f.Read(res[8:])</span><br><span class="line">   if e != nil &#123;</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line">   return</span><br><span class="line">&#125;</span><br><span class="line">func idx2fname(dir string, fidx uint32) (s string) &#123;</span><br><span class="line">   if fidx == 0xffffffff &#123;</span><br><span class="line">      return &quot;blk99999.dat&quot;</span><br><span class="line">   &#125;</span><br><span class="line">   return fmt.Sprintf(&quot;%s/blk%05d.dat&quot;, dir, fidx)</span><br><span class="line">&#125;</span><br><span class="line">func lsb2uint(lt []byte) (res uint64) &#123;</span><br><span class="line">   for i := 0; i &lt; len(lt); i++ &#123;</span><br><span class="line">      res |= uint64(lt[i]) &lt;&lt; uint(i*8)</span><br><span class="line">   &#125;</span><br><span class="line">   return</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type blockMeta struct &#123;</span><br><span class="line">   version uint64</span><br><span class="line">   height  uint64</span><br><span class="line">   status  uint64</span><br><span class="line">   nTx     uint64</span><br><span class="line">   file    uint64</span><br><span class="line">   dataPos uint64</span><br><span class="line">   undoPos uint64</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func parseBlockMeta(raw []byte) (bm blockMeta) &#123;</span><br><span class="line">   var pos uint64</span><br><span class="line">   var i uint64</span><br><span class="line">   bm.version, i = readRawData(raw[pos:])</span><br><span class="line">   pos += i</span><br><span class="line">   bm.height, i = readRawData(raw[pos:])</span><br><span class="line">   pos += i</span><br><span class="line">   bm.status, i = readRawData(raw[pos:])</span><br><span class="line">   pos += i</span><br><span class="line">   bm.nTx, i = readRawData(raw[pos:])</span><br><span class="line">   pos += i</span><br><span class="line">   bm.file, i = readRawData(raw[pos:])</span><br><span class="line">   pos += i</span><br><span class="line">   bm.dataPos, i = readRawData(raw[pos:])</span><br><span class="line">   pos += i</span><br><span class="line">   bm.undoPos, i = readRawData(raw[pos:])</span><br><span class="line">   return</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func readRawData(raw []byte) (uint64, uint64) &#123;</span><br><span class="line">   var n uint64</span><br><span class="line">   var pos uint64</span><br><span class="line">   for &#123;</span><br><span class="line">      data := raw[pos]</span><br><span class="line">      pos += 1</span><br><span class="line">      n = (n &lt;&lt; 7) | (uint64(data) &amp; 0x7f)</span><br><span class="line">      if data&amp;0x80 == 0 &#123;</span><br><span class="line">         return n, pos</span><br><span class="line">      &#125;</span><br><span class="line">      n += 1</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func hashToHex(hash []byte) (s string) &#123;</span><br><span class="line">   for i := 0; i &lt; 32; i++ &#123;</span><br><span class="line">      s += fmt.Sprintf(&quot;%02x&quot;, hash[31-i])</span><br><span class="line">   &#125;</span><br><span class="line">   return</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func hexToHash(s string) (res [32]byte) &#123;</span><br><span class="line">   d, e := hex.DecodeString(s)</span><br><span class="line">   if e != nil &#123;</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line">   if len(d) != 32 &#123;</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line">   for i := 0; i &lt; 32; i++ &#123;</span><br><span class="line">      res[31-i] = d[i]</span><br><span class="line">   &#125;</span><br><span class="line">   return</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type ReverseWriter struct &#123;</span><br><span class="line">   Dir          string</span><br><span class="line">   CacheMaxSize int</span><br><span class="line">   len          int</span><br><span class="line">   cache        []byte</span><br><span class="line">   seek         int</span><br><span class="line">   index        int</span><br><span class="line">   Prefix       string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func NewReverseWriter(dir string, cacheSize int, prefix string) *ReverseWriter &#123;</span><br><span class="line">   rw := &amp;ReverseWriter&#123;Dir: dir, CacheMaxSize: cacheSize, Prefix: prefix&#125;</span><br><span class="line">   rw.init()</span><br><span class="line">   return rw</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (rw *ReverseWriter) init() &#123;</span><br><span class="line">   rw.len = 0</span><br><span class="line">   rw.cache = make([]byte, rw.CacheMaxSize)</span><br><span class="line">   rw.seek = rw.CacheMaxSize</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (rw *ReverseWriter) Insert(content []byte) error &#123;</span><br><span class="line">   if rw.len+len(content) &gt; rw.CacheMaxSize &#123;</span><br><span class="line">      err := rw.writeToFile()</span><br><span class="line">      if err != nil &#123;</span><br><span class="line">         return err</span><br><span class="line">      &#125;</span><br><span class="line">      rw.index++</span><br><span class="line">      rw.init()</span><br><span class="line">   &#125;</span><br><span class="line">   copy(rw.cache[rw.seek-len(content):rw.seek], content)</span><br><span class="line">   rw.seek = rw.seek - len(content)</span><br><span class="line">   rw.len += len(content)</span><br><span class="line">   return nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (rw *ReverseWriter) writeToFile() error &#123;</span><br><span class="line">   if rw.len == 0 &#123;</span><br><span class="line">      return nil</span><br><span class="line">   &#125;</span><br><span class="line">   writer, err := os.OpenFile(fmt.Sprintf(&quot;%s/%sblk%05d.dat&quot;, rw.Dir, rw.Prefix, rw.index), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)</span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      return err</span><br><span class="line">   &#125;</span><br><span class="line">   _, err = writer.Write(rw.cache[rw.seek:])</span><br><span class="line">   return err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (rw *ReverseWriter) Flush() error &#123;</span><br><span class="line">   err := rw.writeToFile()</span><br><span class="line">   rw.index++</span><br><span class="line">   rw.init()</span><br><span class="line">   return err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">重组完成之后，进行更名操作</span><br><span class="line">#!/usr/bin/env bash</span><br><span class="line"></span><br><span class="line"># shell is funny</span><br><span class="line"></span><br><span class="line">read -p &quot;Are you sure:(y/n) &quot; an</span><br><span class="line">if [[ $&#123;an&#125; != &quot;y&quot; ]]; then exit; fi</span><br><span class="line"></span><br><span class="line">cd /Users/woko/bitcoin</span><br><span class="line"></span><br><span class="line">function rename_2() &#123;</span><br><span class="line">    index=0</span><br><span class="line">    for name in $(ls | grep .dat) ; do</span><br><span class="line">        if [[ -f $&#123;name&#125; ]]; then</span><br><span class="line">            rename=$(echo $&#123;index&#125;|awk &apos;&#123;printf(&quot;blk%05d.dat&quot;,$0)&#125;&apos;)</span><br><span class="line">            echo $&#123;name&#125; &quot; ==&gt; &quot; $&#123;rename&#125;</span><br><span class="line">            mv $&#123;name&#125; $&#123;rename&#125;</span><br><span class="line">            ((index=index+1))</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function rename_1() &#123;</span><br><span class="line">    count=0</span><br><span class="line">    for (( i = 0; i &lt; 10; ++i )); do</span><br><span class="line">        index=$(ls $&#123;count&#125;*.dat | wc -l)</span><br><span class="line">        for name in $(ls $&#123;count&#125;*.dat) ; do</span><br><span class="line">            if [[ -f $&#123;name&#125; ]]; then</span><br><span class="line">                ((index=index-1))</span><br><span class="line">                rename=$(echo &quot;$&#123;count&#125; $&#123;index&#125;&quot;|awk &apos;&#123;printf(&quot;%02dblk%05d.dat&quot;,$1,$2)&#125;&apos;)</span><br><span class="line">                echo $&#123;name&#125; &quot; ==&gt; &quot; $&#123;rename&#125;</span><br><span class="line">                mv $&#123;name&#125; $&#123;rename&#125;</span><br><span class="line">            fi</span><br><span class="line">        done</span><br><span class="line">        ((count=count+1))</span><br><span class="line">        echo &quot;--------------&quot;</span><br><span class="line">    done</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rename_1</span><br><span class="line">echo &quot;==============&quot;</span><br><span class="line">rename_2</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#btc-dat数据重组"><span class="toc-number">1.</span> <span class="toc-text">btc dat数据重组</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&text=btc_data_dat"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&is_video=false&description=btc_data_dat"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=btc_data_dat&body=Check out this article: https://github.com/xiaoxuez/2019/04/14/btc-data-dat/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&title=btc_data_dat"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/14/btc-data-dat/&name=btc_data_dat&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

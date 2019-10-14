@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="fabric-examples学习笔记 由于docker images下载的速度实在太… 这个时间就先看看examples吧 版本release-1.1 chaincode  Example-01   func main() { err := shim.Start(new(SimpleChaincode)) if err != nil {     fmt.Printf(&amp;quot;Error st">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fabric_example">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/04/11/fabric-example/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="fabric-examples学习笔记 由于docker images下载的速度实在太… 这个时间就先看看examples吧 版本release-1.1 chaincode  Example-01   func main() { err := shim.Start(new(SimpleChaincode)) if err != nil {     fmt.Printf(&amp;quot;Error st">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fabric_example">
+<meta name="twitter:description" content="fabric-examples学习笔记 由于docker images下载的速度实在太… 这个时间就先看看examples吧 版本release-1.1 chaincode  Example-01   func main() { err := shim.Start(new(SimpleChaincode)) if err != nil {     fmt.Printf(&amp;quot;Error st">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>fabric_example</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/04/14/btc/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/elastic/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/11/fabric-example/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&text=fabric_example"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&is_video=false&description=fabric_example"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=fabric_example&body=Check out this article: https://github.com/xiaoxuez/2019/04/11/fabric-example/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&name=fabric_example&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        fabric_example
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-11T15:05:29.000Z" itemprop="datePublished">2019-04-11</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/fabric/">fabric</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>fabric-examples学习笔记</p>
+<p>由于docker images下载的速度实在太… 这个时间就先看看examples吧</p>
+<p>版本release-1.1</p>
+<p>chaincode</p>
+<ul>
+<li><p>Example-01</p>
+<p>  func main() {</p>
+<pre><code>err := shim.Start(new(SimpleChaincode))
+if err != nil {
+    fmt.Printf(&quot;Error starting Simple chaincode: %s&quot;, err)
+}</code></pre><p>  }</p>
+</li>
+</ul>
+<p>第一个例子就详细看一下结构，后面的都类似。</p>
+<p>main方法里shim.Start(new(结构体))是入口，所有代码实现的部分都是实现这个结构体。这个结构体需要实现的方法</p>
+<ul>
+<li>Init(stub shim.ChaincodeStubInterface) pb.Response</li>
+<li>Invoke(stub shim.ChaincodeStubInterface) pb.Response</li>
+</ul>
+<p>在这个例子中，有两个账户及其余额，Init方法为设置两个账户的名字及余额。Invoke方法实现的是从A账户转账到B账户。顾名思义的话，Init为初始化方法，Invoke猜测应该是使用反射，可实现为分发的功能，分发到其他方法中，实现具体相应功能。例如</p>
+<pre><code>func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
+    function, args := stub.GetFunctionAndParameters() //获取调用的方法名及其参数
+    if function == &quot;invoke&quot; {
+        // Make payment of X units from A to B
+        return t.invoke(stub, args)  //调用相应方法
+    } else if function == &quot;delete&quot; {
+        // Deletes an entity from its state
+        return t.delete(stub, args)  //调用相应方法
+    } else if function == &quot;query&quot; {
+        // the old &quot;Query&quot; is now implemtned in invoke
+        return t.query(stub, args)  //调用相应方法
+    }
+
+    return shim.Error(&quot;Invalid invoke function name. Expecting \&quot;invoke\&quot; \&quot;delete\&quot; \&quot;query\&quot;&quot;)
+}</code></pre><p>好吧其实这是example-02的代码了  - . -</p>
+<ul>
+<li>Example-02</li>
+</ul>
+<p>功能上来说的话，01是两个固定的账户，02是账本上的两个账户的操作。第一，操作增多了，有查询删除，实现为在invoke中进行分发，代码如上…第二，牵涉到账本了，看似像一个key-value的数据存储，代码如下</p>
+<pre><code>//存
+err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
+//取
+Avalbytes, err := stub.GetState(A)</code></pre><p>猜测肯定是数据库方面的了，更深入的之后再看。尤其是stub，shim.ChaincodeStubInterface。这个对象是所有跟上层接轨的接口，其实现需要查看。这里先略过</p>
+<ul>
+<li>Example -03</li>
+</ul>
+<p>这个例子中，好像重点在下面这个代码</p>
+<pre><code>func (t *SimpleChaincode) query(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+  ···
+  // Write the state to the ledger - this put is illegal within Run
+    err = stub.PutState(A, []byte(strconv.Itoa(Aval)))
+  ···
+}</code></pre><p>意思好像是在query方法中不能进行putState。延伸一下的话，是只有在原始invoke方法中才能进行putState，修改数据库。当然啦，这个小写的invoke方法也是可以实现的</p>
+<ul>
+<li>Example-04</li>
+</ul>
+<p>这个例子为example了在链码中调用其他链码，主要api为</p>
+<pre><code>response := stub.InvokeChaincode(chainCodeToCall, invokeArgs, channelID)</code></pre><ul>
+<li>Example-05</li>
+</ul>
+<p>这个例子也是调用其他链码，但是说明了调用的链码和当前链码不是同一个channel上需要指明channel。这个不是很明白。</p>
+<p>使用InvokeChaincode方法，传入的参数依次是 被调用的链码名称，调用参数(包括调用方法和参数)， channel name</p>
+<p>看4，5test并没有看出来4 5调用的差别…</p>
+<ul>
+<li><p>Test</p>
+<pre><code>scc := new(SimpleChaincode)
+stub := shim.NewMockStub(&quot;ex03&quot;, scc)
+res := stub.MockInvoke(&quot;1&quot;, [][]byte{[]byte(&quot;query&quot;), []byte(&quot;A&quot;), []byte(&quot;345&quot;))
+if res.Status != shim.OK {
+    fmt.Println(&quot;Query failed&quot;, string(res.Message))
+    t.FailNow()
+}</code></pre></li>
+</ul>
+<p>还有个启动两个链码的</p>
+<pre><code>scc := new(SimpleChaincode)
+stub := shim.NewMockStub(&quot;ex05&quot;, scc)
+
+ccEx2 := new(ex02.SimpleChaincode)
+stubEx2 := shim.NewMockStub(chaincodeName, ccEx2)
+checkInit(t, stubEx2, [][]byte{[]byte(&quot;init&quot;), []byte(&quot;a&quot;), []byte(&quot;222&quot;), []byte(&quot;b&quot;), []byte(&quot;333&quot;)})
+//在当前模拟peer，添加chaincode
+stub.MockPeerChaincode(chaincodeName, stubEx2)</code></pre><p>看官方文档的介绍，Tutorials似乎提供了4个tutorial，分别为Application开发(使用的node sdk)、网络搭建、链码开发、链码操作。作为入门的话，肯定要都过一遍啦~</p>
+<p>网络搭建</p>
+<p>示例中包含2组，每组2个peer节点，以及1个单独的order服务</p>
+<p>首先clone fabric-example仓库，然后找到下载docker images的地方，下载docker-images官方是使用curl … | bash 的一行命令，下载速度很慢，经过网上很多好心人提示，说curl 那个连接其实是一个脚本，直接用网站打开那个连接，复制粘贴脚本到本地，命名*.sh，然后直接运行就好了，这个脚本大概看一下，有3个方法的调用，2个方法都有下载docker images, 还有1个方法是下载二进制文件，这个二进制文件下载后会保存在当前目录下的bin文件夹下。bin里面的内容如下</p>
+<pre><code>$ ls
+configtxgen        configtxlator        cryptogen        get-docker-images.sh    orderer            peer</code></pre><p>然后把这个bin文件夹拷贝到fabric-example下。</p>
+<pre><code>$ cd first-network
+$ ./byfn.sh -m generate</code></pre><p>如果bin里面内容缺失，这里就会报各种命令不存在。再则，下载的fabric-example的版本应该和二进制可执行文件的版本一致，不然还是会报错..可直接修改下载脚本里的版本。</p>
+<pre><code>$ ./byfn.sh -m up</code></pre><p>其中，对于版本问题是是严谨。各个版本都要一样。另外，上面提到的那个curl 链接的那个脚本，在fabric仓库下其实是有的，script/bootstrap.sh。可直接拷贝粘贴</p>
+<p>然后针对byfn脚本具体分析一下整个过程和结构的吧~</p>
+<p>☝️，$ ./byfn.sh -m generate的功能。</p>
+<ul>
+<li><p>使用cryptogen工具来为节点生成加密证书。这些证书可代表节点的身份，被允许签署/验证身份验证进行实体沟通和交易。</p>
+<ul>
+<li>cryptogen通过配置文件进行工作，配置文件中定义了各个节点信息。如crypto-config.yaml<pre><code>OrdererOrgs:
+  - Name: Orderer
+    Domain: example.com
+    # ---------------------------------------------------------------------------
+    # &quot;Specs&quot; - See PeerOrgs below for complete description
+    # ---------------------------------------------------------------------------
+    Specs:
+      - Hostname: orderer
+PeerOrgs:
+# -----------------------------------------------------
+# Org1
+# ----------------------------------------------------
+- Name: Org1
+  Domain: org1.example.com
+  Template:
+      Count: 2
+  Users:
+      Count: 1</code></pre>使用命令为cryptogen generate –config=./crypto-config.yaml，成功后会在当前文件夹下生成crypto-config文件夹,  各个证书以节点角色/Domain/…的文件形式存在</li>
+</ul>
+</li>
+<li><p>使用configtxgen tool来生成一些部署实体所需要的零件。也需要配置文件，配置文件定义了网络模板。主要零件类型有</p>
+<ul>
+<li>orderer genesis block, orderer服务启动必备，注意的是每个组织的根证书都包含在gensis.block中。</li>
+<li>channel configuration transaction, 该配置在orderer服务启动创建channel时配置channel。这里就已经形成了channel的读写策略（即哪些实体可以读，哪些实体可以写，下同）。</li>
+<li>and two anchor peer transactions - one for each Peer Org. 用于指定在channel中，当前peer组织中都有哪些peer结点。这里就已经形成了组织的读写策略。</li>
+</ul>
+</li>
+<li><p>最后就是 up启动网络了，最重要的命令即… docker-compose -f $COMPOSE_FILE…， 查看docker-compose-cli.yaml，定义了6个容器服务，其中最后一个为cli, 执行为./scripts/script.sh。查看这个脚本大概为创建channel、加入channel、升级组织配置、安装部署chaincode、调用chaincode…后面每一步应该都会自己搞一次..这里还是先跳过<br>到这里，我就感觉脑子里放不下东西了已经，很尴尬…先跟着向导继续走吧</p>
+<p>嗯,  很难受。</p>
+<p>具体看了一下cli， 大致是将证书，script等都作为数据卷挂载到容器上，然后在容器上调用script操作。channel的加入，似乎是通过各证书验证身份。链码的部署调用都是通过peer chaincode … 命令进行</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/11/fabric-example/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&text=fabric_example"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&is_video=false&description=fabric_example"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=fabric_example&body=Check out this article: https://github.com/xiaoxuez/2019/04/11/fabric-example/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&title=fabric_example"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/11/fabric-example/&name=fabric_example&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

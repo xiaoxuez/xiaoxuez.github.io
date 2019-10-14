@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="EOS生态系统介绍EOS目标 EOS能实现每秒百万级的处理量，而目前比特币是每秒7笔，以太坊是30-40笔。 EOS将是第一个拥有自己宪法(constitution)的区块链，能实现高度自治。 EOS将会成为区块链的操作系统，为开发dApp的开发者提供底层模块，降低开发门槛。会导致开发区块链dApp的大潮。并发处理快，没有手续费，会吸引更多普通用户。  EOS App架构  IPFS存储 包含文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eos">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/eos/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="EOS生态系统介绍EOS目标 EOS能实现每秒百万级的处理量，而目前比特币是每秒7笔，以太坊是30-40笔。 EOS将是第一个拥有自己宪法(constitution)的区块链，能实现高度自治。 EOS将会成为区块链的操作系统，为开发dApp的开发者提供底层模块，降低开发门槛。会导致开发区块链dApp的大潮。并发处理快，没有手续费，会吸引更多普通用户。  EOS App架构  IPFS存储 包含文件">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3866441-75058ee05f7b7f8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+<meta property="og:image" content="https://github.com/EOSIO/eos/wiki/assets/Single-Host-Testnet-No-keosd.png">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-1b8fb0ef655fcc6e3c70a8da6d3a379d_hd.jpg">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eos">
+<meta name="twitter:description" content="EOS生态系统介绍EOS目标 EOS能实现每秒百万级的处理量，而目前比特币是每秒7笔，以太坊是30-40笔。 EOS将是第一个拥有自己宪法(constitution)的区块链，能实现高度自治。 EOS将会成为区块链的操作系统，为开发dApp的开发者提供底层模块，降低开发门槛。会导致开发区块链dApp的大潮。并发处理快，没有手续费，会吸引更多普通用户。  EOS App架构  IPFS存储 包含文件">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3866441-75058ee05f7b7f8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>eos</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/eos-code/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/zilliqa-network/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eos/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eos/&text=eos"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eos/&is_video=false&description=eos"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eos&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eos/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eos/&name=eos&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#EOS生态系统介绍"><span class="toc-number">1.</span> <span class="toc-text">EOS生态系统介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EOS目标"><span class="toc-number">1.1.</span> <span class="toc-text">EOS目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EOS-App架构"><span class="toc-number">1.2.</span> <span class="toc-text">EOS App架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EOS-系统组成"><span class="toc-number">1.3.</span> <span class="toc-text">EOS 系统组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#共识算法-BFT-DPOS"><span class="toc-number">1.4.</span> <span class="toc-text">共识算法(BFT-DPOS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生态建设"><span class="toc-number">1.5.</span> <span class="toc-text">生态建设</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        eos
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:43:53.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eos/">eos</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="EOS生态系统介绍"><a href="#EOS生态系统介绍" class="headerlink" title="EOS生态系统介绍"></a>EOS生态系统介绍</h2><h3 id="EOS目标"><a href="#EOS目标" class="headerlink" title="EOS目标"></a>EOS目标</h3><ul>
+<li>EOS能实现每秒百万级的处理量，而目前比特币是每秒7笔，以太坊是30-40笔。</li>
+<li>EOS将是第一个拥有自己宪法(constitution)的区块链，能实现高度自治。</li>
+<li>EOS将会成为区块链的操作系统，为开发dApp的开发者提供底层模块，降低开发门槛。会导致开发区块链dApp的大潮。并发处理快，没有手续费，会吸引更多普通用户。</li>
+</ul>
+<h3 id="EOS-App架构"><a href="#EOS-App架构" class="headerlink" title="EOS App架构"></a>EOS App架构</h3><p><img src="https://upload-images.jianshu.io/upload_images/3866441-75058ee05f7b7f8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="架构图"></p>
+<ul>
+<li><p>IPFS存储</p>
+<p>包含文件的存储，和服务器端程序的存储</p>
+</li>
+<li><p>数据库查询服务</p>
+</li>
+</ul>
+<p>​        除了托管文件之外，块生产者还需要运行能够代表应用程序查询区块链数据库状态的API节点</p>
+<ul>
+<li><p>资源限制</p>
+<p>应用程序在块链和接口上都占用传输带宽，CPU和存储空间。 <strong>块链生产者</strong>必须设置访问限制规则，以防用户滥用</p>
+</li>
+</ul>
+<h3 id="EOS-系统组成"><a href="#EOS-系统组成" class="headerlink" title="EOS 系统组成"></a>EOS 系统组成</h3><p><img src="https://github.com/EOSIO/eos/wiki/assets/Single-Host-Testnet-No-keosd.png" alt="EOS系统组成"></p>
+<p>上图为本地单节点组成。</p>
+<ul>
+<li><code>keosd</code>：本地钱包工具。非节点用户存储钱包的进程，可以管理多个含有私钥的钱包并加密。</li>
+<li><code>cleos</code>:本地的命令行工具，通过命令行与真人用户交互，并与节点（nodeos）的 REST 接口通信。是用户或者开发者与节点进程交互的桥梁。</li>
+<li><code>nodeos</code>： EOS 系统的核心进程，也就是所谓的“节点”。</li>
+</ul>
+<p>节点运行时可配置相关插件。如</p>
+<ul>
+<li><code>producer_plugin</code>（见证人插件）：见证人必须使用这个插件，普通节点不需要。</li>
+<li><code>wallet_plugin</code>（钱包插件）：使用这个插件就可以省去 keosd 钱包工具。</li>
+<li><code>wallet_api_plugin</code>（钱包接口插件）：给钱包插件提供接口。</li>
+<li><code>chain_api_plugin</code>（区块链接口插件）：提供区块链数据接口。</li>
+<li><code>http_plugin</code>（http 插件）：提供 http 接口。</li>
+<li><code>account_history_api_plugin</code>（账户历史接口）：提供账户历史查询接口。</li>
+</ul>
+<p>公共网络下，用户通过 <code>cleos</code> 连接到 <code>nodeos</code> ， <code>nodeos</code> 再连接到区块链网络（其他<code>nodeos</code>）。</p>
+<h3 id="共识算法-BFT-DPOS"><a href="#共识算法-BFT-DPOS" class="headerlink" title="共识算法(BFT-DPOS)"></a>共识算法(BFT-DPOS)</h3><p>被投票选出的21个超级节点轮流进行出块，每0.5秒生成一个。任何时刻，只有一个生产者被授权产生区块。如果在计划的某个时间内没有成功出块，则跳过该块。如果有一个或更多的区块被跳过，则在区块链上会有0.5s或者更久的空白。一个生产者一次连续出6个块。那么，区块的产生是以126个区块(每个出块者六个区块，乘以21个出块者)为一个周期。在每个出块周期开始时，会根据通证持有人所投票数选出21个区块生产者。被选中的区块生产者的顺序会根据15个及以上的区块生产者的同意，制定出块顺序的安排。</p>
+<p>如果出块者错过了一个块，并且在最近24小时内没有产生任何块，则这个出块者将被剔除在考虑范围之外，直到他们通知区块链可以重新开始产生区块。这确保了网络的顺利运行，把被证明为不可靠的区块生产者排除在出块排程之外，通过这一方式使得错过区块的数量最小化</p>
+<p><strong>投票</strong>：根据最新规则，投票将会在官方钱包中进行，每隔 63s ，也就是每产生126个区块进行一次。每个EOS拥有 30 票，可以投给不同的候选者。参与投票的代币将会被锁定一段时间，代币持有者可以设置代币锁定期内的候选人账户和投票数量进行投票。</p>
+<p>投票结果，EOS 系统会统计各个候选节点获得的代币数量。其中获得代币数量最多的 21 个节点将被选定为超级节点，次多的 100 个节点被选为备用节点。</p>
+<p><strong>超级节点</strong>：收集、验证网络交易信息，打包到区块中，并广播给其他节点。</p>
+<p>在正常情况下，DPOS块链不会经历任何分叉，因为区块生产者并非竞争关系，他们合作产生区块。如果有区块分叉，共识将自动切换到最长链。关于不会分叉的验证，见<a href="https://steemit.com/dpos/@dantheman/dpos-consensus-algorithm-this-missing-white-paper" target="_blank" rel="noopener">验证篇</a></p>
+<p>另外，在传统的DPOS算法上增加了拜占庭容错算法(Byzantin Fault Tolerance) ，所有的出块者都要对所有区块签名，以此来确保在同一时间戳或者同一区块高度上，没有区块生产者能够同时在两个区块上签名。一个区块有了15个区块生产者的签名，该区块就被认为是不可逆的。</p>
+<h3 id="生态建设"><a href="#生态建设" class="headerlink" title="生态建设"></a>生态建设</h3><p>Block.one和Galaxy Digital将通过资本化一个新的3.25亿美元的<a href="https://link.zhihu.com/?target=http%3A//EOS.IO" target="_blank" rel="noopener">http://EOS.IO</a>生态系统基金（“基金”），为未来的投资部署资金。总之不缺钱，而且目前有大量DAPP已经宣布加入EOS，有易用的通用开发模块，基金投资，人气很不错。</p>
+<p><img src="https://pic2.zhimg.com/80/v2-1b8fb0ef655fcc6e3c70a8da6d3a379d_hd.jpg" alt="EOS的Dapp生态图"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#EOS生态系统介绍"><span class="toc-number">1.</span> <span class="toc-text">EOS生态系统介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EOS目标"><span class="toc-number">1.1.</span> <span class="toc-text">EOS目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EOS-App架构"><span class="toc-number">1.2.</span> <span class="toc-text">EOS App架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EOS-系统组成"><span class="toc-number">1.3.</span> <span class="toc-text">EOS 系统组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#共识算法-BFT-DPOS"><span class="toc-number">1.4.</span> <span class="toc-text">共识算法(BFT-DPOS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生态建设"><span class="toc-number">1.5.</span> <span class="toc-text">生态建设</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eos/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eos/&text=eos"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eos/&is_video=false&description=eos"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eos&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eos/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eos/&title=eos"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eos/&name=eos&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

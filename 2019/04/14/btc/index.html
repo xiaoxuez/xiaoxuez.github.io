@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="比特币的基本概念及相关认识本篇笔记绝大部分参考自比特币超级详细入门指南以及阮一峰老师关于区块链的相关博客 区块链本质上是分布式的数据库系统，是开放式的账簿系统(ledger)。 本质上，区块链就是一个有着特定结构的数据库，是一个有序，每一个块都连接到前一个块的链表。也就是说，区块按照插入的顺序进行存储，每个块都与前一个块相连。这样的结构，能够让我们快速地获取链上的最新块，并且高效地通过哈希来检索一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="btc">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/04/14/btc/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="比特币的基本概念及相关认识本篇笔记绝大部分参考自比特币超级详细入门指南以及阮一峰老师关于区块链的相关博客 区块链本质上是分布式的数据库系统，是开放式的账簿系统(ledger)。 本质上，区块链就是一个有着特定结构的数据库，是一个有序，每一个块都连接到前一个块的链表。也就是说，区块按照插入的顺序进行存储，每个块都与前一个块相连。这样的结构，能够让我们快速地获取链上的最新块，并且高效地通过哈希来检索一">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="btc">
+<meta name="twitter:description" content="比特币的基本概念及相关认识本篇笔记绝大部分参考自比特币超级详细入门指南以及阮一峰老师关于区块链的相关博客 区块链本质上是分布式的数据库系统，是开放式的账簿系统(ledger)。 本质上，区块链就是一个有着特定结构的数据库，是一个有序，每一个块都连接到前一个块的链表。也就是说，区块按照插入的顺序进行存储，每个块都与前一个块相连。这样的结构，能够让我们快速地获取链上的最新块，并且高效地通过哈希来检索一">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>btc</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/04/14/btc-wallet/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/04/11/fabric-example/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/14/btc/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/14/btc/&text=btc"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/14/btc/&is_video=false&description=btc"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=btc&body=Check out this article: https://github.com/xiaoxuez/2019/04/14/btc/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/14/btc/&name=btc&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#比特币的基本概念及相关认识"><span class="toc-number">1.</span> <span class="toc-text">比特币的基本概念及相关认识</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#挖矿（工作量证明）"><span class="toc-number">1.0.1.</span> <span class="toc-text">挖矿（工作量证明）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#交易"><span class="toc-number">1.0.2.</span> <span class="toc-text">交易</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#地址"><span class="toc-number">1.0.3.</span> <span class="toc-text">地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UTXO集"><span class="toc-number">1.0.4.</span> <span class="toc-text">UTXO集</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Merkle树"><span class="toc-number">1.0.5.</span> <span class="toc-text">Merkle树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#P2PKH"><span class="toc-number">1.0.6.</span> <span class="toc-text">P2PKH</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库结构"><span class="toc-number">1.0.7.</span> <span class="toc-text">数据库结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#网络"><span class="toc-number">1.0.8.</span> <span class="toc-text">网络</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        btc
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-14T14:37:56.000Z" itemprop="datePublished">2019-04-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/btc/">btc</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="比特币的基本概念及相关认识"><a href="#比特币的基本概念及相关认识" class="headerlink" title="比特币的基本概念及相关认识"></a>比特币的基本概念及相关认识</h3><p>本篇笔记绝大部分参考自<a href="https://github.com/liuchengxu/blockchain-tutorial">比特币超级详细入门指南</a>以及<a href="http://www.ruanyifeng.com/blog/2017/12/blockchain-tutorial.html" target="_blank" rel="noopener">阮一峰老师关于区块链的相关博客</a></p>
+<p>区块链本质上是分布式的数据库系统，是开放式的账簿系统(ledger)。</p>
+<p>本质上，区块链就是一个有着特定结构的数据库，是一个有序，每一个块都连接到前一个块的链表。也就是说，区块按照插入的顺序进行存储，每个块都与前一个块相连。这样的结构，能够让我们快速地获取链上的最新块，并且高效地通过哈希来检索一个块。</p>
+<h5 id="挖矿（工作量证明）"><a href="#挖矿（工作量证明）" class="headerlink" title="挖矿（工作量证明）"></a>挖矿（工作量证明）</h5><p>工作量证明是一种共识算法，在比特币中，这个工作就是找到一个块的有效哈希，并证明其有效性。</p>
+<p>获得指定数据的一个哈希值的过程，就叫做哈希计算。一个哈希，就是对所计算数据的一个唯一表示。对于一个哈希函数，输入任意大小的数据，它会输出一个固定大小的哈希值。下面是哈希的几个关键特性：</p>
+<ol>
+<li>无法从一个哈希值恢复原始数据。也就是说，哈希并不是加密。</li>
+<li>对于特定的数据，只能有一个哈希，并且这个哈希是唯一的。</li>
+<li>即使是仅仅改变输入数据中的一个字节，也会导致输出一个完全不同的哈希。</li>
+</ol>
+<p>在区块链中，哈希被用于保证一个块的一致性。哈希算法的输入数据包含了前一个块的哈希，因此使得不太可能（或者，至少很困难）去修改链中的一个块：因为如果一个人想要修改前面一个块的哈希，那么他必须要重新计算这个块以及后面所有块的哈希。</p>
+<p>寻找一个合适的哈希，需要大量的计算，平均是10分钟才能找到一个合适的哈希，生成1个新的区块。</p>
+<h5 id="交易"><a href="#交易" class="headerlink" title="交易"></a>交易</h5><p>比特币中交易分为两种：</p>
+<ol>
+<li>普通交易，输入会引用之前一笔交易的输出。即花费之前的交易输出</li>
+<li>例外，coinbase交易，即挖矿奖励，只有输出</li>
+</ol>
+<p>在交易中，需要注意的是：</p>
+<ul>
+<li>一笔交易的输入可以引用之前多笔交易的输出</li>
+<li>一个输入必须引用一个输出</li>
+<li>没有被引用的输出，即为未花费交易输出</li>
+<li>输出是不可再分的，即一个输出你无法仅引用它的其中某一部分，要么不要，要么一次性用完。当它的值比需要的值大，那么就会产生一个找零，找零会返还给发送方。</li>
+</ul>
+<p>那么，交易的话，需要的是发送方，接收方，交易金额。整个交易的过程如下：</p>
+<ol>
+<li>从发送方中找到足够交易金额的未花费交易输出s(可能是多个输出的叠加)，作为交易的输入</li>
+<li>确定输出，输出有可能为2个，一个是接收方，一个是发送者的找零</li>
+</ol>
+<p>值得注意的是，交易生成后，并不是立刻生效，而是先将交易放到一个内存池中，然后当矿工准备挖出一个新块时，它就从内存池中取出所有交易，创建一个候选块，当包含这些交易的块被挖出来添加到区块链以后，里面的交易才开始确认。</p>
+<h5 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h5><p>当交易发生时，如何校验发送方和接收方呢，没有用户账户，如何查验自己所有的未花费输出呢。在比特币中，校验方式为，密钥对，公钥和私钥。私钥代表的就是你，所有的交易中含有的信息为公钥相关。</p>
+<p>根据协议，公钥的长度是512位。这个长度不太方便传播，因此协议又规定，要为公钥生成一个160位的指纹。所谓指纹，就是一个比较短的、易于传播的哈希值。160位是二进制，写成十六进制，大约是26到35个字符，即地址。</p>
+<p>交易产生时，需要对数据进行签名，签名过程需要被签名的数据和私钥，这个签名会被存储在交易输入中。为了对一个签名进行验证，需要被签名的数据，签名，公钥。所以在一个交易的输入中，这三者都会存储。那么，什么时候进行验证呢，当把交易从内存池中取出来放入到一个块之前，对每一笔交易都要进行验证，验证意味着什么呢，其一是检查交易输入有权使用来自之前交易的输出，其二是检查交易签名是正确的。</p>
+<p>交易过程，一笔交易就是一个地址的比特币转移到另一个地址。申报交易时，除了交易金额，转出比特币的一方还必须提供以下数据：</p>
+<ul>
+<li>上一笔交易的hash(你从哪里得到的这些比特币)</li>
+<li>本次交易双方的地址</li>
+<li>支付方的公钥</li>
+<li>支付方的私钥生成的数字签名</li>
+</ul>
+<p>验证这笔交易是否属实，需要三步：</p>
+<ol>
+<li>找到上一笔交易，确认支付方的比特币来源</li>
+<li>算出支付方公钥的指纹，确认与支付方的地址一直，从而保证公钥属实</li>
+<li>使用公钥去解开数字签名，保证私钥属实</li>
+</ol>
+<p>交易确认，交易必须写入区块链，才算生效。首先，所有的交易数据都会传送到矿工那里，矿工负责把这些交易写入区块链。根据比特币协议，一个区块的大小最大是 1MB，而一笔交易大概是500字节左右，因此一个区块最多可以包含2000多笔交易。矿工负责把这2000多笔交易打包在一起，组成一个区块然后计算这个区块的 Hash（工作量证明）。另外，鉴于区块链分叉的情况，根据比特币协议规定，分叉点最先达到6个区块的那个分支，被认定为正式的区块链，其他分支都将被放弃，所以，一笔交易真正生效，必须等待至少1个小时。</p>
+<p>粘贴一点数据结构，供参考。</p>
+<p>输入结构体定义为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">type TXInput struct &#123;</span><br><span class="line">    Txid      []byte  //一个输入引用之前交易的一个输出，txid为之前交易的ID</span><br><span class="line">    Vout      int  //之前交易的输出可能有多个，需要指明是具体哪一个</span><br><span class="line">    Signature []byte //签名</span><br><span class="line">    PubKey    []byte //公钥</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结构体定义为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type TXOutput struct &#123;</span><br><span class="line">    Value      int  </span><br><span class="line">    PubKeyHash []byte //公钥哈希</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到两个结构体的定义，可以想到，签名的作用仅在于到被验证完毕。输出中公钥哈希的使用场景在于校验，例如查找未花费输出时，判断条件为输出中的公钥哈希和当前公钥进行哈希之后是否匹配，还有另外的场景..下面来回顾一下一个交易完整的生命周期。</p>
+<ol>
+<li>起初，创世块里面包含了一个coinbase交易，在coinbase交易中，没有输入，就不需要签名，coinbase交易的输出包含了一个哈希过的公钥（使用的是 <strong>RIPEMD16(SHA256(PubKey))</strong> 算法）</li>
+<li>当有人发送币时，就会创建一笔交易，这笔交易的输入会引用之前交易的输出，还会存储一个公钥(没有被哈希)和整个交易的一个签名</li>
+<li>比特币网络中接收到交易的其他节点会对该交易进行验证，除了一些其他事情，他们还会检查，在一个输入中，公钥哈希与所引用的输出哈希相匹配（这保证了发送方只能花费属于自己的币）；签名是正确的（这保证了交易是由币的实际拥有者所创建）。</li>
+<li>当一个矿工准备挖一个新块时，他会将交易放到块中，然后开始挖矿。</li>
+<li>当新块被挖出来以后，网络中的所有其他节点会接收到一条消息，告诉其他人这个块已经被挖出并被加入到区块链。</li>
+<li>当一个块被加入到区块链以后，交易就算完成，它的输出就可以在新的交易中被引用。</li>
+</ol>
+<p>接下来，就是这其中的一些加密算法啦~</p>
+<ul>
+<li><p>私钥生成算法，椭圆曲线加密</p>
+</li>
+<li><p>地址生成算法，Base58,  如果你想要给某个人发送币，只需要知道他的地址就可以了。当我们给某个人发送币时，我们只知道他的地址，因为这个函数使用一个地址作为唯一的参数。然后，地址会被解码，从中提取出公钥哈希并保存在 <code>PubKeyHash</code> 字段</p>
+</li>
+<li><p>签名的数据，因为用于签名的这个数据，必须要包含能够唯一识别数据的信息。所以需要签名的数据必须包括以下部分</p>
+<ol>
+<li>存储在已解锁输出的公钥哈希。它识别了一笔交易的“发送方”。</li>
+<li>存储在新的锁定输出里面的公钥哈希。它识别了一笔交易的“接收方”。</li>
+<li>新的输出值。</li>
+</ol>
+<p>比特币里， 所签名的并不是一个交易，而是一个去除部分内容的输入副本。</p>
+</li>
+</ul>
+<h5 id="UTXO集"><a href="#UTXO集" class="headerlink" title="UTXO集"></a>UTXO集</h5><p>在查找某个公钥的所有未花费输出时，需要查找所有的区块，区块中的每一笔交易，但是如果区块特别多的情况下，迭代需要的成本就太大了。解决方式就是有一个仅有未花费输出的索引，这就是UTXO集要做的事情，这是一个从所有区块链交易中构建(对区块进行迭代，但是只须做一次)而来的缓存，然后用它来计算余额和验证新的交易。</p>
+<h5 id="Merkle树"><a href="#Merkle树" class="headerlink" title="Merkle树"></a>Merkle树</h5><p>Merkle树为1种优化机制，实现的是每个块中，都有1个Merkle树，树的叶子节点为一个交易哈希，从下往上，两两成对，连接两个节点哈希，将组合哈希作为新的哈希，新的哈希就成为新的树节点，一直到树根，根哈希就会当作是整个块交易的唯一标识，将它保存到区块头，然后用于工作量证明。</p>
+<p>Merkle树的好处就是一个节点可以在不下载整个块的情况下，验证是否包含某笔交易。并且这些只需要一个交易哈希，一个 Merkle 树根哈希和一个 Merkle 路径。</p>
+<h5 id="P2PKH"><a href="#P2PKH" class="headerlink" title="P2PKH"></a>P2PKH</h5><p>在比特币中有一个 <em>脚本（Script）</em>编程语言，它用于锁定交易输出；交易输入提供了解锁输出的数据。这个个脚本叫做 <em>Pay to Public Key Hash(P2PKH)</em>，这是比特币最常用的一个脚本。它所做的事情就是向一个公钥哈希支付，也就是说，用某一个公钥锁定一些币。这是<strong>比特币支付的核心</strong>：没有账户，没有资金转移；只有一个脚本检查提供的签名和公钥是否正确。有了一个这样的脚本语言，实际上也可以让比特币成为一个智能合约平台：除了将一个单一的公钥转移资金，这个语言还使得一些其他的支付方案成为可能。</p>
+<h5 id="数据库结构"><a href="#数据库结构" class="headerlink" title="数据库结构"></a>数据库结构</h5><p>简单来说，Bitcoin Core使用两个”bucket”来存储数据：</p>
+<ol>
+<li>blocks, 它存储了描述一条链中所有块的元数据</li>
+<li>chainstate, 存储了一条链的状态，也就是当前所有的未花费的交易输出，和一些元数据</li>
+</ol>
+<p>此外，出于性能的考虑，Bitcoin Core 将每个区块（block）存储为磁盘上的不同文件。如此一来，就不需要仅仅为了读取一个单一的块而将所有（或者部分）的块都加载到内存中。</p>
+<h5 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h5><p>区块链网络是去中心化的，这意味着没有服务器，客户端也不需要依赖服务器来获取或处理数据。在区块链网络中，有的是节点，每个节点是网络的一个完全（full-fledged）成员。节点就是一切：它既是一个客户端，也是一个服务器。这一点需要牢记于心，因为这与传统的网页应用非常不同。</p>
+<p>区块链网络是一个 P2P（Peer-to-Peer，端到端）的网络，即节点直接连接到其他节点。它的拓扑是扁平的，因为在节点的世界中没有层级之分。每个节点必须与很多其他节点进行交互，它必须请求其他节点的状态，与自己的状态进行比较，当状态过时时进行更新。</p>
+<p>当你发生了一笔支付，你所在的节点就会把这笔交易告诉另一个节点，直至传遍整个网络。矿工从网上收集各种新发生的交易，将它们打包写入区块链。一旦写入成功， 矿工所在节点的区块链，就成为最新版本，其他节点都会来复制新增的区块，保证全网的区块链都是一致的。</p>
+<p>节点角色：</p>
+<ul>
+<li>矿工 这样的节点运行于强大或专用的硬件（比如 ASIC）之上，它们唯一的目标是，尽可能快地挖出新块。矿工是区块链中唯一可能会用到工作量证明的角色，因为挖矿实际上意味着解决 PoW 难题。在权益证明 PoS 的区块链中，没有挖矿。</li>
+<li>全节点 这些节点验证矿工挖出来的块的有效性，并对交易进行确认。为此，他们必须拥有区块链的完整拷贝。同时，全节点执行路由操作，帮助其他节点发现彼此。对于网络来说，非常重要的一段就是要有足够多的全节点。因为正是这些节点执行了决策功能：他们决定了一个块或一笔交易的有效性。</li>
+<li>SPV SPV 表示 Simplified Payment Verification，简单支付验证。这些节点并不存储整个区块链副本，但是仍然能够对交易进行验证（不过不是验证全部交易，而是一个交易子集，比如，发送到某个指定地址的交易）。一个 SPV 节点依赖一个全节点来获取数据，可能有多个 SPV 节点连接到一个全节点。SPV 使得钱包应用成为可能：一个人不需要下载整个区块链，但是仍能够验证他的交易。</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#比特币的基本概念及相关认识"><span class="toc-number">1.</span> <span class="toc-text">比特币的基本概念及相关认识</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#挖矿（工作量证明）"><span class="toc-number">1.0.1.</span> <span class="toc-text">挖矿（工作量证明）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#交易"><span class="toc-number">1.0.2.</span> <span class="toc-text">交易</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#地址"><span class="toc-number">1.0.3.</span> <span class="toc-text">地址</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UTXO集"><span class="toc-number">1.0.4.</span> <span class="toc-text">UTXO集</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Merkle树"><span class="toc-number">1.0.5.</span> <span class="toc-text">Merkle树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#P2PKH"><span class="toc-number">1.0.6.</span> <span class="toc-text">P2PKH</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数据库结构"><span class="toc-number">1.0.7.</span> <span class="toc-text">数据库结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#网络"><span class="toc-number">1.0.8.</span> <span class="toc-text">网络</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/14/btc/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/14/btc/&text=btc"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/14/btc/&is_video=false&description=btc"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=btc&body=Check out this article: https://github.com/xiaoxuez/2019/04/14/btc/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc/&title=btc"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/14/btc/&name=btc&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

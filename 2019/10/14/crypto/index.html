@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="区块链中使用到的密码学哈希算法将任意长度的消息压缩为固定长度的二进制串，其输出称为哈希值，也称为散列值。 哈希函数的性质包括  抗碰撞性，所谓碰撞是指两个不同的消息在同一个哈希函数作用下，具有相同的哈希值，哈希函数的扛碰撞性是指寻找两个能够产生碰撞的消息在计算上是不可行的。 原像不可逆，指的是知道输入值，很容易通过哈希计算出哈希值，但知道哈希值，没有办法计算出原来的输入值。 难题友好性，没有便捷的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="crypto">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/crypto/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="区块链中使用到的密码学哈希算法将任意长度的消息压缩为固定长度的二进制串，其输出称为哈希值，也称为散列值。 哈希函数的性质包括  抗碰撞性，所谓碰撞是指两个不同的消息在同一个哈希函数作用下，具有相同的哈希值，哈希函数的扛碰撞性是指寻找两个能够产生碰撞的消息在计算上是不可行的。 原像不可逆，指的是知道输入值，很容易通过哈希计算出哈希值，但知道哈希值，没有办法计算出原来的输入值。 难题友好性，没有便捷的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/802212/201703/802212-20170307221220969-754021676.png">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="crypto">
+<meta name="twitter:description" content="区块链中使用到的密码学哈希算法将任意长度的消息压缩为固定长度的二进制串，其输出称为哈希值，也称为散列值。 哈希函数的性质包括  抗碰撞性，所谓碰撞是指两个不同的消息在同一个哈希函数作用下，具有相同的哈希值，哈希函数的扛碰撞性是指寻找两个能够产生碰撞的消息在计算上是不可行的。 原像不可逆，指的是知道输入值，很容易通过哈希计算出哈希值，但知道哈希值，没有办法计算出原来的输入值。 难题友好性，没有便捷的">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/802212/201703/802212-20170307221220969-754021676.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>crypto</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/blockchain/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/wallet-connection/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/crypto/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/crypto/&text=crypto"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/crypto/&is_video=false&description=crypto"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=crypto&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/crypto/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/crypto/&name=crypto&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#区块链中使用到的密码学"><span class="toc-number">1.</span> <span class="toc-text">区块链中使用到的密码学</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#哈希算法"><span class="toc-number">1.0.1.</span> <span class="toc-text">哈希算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加密"><span class="toc-number">1.0.2.</span> <span class="toc-text">加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数字签名"><span class="toc-number">1.0.3.</span> <span class="toc-text">数字签名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数字证书"><span class="toc-number">1.0.4.</span> <span class="toc-text">数字证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#应用"><span class="toc-number">1.0.5.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#MAC-与数字签名的对比"><span class="toc-number">1.0.5.1.</span> <span class="toc-text">MAC 与数字签名的对比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#签名"><span class="toc-number">1.1.</span> <span class="toc-text">签名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数字签名、数字证书"><span class="toc-number">1.1.1.</span> <span class="toc-text">数字签名、数字证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区块链中的数字签名"><span class="toc-number">1.1.2.</span> <span class="toc-text">区块链中的数字签名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区块链中的密码学"><span class="toc-number">1.1.3.</span> <span class="toc-text">区块链中的密码学</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多重签名"><span class="toc-number">1.1.4.</span> <span class="toc-text">多重签名</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        crypto
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:34:52.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/blockchain/">blockchain</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="区块链中使用到的密码学"><a href="#区块链中使用到的密码学" class="headerlink" title="区块链中使用到的密码学"></a>区块链中使用到的密码学</h2><h4 id="哈希算法"><a href="#哈希算法" class="headerlink" title="哈希算法"></a>哈希算法</h4><p>将任意长度的消息压缩为固定长度的二进制串，其输出称为哈希值，也称为散列值。</p>
+<p>哈希函数的性质包括</p>
+<ul>
+<li>抗碰撞性，所谓碰撞是指两个不同的消息在同一个哈希函数作用下，具有相同的哈希值，哈希函数的扛碰撞性是指寻找两个能够产生碰撞的消息在计算上是不可行的。</li>
+<li>原像不可逆，指的是知道输入值，很容易通过哈希计算出哈希值，但知道哈希值，没有办法计算出原来的输入值。</li>
+<li>难题友好性，没有便捷的方法去产生一满足特殊要求的哈希值。</li>
+</ul>
+<p>哈希函数的应用，在区块链中，可用于验证消息的完整性。</p>
+<h4 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h4><ul>
+<li>对称加密，加密解密钥匙为同一把</li>
+<li>非对称加密，钥匙分为私钥和公钥，私钥加密，公钥解密</li>
+</ul>
+<p>区块链中所使用的公钥密码算法是椭圆曲线算法。椭圆曲线函数的特性为曲线上的两个不同的点相加所得到的点仍在原曲线上，即P + P + P + P .. = k*P = Q，其中P、Q为均曲线上的点。且有特性如下，已知k和点P，求Q容易，但已知点P,Q，求k超超难，运用在实际中，k对应为私钥，Q对应为公钥。</p>
+<h4 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h4><p>数字签名可保证消息的真实性和不可否认性。数字签名为使用私钥对消息摘要进行签名生成数字签名，验证数字签名时使用消息摘要，公钥、数字签名带入算法即可验证。</p>
+<p>其中，签名算法，例如ECDSA，又或者BLS.. (<u>emm，虽然有说签名就是公钥密码“反过来”实现的.但签名的算法其实没看懂</u>.)， 然后BLS的优势是签名长度短，在当前应用中，使用BLS签名的主要是与VRF一起使用，如DFINITY项目~</p>
+<h4 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h4><p>一般使用上是对方持有你的公钥，你用私钥加密，发送给对方，对方使用你的公钥进行解密，问题在于万一对方持有的你的公钥被替换了，对方无法确认公钥是否是属于你的，解决方式呢，就是存在一个证书中心，所有人都持有证书中心的公钥，证书中心使用自己的私钥，对你的公钥和一些相关信息进行一起加密，生成数字证书，你在发送信息的时候附带上数字证书一起发送。</p>
+<p>数字证书使用的示例之一为，https协议，网页加密。</p>
+<p>首先，客户端向服务器发出加密请求，服务器用自己的私钥加密网页以后，连同本身的数字证书，一起发送给客户端，客户端(浏览器)的证书管理器中，有受信任的根证书颁发机构列表，客户端会根据这张列表，查看解开数字证书的公钥是否在列表之内(证书中心是否可靠)。如果数字证书记载的网址，与你正在浏览的网址不一致，就说明这张证书可能被冒用，浏览器会发出警告，如果这张证书不是由受信任的机构颁发的，浏览器会发出另一种警告，如果数字证书是可靠的，客户端就可以使用证书中的服务器公钥，对信息进行加密，然后与服务器交换加密信息。</p>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>消息传输安全体系。</p>
+<p>当发送方A向B发送数据时，需要考虑的问题有</p>
+<ul>
+<li>数据的安全性，即数据不被偷窥</li>
+<li>数据的完整性，即数据不被篡改</li>
+<li>数据的真实性，即数据确实来自发送方，传输过程中没有被替换</li>
+<li>数据的不可否认性，即发送方不能抵赖发送了消息</li>
+</ul>
+<p>上述算法对应安全体系中，关系如下</p>
+<p><img src="https://images2015.cnblogs.com/blog/802212/201703/802212-20170307221220969-754021676.png" alt="img"></p>
+<h5 id="MAC-与数字签名的对比"><a href="#MAC-与数字签名的对比" class="headerlink" title="MAC 与数字签名的对比"></a>MAC 与数字签名的对比</h5><p>MAC，消息认证码。由消息和密钥生成MAC值，可用于确认完整性和真实性。</p>
+<p>其实看起来和数字签名是有点像的，区别在于，MAC使用对称加密，加密解密的密钥是一样的，数字签名使用非对称加密，所以MAC不能保证发送方可以否认发送过数据，而数字签名却可以保证他不能抵赖(私钥只有你自己知道)。</p>
+<h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><h4 id="数字签名、数字证书"><a href="#数字签名、数字证书" class="headerlink" title="数字签名、数字证书"></a>数字签名、数字证书</h4><p>数字签名目前的实现方法之一为公私钥对，A将其公钥拿给B，B给A发消息的时候使用A的公钥进行加密，A收到消息后使用A的私钥进行解密。</p>
+<p>数字签名，A发送消息给B，把消息进行哈希算法生成摘要，使用私钥对消息进行加密，生成的称为数字签名，发送时发送消息和数字签名。B收到消息后，使用A的公钥解密数字签名，证明确实是A发出的消息，另对消息求哈希与数字签名解密出来的哈希对比，可验证消息完整性。</p>
+<p>数字证书，引入第三方可信机构，大家认为其公钥都是可信的，可信机构使用私钥对A的公钥及相关信息进行加密，称为数字证书，B使用可信机构公钥进行解密得到A的公钥，可保证A公钥确实A的公钥。</p>
+<p>通常而言，公钥进行加密，私钥进行数字签名。</p>
+<p>数字签名的作用，</p>
+<ul>
+<li>一方面是消息的加密解密，</li>
+<li>一方面可保证消息的完整性且不被篡改。</li>
+</ul>
+<h4 id="区块链中的数字签名"><a href="#区块链中的数字签名" class="headerlink" title="区块链中的数字签名"></a>区块链中的数字签名</h4><p>区块链中所使用的公钥密码算法是椭圆曲线算法。</p>
+<p>椭圆曲线的数学意义为，两个椭圆曲线上的点相加所得到的点依然在原椭圆曲线上，即k*P = Q，P为椭圆上的点，在已知k、P，求点Q比较容易，但是反过来，已知点PQ,求k却是相当困难的。这个问题成为椭圆曲线上点群的离散对数问题。椭圆曲线密码体制正是利用这个设计，实际应用中，k作为私钥，q作为公钥。</p>
+<p>椭圆曲线算法具有两个明显的有点：</p>
+<ul>
+<li>短的密钥长度，这意味着小的带宽和存储要求。</li>
+<li>所有的用户可以选择同一基域上的不同椭圆曲线，可使所有的用户使用同样的操作完成域运算。</li>
+</ul>
+<p>椭圆曲线签名与验证签名：</p>
+<ul>
+<li>发送消息包含消息本身、公钥、和数字签名。数字签名为，对消息求哈希后使用私钥进行签名</li>
+<li>验证过程为，将消息取哈希、公钥、数字签名带入算法进行计算，根据计算结果可判定验证是否通过</li>
+</ul>
+<p>数字签名的作用，</p>
+<ul>
+<li>保证用户的账户不能被冒名顶替</li>
+<li>确保用户不能否认其所签名的交易</li>
+</ul>
+<h4 id="区块链中的密码学"><a href="#区块链中的密码学" class="headerlink" title="区块链中的密码学"></a>区块链中的密码学</h4><ul>
+<li>哈希算法，对消息A取哈希得到固定长度串B，可理解为摘要。A计算得到B，B很难计算出得到A。哈希碰撞的问题为不同的串得到相同的哈希，取决于哈希桶的大小，故当前很多哈希算法桶取值蛮大，如128、256等(桶大小为2的128或256次方，哈希碰撞的可能性基本很小很小)</li>
+<li>merkle树，对数据块进行取哈希，两两拼凑，再取哈希，最后得到根哈希，整个结构形成树，称为merkle树，验证某数据块只需得到相应非叶子节点哈希进行计算即可，可进行轻量验证</li>
+<li>公钥密码</li>
+</ul>
+<h4 id="多重签名"><a href="#多重签名" class="headerlink" title="多重签名"></a>多重签名</h4><p>多重签名，某条消息是由多个公钥(m个)进行签名，签名验证时需要n个公钥进行解密，其中m&gt;=n。可以是3/2, 5/3等。</p>
+<p>例如，动用这笔资金需要多个私钥签名，通常这笔资金或数字资产会保存在一个多重签名的地址或帐号里（就比特币而言，多重签名地址通常以<code>3</code>开头）。在实际的操作过程中，一个多重签名地址可以关联n个私钥，在需要转账等操作时，只要其中的m个私钥签名就可以把资金转移了，其中m要小于等于n，也就是说m/n小于1，可以是2/3, 3/5等等，是要在建立这个多重签名地址的时候确定好的。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#区块链中使用到的密码学"><span class="toc-number">1.</span> <span class="toc-text">区块链中使用到的密码学</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#哈希算法"><span class="toc-number">1.0.1.</span> <span class="toc-text">哈希算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加密"><span class="toc-number">1.0.2.</span> <span class="toc-text">加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数字签名"><span class="toc-number">1.0.3.</span> <span class="toc-text">数字签名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数字证书"><span class="toc-number">1.0.4.</span> <span class="toc-text">数字证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#应用"><span class="toc-number">1.0.5.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#MAC-与数字签名的对比"><span class="toc-number">1.0.5.1.</span> <span class="toc-text">MAC 与数字签名的对比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#签名"><span class="toc-number">1.1.</span> <span class="toc-text">签名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数字签名、数字证书"><span class="toc-number">1.1.1.</span> <span class="toc-text">数字签名、数字证书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区块链中的数字签名"><span class="toc-number">1.1.2.</span> <span class="toc-text">区块链中的数字签名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区块链中的密码学"><span class="toc-number">1.1.3.</span> <span class="toc-text">区块链中的密码学</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多重签名"><span class="toc-number">1.1.4.</span> <span class="toc-text">多重签名</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/crypto/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/crypto/&text=crypto"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/crypto/&is_video=false&description=crypto"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=crypto&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/crypto/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/crypto/&title=crypto"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/crypto/&name=crypto&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

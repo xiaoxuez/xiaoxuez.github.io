@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Zil白皮书翻译扩大吞吐量的关键是网络和共识协议的设计。 加密层密码层定义了ZILLIQA中使用的密码基础。 与其他几个区块链平台类似，ZILLIQA依靠椭圆曲线密码学进行数字签名，并使用内存硬散列函数进行校对（PoW）。 在整个白皮书中，我们广泛使用SHA3 [6]散列函数来呈现我们的设计。 SHA3最初基于Keccak [7]，广泛应用于不同的区块链平台，尤其是以太坊。 在不久的将来，我们可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zilliqa">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/zilliqa/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Zil白皮书翻译扩大吞吐量的关键是网络和共识协议的设计。 加密层密码层定义了ZILLIQA中使用的密码基础。 与其他几个区块链平台类似，ZILLIQA依靠椭圆曲线密码学进行数字签名，并使用内存硬散列函数进行校对（PoW）。 在整个白皮书中，我们广泛使用SHA3 [6]散列函数来呈现我们的设计。 SHA3最初基于Keccak [7]，广泛应用于不同的区块链平台，尤其是以太坊。 在不久的将来，我们可能">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zilliqa">
+<meta name="twitter:description" content="Zil白皮书翻译扩大吞吐量的关键是网络和共识协议的设计。 加密层密码层定义了ZILLIQA中使用的密码基础。 与其他几个区块链平台类似，ZILLIQA依靠椭圆曲线密码学进行数字签名，并使用内存硬散列函数进行校对（PoW）。 在整个白皮书中，我们广泛使用SHA3 [6]散列函数来呈现我们的设计。 SHA3最初基于Keccak [7]，广泛应用于不同的区块链平台，尤其是以太坊。 在不久的将来，我们可能">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>zilliqa</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/zilliqa-network/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/blockchain/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/zilliqa/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&text=zilliqa"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&is_video=false&description=zilliqa"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=zilliqa&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/zilliqa/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&name=zilliqa&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zil白皮书翻译"><span class="toc-number">1.</span> <span class="toc-text">Zil白皮书翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#加密层"><span class="toc-number">1.0.1.</span> <span class="toc-text">加密层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据层"><span class="toc-number">1.0.2.</span> <span class="toc-text">数据层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#块"><span class="toc-number">1.0.3.</span> <span class="toc-text">块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络层"><span class="toc-number">1.1.</span> <span class="toc-text">网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#网络分片"><span class="toc-number">1.1.1.</span> <span class="toc-text">网络分片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#公共信道"><span class="toc-number">1.1.2.</span> <span class="toc-text">公共信道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新节点加入ZILLIQA"><span class="toc-number">1.1.3.</span> <span class="toc-text">新节点加入ZILLIQA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#交易分片和过程"><span class="toc-number">1.1.4.</span> <span class="toc-text">交易分片和过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#共识层"><span class="toc-number">1.2.</span> <span class="toc-text">共识层</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#实用拜占庭容错"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">实用拜占庭容错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#提高效率"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">提高效率</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Zilliqa共识"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">Zilliqa共识</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#领导者改变"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">领导者改变</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#附录A，数字签名算法"><span class="toc-number">1.2.1.</span> <span class="toc-text">附录A，数字签名算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#EC-Schnorr（单个签名者）机制"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">EC-Schnorr（单个签名者）机制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-number">1.2.1.2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#EC-Schnorr多重签名机制"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">EC-Schnorr多重签名机制</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        zilliqa
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:39:28.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/zilliqa/">zilliqa</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Zil白皮书翻译"><a href="#Zil白皮书翻译" class="headerlink" title="Zil白皮书翻译"></a>Zil白皮书翻译</h2><p>扩大吞吐量的关键是网络和共识协议的设计。</p>
+<h4 id="加密层"><a href="#加密层" class="headerlink" title="加密层"></a>加密层</h4><p>密码层定义了ZILLIQA中使用的密码基础。 与其他几个区块链平台类似，ZILLIQA依靠椭圆曲线密码学进行数字签名，并使用内存硬散列函数进行校对（PoW）。 在整个白皮书中，我们广泛使用SHA3 [6]散列函数来呈现我们的设计。 SHA3最初基于Keccak [7]，广泛应用于不同的区块链平台，尤其是以太坊。 在不久的将来，我们可能会转向Keccak以实现与其他平台更好的互操作性。</p>
+<ul>
+<li><p>数字签名</p>
+<p>ZILLIQA采用基于椭圆曲线的Schnorr签名算法（EC-Schnorr）[8]作为基础签名算法。我们用secp256k1曲线实例化了这个方案[9]。比特币和以太坊目前使用相同的曲线，但使用不同的签名算法ECDSA。通过ECDSA选择ECSchnorr有几个好处，我们将在下面讨论：</p>
+<ol>
+<li>非可塑性：非正式地说，非可塑性属性意味着给定一组使用私钥生成的签名，对于攻击者来说很难为相应的公钥生成相同消息的新签名。与ECDSA不同，EC Schnorr已被证明是不可修改的。[10]</li>
+<li>多重签名：多重签名方案允许多个设计者将他们的签名集合到一个给定的消息中，并将其集中到一个单一的签名中，这个签名可以通过一个公钥即“汇集”所有授权方的钥匙。而EC-Schnorr本质上是一种多重签名方案（参见[11]），ECDSA允许创建多重签名，但不够灵活。当消息需要多个签名时，ZILLIQA使用基于EC-Schnorr的多重签名来减少签名大小。较小的签名在我们的共识协议中尤为重要，因为多方需要通过签署协议来达成一致</li>
+<li>速度：EC-Schnorr比ECDSA更快，因为后者需要计算大数反模。 EC-Schnorr不需要反转。</li>
+</ol>
+<p>EC-Schnorr密钥生成，签名和验证程序在附录A中给出。在附录中，我们还介绍了EC-Schnorr如何用作多重签名方案</p>
+</li>
+</ul>
+<ul>
+<li><p>POW</p>
+<p>ZILLIQA仅使用PoW来防止Sybil攻击并生成节点标识。这与许多现有的区块链平台（特别是比特币和以太坊）形成鲜明对比，其中PoW用于达成分布式共识。 ZILLIQA采用Ethash ，即Ethereum 1.0中使用的PoW算法。 Ethash是一种内存硬散列函数，旨在使用GPU很容易挖掘，但使用专用计算硬件（如ASIC）很难。为此，Ethash计算需要大量内存（以GB为单位）和I / O带宽，以便该功能不能在专用计算硬件上并行调用。粗略地说，Ethash将一个数据（例如一个块头）和一个64位随机数作为输入，并生成一个256位的摘要。该算法由四个以给定顺序运行的子例程组成：</p>
+<ol>
+<li>种子生成：种子是一个SHA3-256摘要，每30000个块称为一个时期后更新。对于第一个时代，它是一系列32字节零的SHA3-256散列。对于其他时代，它始终是前一个种子的SHA3-256散列。</li>
+<li>缓存生成：种子用于使用SHA3-512生成伪随机缓存。缓存的大小随着时期线性增加。缓存的初始大小为16 MB。</li>
+<li>数据集生成：然后使用高速缓存生成数据集，其中数据集中的每个“项目”仅取决于缓存中的少量项目。数据集每次更新一次，以便矿工不必非常频繁地进行更改。数据集的大小也随着时期线性增加。数据集的初始大小为1 GB。</li>
+<li>挖掘和验证：挖掘包括抓取数据集的随机切片并将它们散列在一起。验证使用缓存重新生成计算哈希所需的特定数据集。</li>
+</ol>
+</li>
+</ul>
+<h4 id="数据层"><a href="#数据层" class="headerlink" title="数据层"></a>数据层</h4><p>广义而言，数据层定义了构成ZILLIQA全局状态的数据。 通过扩展，它还定义了ZILLIQA中不同实体更新其全局状态所需的数据。</p>
+<ul>
+<li><p>账户、地址和状态</p>
+<p>ZILLIQA是一个基于账户的系统（如以太坊）。 有两种类型的帐户：普通帐户和合同帐户。 通过生成ECSchnorr私钥创建普通帐户。 合同帐户由另一个帐户创建。每个帐户由根据其类型导出的地址标识。 普通账户的地址来源于账户的私钥。 对于给定的私钥sk，地址Anormal是一个160位的值，其计算公式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Anormal = LSB160(SHA3-256(PubKey(sk))),</span><br></pre></td></tr></table></figure>
+
+<p>其中，LSB160（·）返回输入的最右边的160位，PubKey（·）返回与输入密钥对应的公钥。 合约帐户的地址是根据其创建者的地址以及创建者帐户发送的交易次数计算的，也就是帐户随机数（如下所述）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Acontract = LSB160(SHA3-256(address||nonce)),</span><br></pre></td></tr></table></figure>
+
+<p>其中，address是创建者账户的地址，nonce是创建者的现时值。每个账户（无论是正常账户还是合约）都与账户状态相关联。账户状态是一个关键的价值存储区，由以下键组成：</p>
+<p>1）帐户现时：（64位）计数从普通帐户发送的交易数量的计数器（初始化为0）。如果是合同帐户，它会计算帐户创建的合同数量。</p>
+<p>2）余额：（128位）一个非负值。每当一个账户收到来自另一个账户的token时，收到的金额将被添加到账户的余额中。当一个账户向另一个账户发送token时，余额会减少适当的金额。</p>
+<p>3）代码散列：（256位）这存储合同代码的SHA3-256摘要。对于普通帐户，它是空字符串的SHA3-256摘要。</p>
+<p>4）存储根：（256位）每个帐户都有一个存储，它又是一个key-value存储，存储256位密钥和256位值。存储根目录是代表此存储的SHA3-256摘要。例如，如果存储是一个trie，那么存储根就是trie的根的摘要。</p>
+<p>ZILLIQA的全局状态（状态）是帐户地址和帐户状态之间的映射。它使用类似于数据结构的trie来实现。</p>
+</li>
+<li><p>交易</p>
+<p>交易总是从普通账户地址发送，并更新ZILLIQA的全局状态。交易具有以下字段：<br>1）版本（32位）：当前版本。<br>2）nonce（64位）：一个计数器，等于此交易发送者发送的交易数。<br>3）目的（160位）：目的地帐户地址。如果交易创建新的合同帐户，则该字段是空字符串的最右边的160位SHA3-256。<br>4）金额（128位）：要转移到目标地址的交易金额。<br>5）gas价格（128位）：gas被定义为计算的最小单位。gas价格是发送者愿意为交易处理过程中发生的计算而支付的每单位gas的金额。<br>6）gas限制（128位）：处理交易时应使用的最大gas量。<br>7）代码（无限制）：指定合同代码的可扩展字节数组。只有在交易创建新的合同帐户时才存在。<br>8）data（无限）：一个可扩展的字节数组，用于指定应该用来处理数据的数据。它仅在交易调用目标地址的合同调用时才存在。<br>9）公钥（264位）：应该用来验证签名的EC-Schnorr公钥。 pubkey字段也决定了交易的发送地址。<br>10）签名（512位）：整个数据上的EC-Schnorr签名。每个交易都由一个交易ID唯一标识 - 一个排除签名字段的交易数据的SHA3-256摘要。</p>
+</li>
+</ul>
+<h4 id="块"><a href="#块" class="headerlink" title="块"></a>块</h4><p>ZILLIQA协议引入了两种类型的块（以及两个块链）：事务块（TX块）和目录服务块（DS块）。 TX块包含用户发送的交易，而DS块包含有关参与共识协议的矿工的元数据。</p>
+<ul>
+<li>DS块：DS块具有两部分：头部和签名。 DS块的标题部分包含以下字段：</li>
+</ul>
+<p>​    1）版本（32位）：当前版本。<br>​    2）先前的散列（256位）：其父块标题的SHA3-256摘要。<br>​    3）公钥（264位）：在这个块头上做PoW的矿工的公钥。<br>​    4）难度（64位）：这可以从前面的块的难度和块编号中计算出来。它存储了PoW难题的难度。<br>​    5）数字（256位）：祖先块的数量。生成块的块号为0。<br>​    6）时间戳（64位）：Unix创建该块时的时间（）。<br>​    7）mixHash（256比特）：根据nonce计算出的摘要，用于检测DoS攻击。<br>​    8）nonce（64位）：PoW的解决方案。</p>
+<p> DS块的签名部分包含以下两个字段：<br>​    1）签名（512比特）：签名是DS节点签名的DS块头上的基于EC-Schnorr的多重签名。<br>​    2）位图（1024位）：它记录哪些DS节点参与多重签名。我们用位向量B表示位图，其中，B [i] = 0, 如果第i个节点签名B [i] = 1。</p>
+<p>DS块形成DS区块链。</p>
+<ul>
+<li><p>交易块：</p>
+<p>如前所述，DS块包含有关交易共识节点的信息。 TX块存储关于DS块中的节点同意的交易的信息。每个DS块都链接到多个TX块。 TX块包含三部分：标题，数据和签名。标题由以下字段组成：<br>1）类型（8位）：TX-Block有两种类型，即微块（0x00）和最终块（0x01）。更多关于这些在第V-D部分。<br>2）版本（32位）：当前版本。<br>3）先前的散列（256位）：其父块标题的SHA3-256摘要。<br>4）gas限制（128位）：每个块中gas消耗的限制。<br>5）使用的gas（128位）：本区块交易使用的gas总量。<br>6）数字（256位）：祖先块的数量。genesis块的块号为0。<br>7）时间戳（64位）：Unix创建该块时的时间（）。<br>8）状态根（256位）：这是一个SHA3-256摘要，表示所有交易执行并完成后的全局状态。如果全局状态被存储为一个trie，那么状态根就是trie的根的摘要。<br>9）交易根（256位）：这是一个SHA3-256摘要，表示存储此块中存在的所有交易的Merkle树的根。<br>10）tx散列（每个256位）：交易的SHA3-256摘要列表。交易的签名部分也被散列。<br>11）公钥（264位）：提出该块的领导者的EC-Schnorr公钥。<br>12）pubkey微块（无限制）：它是ECSchnorr公钥的列表（每个长度为264位）。该清单包含提交交易的领导人的公钥。该字段仅在final块才存在。<br>13）父块散列（256位）：它是前一个最后块标题的SHA3-256摘要。<br>14）父DS散列（256位）：它是其父DS-Block头的SHA3-256摘要。<br>15）父DS块号（256位）：它是父DS块号。</p>
+<p> TX块的数据部分包含交易列表。它有以下领域：<br>1）tx计数（32位）：该块中的交易数。<br>2）tx list（unlimited）：交易清单。</p>
+<p> TX-Block的签名部分包含基于ECSchnorr的多重签名。它有以下两个字段：</p>
+<ol>
+<li>签名（512比特）：签名基于EC-Schnorr的多重签名，由一组节点在TX-Bloc上进行签名。签名的节点取决于它是微块还是最终块的不同节点组。第V-D节给出了签署方的进一步细节。</li>
+</ol>
+<p>2）位图（1024位）：它记录参与多重签名的节点。我们用位向量B表示位图，其中，如果第i个节点对头部进行签名，则B [i] = 1，否则B [i] = 0。</p>
+<p>final块形成交易区块链。交易区块链不包含微块</p>
+</li>
+</ul>
+<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>ZILLIQA被设计成是交易率按比例决定。主要的想法是，分片。即，将挖矿网络分成小分片，每个小分片处理交易是并行的。在本节中，我们将介绍网络和交易分片。</p>
+<h4 id="网络分片"><a href="#网络分片" class="headerlink" title="网络分片"></a>网络分片</h4><p>网络分片。将挖矿网络分成小分片是一个两个的过程，首先，一组专用的称为目录服务委员会（或DS委员会）的节点被选举出来，然后他们将将网络和节点分到他们的分片中。在下面，将具体介绍细节。</p>
+<ul>
+<li><p>目录服务委员会（Directory Service Committee）：为了促进网络的切分，我们首先会选举出一组节点，成为目录服务(DS)节点。<strong>DS节点形成一个DS委员会。DS节点的选举是基于proof-of-work1算法</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//Algorithm 1: PoW1 for DS committee election.</span><br><span class="line">Input: i: Current DS-epoch, DSi−1: Prev. DS committee</span><br><span class="line">composition.</span><br><span class="line">Output: header: DS-Block header.</span><br><span class="line"> On each competing node:</span><br><span class="line">// get epoch randomness from the DS blockchain</span><br><span class="line">// DBi−1: Most recent DS-Block before start of i-th epoch</span><br><span class="line"> r1 ← GetEpochRand(DBi−1)</span><br><span class="line">// get epoch randomness from the transaction blockchain</span><br><span class="line">// TBj : Most recent TX-Block before start of i-th epoch</span><br><span class="line"> r2 ← GetEpochRand(TBj )</span><br><span class="line">// pk: node’s public key, IP = node’s IP address</span><br><span class="line"> nonce, mixHash ← Ethash-PoW(pk, IP, r1, r2)</span><br><span class="line"> header ← BuildHeader(nonce, mixHash, pk)</span><br><span class="line">// header includes pk and nonce among other fields</span><br><span class="line">// IP, header is multicast to members in the DS committee</span><br><span class="line"> MulticastToDSi−1(IP, header)</span><br><span class="line"> return header</span><br></pre></td></tr></table></figure>
+
+<p>比其他节点更早成功产生一个有效的随机数的节点，将为新块提供区块头。回想一下DS-Block头和签名部分，当一个节点解决了POW1，它便可以生产仅仅1个区块头，区块头随后会被多点广播给DS委员会的所有节点，DS委员会将对产生的区块头进行共识后生成签名部分。2f个DS节点签名了区块头，这个区块便被确认添加到DS区块链中。</p>
+<p> 在成功引导阶段后，在任何时候，规定DS节点的组成为一个预定义的窗口大小n0。在最近n0节点中并成功挖掘DS-Block的节点将加入DS委员会。</p>
+<p>连续挖到两个DS-Block之间的平均时间称为DS-epoch。DS-eposh的值的设置是减小两个竞争块几率的一种方法。在DS-epoch的开始，一个新的DS节点加入DS委员然后DS委员会中最老的成员会出去。这固定了在DS-eposh期间DS委员会的大小始终是n0。<strong>DS委员中最新的成员将成为leader, 并领导该时期的共识协议。</strong> 这进一步导致了DS委员会成员的严格排序。</p>
+<p>可以看到的是，如果DS委员会的规模n0足够大（比如说800），那么在n0个委员会成员中极有可能最多有1/3是拜占庭。</p>
+</li>
+<li><p>冲突解决：我们的共识协议不允许在DS区块链中分叉。  当多个节点大致同时解决难题时，可能会出现分叉。 为了解决冲突，每个DS节点从接收到的头中检索nonce字段，并按递增顺序对它们进行排序。 让我们假设第i个DS节点的最大随机数是max(nⁱ)。</p>
+<p>DS委员会的leader然后提出自己的header（对应于他所见过的最大随机数），并运行一致的协议来就DS-         Block header达成一致。 只有当相应的随机数大于或等于max(nⁱ)时，第i个DS节点才被同意接受建议的header。 一旦达成共识，DS-Block的签名部分就建立起来了，然后成为领导者</p>
+</li>
+<li><p>分片生成：一旦选出DS委员会，网络的实际分片就可以开始。 为了使节点参与下面的共识协议，它必须执行工作证明（PoW2）。 分片协议在每个DS时期开始时重复。 算法2给出了PoW2的算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Algorithm 2: PoW2 for shard membership.</span><br><span class="line">Input: i: Current DS-epoch, DSi: Current DS committee</span><br><span class="line">composition.</span><br><span class="line">Output: nonce, mixHash: outputs of Ethash-PoW</span><br><span class="line"> On each competing node:</span><br><span class="line">// get epoch randomness from the DS blockchain</span><br><span class="line">// DBi−1: Most recent DS-Block before start of i-th epoch</span><br><span class="line"> r ← GetEpochRand(DBi)</span><br><span class="line">// pk: node’s public key, IP = node’s IP address</span><br><span class="line"> nonce, mixHash ← Ethash-PoW(pk, IP, r)</span><br><span class="line">// IP, header is multicast to members in the DS committee</span><br><span class="line"> MulticastToDSi(nonce, mixHash, pk, IP)</span><br><span class="line"> return nonce, mixHash</span><br></pre></td></tr></table></figure>
+
+<p>然后将<strong>计算出的PoW2的有效随机数（和混合散列）多播到DS委员会。 DS节点将共同接受足够的PoW解决方案，以分解为L个共识委员会或分片，每个都具有n0个节点以达成共识</strong>。一旦DS委员会负责人收到足够数量的PoW2解决方案，他就启动一个协商一致的协议，以就该组有效的PoW2解决方案达成一致。在共识协议结束时，leader生成由DS节点签名的EC-Schnorr多重签名。为了进一步进行下去，超过2/3的DS节点必须同意一组可接受的PoW2解决方案。<br>Sharding利用确定性函数将节点分配给分片。让我们假设我们需要每个都有n0个节点的碎片。随机数值按升序排序，第一个有n0个节点的节点们被分配给第一个分片，下一个n0分配到下一个分片，依此类推。<strong>在碎片中提出最大随机数的矿工的身份被宣布为leader</strong>。这进一步诱导了对分片成员的严格排序。也可以表明，如果n0足够大（比如800以上），那么在每个碎片内至多有1/3个是具有高概率的拜占庭</p>
+</li>
+</ul>
+<h4 id="公共信道"><a href="#公共信道" class="headerlink" title="公共信道"></a>公共信道</h4><p>DS节点在公共信道上发布某些信息，包括DS节点的身份和连接信息，每个分片中的节点列表以及交易的分片逻辑（在第V-D节中解释）。 公共频道不可信，并假定所有节点均可访问。 在我们的实现中，我们的广播原语实现了这样的公共频道。 我们区块链的用户想要提交交易以进行接受，然后可以检查分片信息以获取负责处理其交易的碎片。 在公共频道上发布的信息预计将由任何节点或用户可验证的DS节点的2/3以上进行签名。</p>
+<h4 id="新节点加入ZILLIQA"><a href="#新节点加入ZILLIQA" class="headerlink" title="新节点加入ZILLIQA"></a>新节点加入ZILLIQA</h4><p>对于新节点加入网络，它可以尝试解决PoW1成为DS节点或PoW2成为分片的成员。 为此，它需要从区块链获得关于PoW1或PoW2所需的随机性的信息。 一旦获得了随机性信息，新节点就可以将其解决方案提交给DS委员会。</p>
+<h4 id="交易分片和过程"><a href="#交易分片和过程" class="headerlink" title="交易分片和过程"></a>交易分片和过程</h4><p>如以上所述，网络分片创建了每个能够并行处理交易的分片。 在本节中，我们将介绍特定交易如何分配给分片以及如何处理交易。 为此，我们使用以下抽象：A -ⁿ-&gt;B来指示从发件人账户A到收件人账户B的n个ZIL的交易</p>
+<ul>
+<li><p>交易分配：任何交易都表示A -ⁿ-&gt;B被单个分片处理。 假设有L个分片，编号为0到L-1，交易被分配到由发送者地址的(log₂L + 1)右边的位（bit）标识的碎片。即，实例中A的账户地址。因为账户地址是一个160位(bit)的整型数据，所以L的范围应该为<strong>log₂L + 1 ≤ 160</strong>。但实际上，它会小于100。</p>
+<p>一旦识别了分配的分片，交易就会被多播到分片中的一些节点，节点然后再进一步广播它。 一旦交易到达指定分片的领导者，它将把交易包含在TX-Block中并运行共识协议。</p>
+<p><strong>双花（或重播攻击）可以使用每笔交易中的随机数轻松检测</strong>。 回想一下，每笔交易都有一个随机数，用于统计发件人帐户发送的交易数量。 一旦交易进入交易区块链，nonce在账户状态中更新，从而处于全局状态。 当前值小于或等于全局状态当前值的交易被矿工拒绝。 根据发件人的帐户地址本地分片交易允许分片成员检测双倍支出，因为发件人的每个交易都将在同一分片中处理。</p>
+</li>
+<li><p>交易处理：委员会内的所有节点都可以提出交易。这些交易被发送给领导者以运行一组协议，其中一组交易形成下一个TX块。由每个分片建议的块称为微块（由类型标记0x00标识）。一个微块包含EC-Schnorr多重签名，由分片中的2/3个节点组成。leader还建立一个标识签名者公钥的位图B。如果分片的第i个成员签署了TX-Block头部，则B [i] = 1。当一个分片在TX块上达成共识时，其领导者将块头和签名多播给一些DS节点。 DS节点然后在DS委员会内广播它，以便该块到达其领导者。块的数据部分可以异步发送到节点。 DS委员会然后汇集从分片发送的所有块，并且在它们之间运行另一轮共识协议以达成最终块。最后的块是由类型标记0x01标识的TX块。最后一个块包含来自DS委员会的超过2/3个n0节点的EC-Schnorr多重签名。 DS委员会的leader还构建了一个位图B，用于标识签名者的公钥。如果DS委员会的第i个成员签署了TX-Block标题，则B [i] = 1。最后的块头和签名，然后被组播到每个分片中的一些节点。实际的TX块数据不是由DS节点发送的。(DS节点发送的是块头和签名，tx块数据应该是由分片节点间进行同步广播)</p>
+<p>在每个分片中，采取以下步骤来处理最终的块:</p>
+<ol>
+<li>分片中的每个节点使用DS节点的公钥验证EC-Schnorr多重签名。 如果签名对由位图表示的超过2/3个n0公钥有效，则节点执行下一个检查。</li>
+<li>对于包含在最终块头中的每个交易hash，节点检查其相应的交易内容是否可用。 如果相应的交易由节点所属的分片提出，则将交易数据的散列与包含在最后块header中的散列进行比较。 如果交易是由另一个分片提出的，则交易数据跨分片异步共享</li>
+<li>一旦交易数据可用，最终块的data部分被重构并且TX块被附加到本地交易区块链。 账户状态和全局状态相应地被更新。</li>
+<li>如果交易内容不可用，则节点在其本地账户视图中临时使该交易的发送账户失效，以便该账户的任何其他未决交易被拒绝，直到本地交易内容可以与全局状态同步。 这些被拒绝的事务将不得不由发送节点重试</li>
+</ol>
+</li>
+</ul>
+<h3 id="共识层"><a href="#共识层" class="headerlink" title="共识层"></a>共识层</h3><p>如以上提到的，每个分片和DS委员会需要分别在微块和终块上跑一个共识协议。在这一块，我们将展示在每一个分片和DS委员会中定义的共识协议的共识层。在讨论中，我们将分片和DS委员会代指为共识组。</p>
+<h5 id="实用拜占庭容错"><a href="#实用拜占庭容错" class="headerlink" title="实用拜占庭容错"></a>实用拜占庭容错</h5><p>ZILLIQA共识协议的核心依赖于实用拜占庭容错(PBFT)协议。然而我们通过在PBFT中使用EC-Schnorr多签名来提升效率。EC-Schnorr多重签名的使用将正常情况下的通信延迟从O(n*n)降低为O(n)，并将签名大小从O(n)减小到O(1)，其中n是共识组的大小。 在这个部分，我们提供PBFT的概述。</p>
+<p>在PBFT中，共识组内的所有节点都按顺序排列，它有一个主节点（或领导者），其他节点称为备份节点。 每轮PBFT都有三个阶段，如下所述：</p>
+<ul>
+<li>预准备阶段:  在这个阶段，领导者宣布该小组将应该达成一致共识的下一个记录（在我们的案例中是TX-Block）</li>
+<li>准备阶段：在接收到预先准备消息后，每个节点验证其正确性并将准备消息多播给所有其他节点</li>
+<li>提交阶段：在收到超过2/3*n准备消息时，节点向组播组发送提交消息。最后，节点等待超过2/3*n的提交消息，以确保有足够数量的节点做出相同的决定。 因此，所有诚实的节点都接受相同的有效记录。</li>
+</ul>
+<p>PBFT依靠正确的领导者开始每个阶段，并在足够多节点存在时继续进行。 如果领导是拜占庭，它可能会拖延整个共识协议。 为了应对这一挑战，PBFT提供了视图更改协议来使用另一个取代拜占庭领袖。 如果节点在有限的时间内没有看到任何进展，他们可以独立宣布改变领导者的愿望。 如果超过2/3*n个节点的法定人数决定领导者有问题，那么在已知计划中的下一个领导者就会接管。</p>
+<p> 由于在准备/提交阶段每个节点的多播，正常情况下PBFT的通信复杂度为O（n*n）</p>
+<h5 id="提高效率"><a href="#提高效率" class="headerlink" title="提高效率"></a>提高效率</h5><p>经典的PBFT使用消息认证码（MAC）进行节点之间的认证通信。 由于MAC需要在每两个节点之间共享密钥，所以一个共识组中的节点可以在同一个记录上达成一致，其中每个节点的通信复杂度为O（n*n）。 由于二次复杂性，当委员会有20多个节点时，PBFT变得不切实际。</p>
+<p>为了提高效率，我们使用来源于ByzCoin的想法：</p>
+<ul>
+<li>我们用数字签名替换MAC来有效地减少O（n）的通信开销。</li>
+<li>与此同时，为了让其他节点能够验证协议，一种典型的方法是从诚实的多数收集签名并将它们附加到协议中，从而导致协商规模与协商组的大小成线性关系。 为了改善这一点，我们使用EC-Schnorr多重签名来将几个签名聚合成O（1） - 大小多重签名</li>
+</ul>
+<p>然而，我们不能直接在PBFT设置中使用经典的EC-Schnorr多重签名方案。 这是因为在古典设置中，所有签名者都同意签署给定的消息，并且签名只有在所有签名者都签名后才有效。 在PBFT设置中，我们只需要在共识组中超过2/3*n个节点签署消息。 所需的主要修改之一是为参与签名过程的签名者维护位图B. 如果第i个节点参与该过程，则B [i] = 1，否则为0。位图由领导者构建。 位图可以被任何验证者用来验证签名。 最终的协议留在附录B中。</p>
+<h5 id="Zilliqa共识"><a href="#Zilliqa共识" class="headerlink" title="Zilliqa共识"></a>Zilliqa共识</h5><p>在ZILLIQA中，我们使用PBFT作为基础共识协议，并采用两轮EC-Schnorr多重签名来替换PBFT中的准备阶段和提交阶段。 下面将解释对PBFT阶段的不同修改。</p>
+<ul>
+<li>预准备阶段: 与标准PBFT中一样，领导者将TX-Block或声明（由领导者签名）分发给共识组中的所有节点。</li>
+<li>准备阶段：所有诚实的节点检查TX块的有效性，并且领导者收集来自超过2/3*n个节点的响应。 这保证领导者提出的陈述是安全的并且与以前的所有历史一致。 签名是使用EC-Schnorr多重签名生成的。 领导者还构建签署TX块的节点的位图</li>
+<li>提交阶段：为了确保超过2/3*n的节点知道超过2/3*n节点验证了TX-Block的事实。我们进行第二轮EC-Schnorr多重签名。 正在签署的声明是上一轮生成的多重签名。</li>
+</ul>
+<p>在三个阶段结束时，就领导者提出的TX-Block将达成共识。</p>
+<h5 id="领导者改变"><a href="#领导者改变" class="headerlink" title="领导者改变"></a>领导者改变</h5><p>在我们的共识协议中，如果领导者是诚实的，它可以不断的推动共识小组中的节点就新的交易达成协议。 但是，如果领导是拜占庭，它可以有意地延迟或丢弃来自诚实节点的消息，并减慢协议。 为了惩罚这些恶意领导者，我们的协议会定期更改每个分片的领导和DS委员会。 这可以防止拜占庭领袖在无限期的时间内拖延共识协议。 由于所有节点都是有序的，下一个领导者将以循环方式选择。</p>
+<p> 事实上，每一个微块后分片的领导者都会改变，并且在每个最后一个区块之后DS委员会的领导者也会更改。 让我们假设共识组的大小为n，那么在一个DS-epoch时期内，我们允许的最终块的最大值为n，每个最终块最多在1个分片聚合1个微块。</p>
+<h4 id="附录A，数字签名算法"><a href="#附录A，数字签名算法" class="headerlink" title="附录A，数字签名算法"></a>附录A，数字签名算法</h4><h5 id="EC-Schnorr（单个签名者）机制"><a href="#EC-Schnorr（单个签名者）机制" class="headerlink" title="EC-Schnorr（单个签名者）机制"></a>EC-Schnorr（单个签名者）机制</h5><p>EC-Schnorr工作在离散对数很难的组[8]，[24]，[25]。 ZILLIQA使用在流行的secp256k1曲线上定义的椭圆曲线组。 我们用C :=（p，G，n）表示定义组的参数集合，其中p是指定基础场Fp的质数，G是曲线上的基点，n（素数）是 G的顺序。EC-Schnorr还需要一个密码散列函数H，我们用SHA3-256 [6]实例化。</p>
+<p> EC-Schnorr是我们在本节中介绍的一组三种算法KeyGen，Sign和Verify。 在下面的算法中，对于任何标量x和点Q，我们用[x] Q表示乘法</p>
+<ul>
+<li>KeyGen(C): 该算法取曲线参数C并返回一对公钥（pk）和私钥（sk）。算法省略</li>
+<li>Sign(C, pk, sk, m)：该算法由签名者运行。 根据曲线参数C，公钥和私钥对（pk，sk）以及签署的消息。 它返回一个签名σ</li>
+<li>Verify(C, σ, pk, m): 该算法由希望检查签名有效性的验证者运行。 它取曲线参数C，签名σ，公钥pk和消息m。 如果签名对于pk下的m有效，则返回1，否则返回0</li>
+</ul>
+<h5 id><a href="#" class="headerlink" title></a></h5><h5 id="EC-Schnorr多重签名机制"><a href="#EC-Schnorr多重签名机制" class="headerlink" title="EC-Schnorr多重签名机制"></a>EC-Schnorr多重签名机制</h5><ul>
+<li><p>设置和假设：EC-Schnorr也可以用作多重签名方案[11]。在多重签名方案中，我们有T个签名者：P1，…。 。 。 ，PT，聚合器和验证者。签名者希望联合签署消息m。聚合者扮演促进者的角色并聚合每个签名者发送的签名。验证者验证汇总的签名。聚合者和验证者的角色可以由同一个实体来扮演。每个签名者Pi拥有她自己的用于EC-Schnorr单签名者方案的公共私钥对（pki，ski）。</p>
+<p>我们用P = {pk1，。 。 。 ，pkT}表示所有公钥的集合。我们还假设每个实体都知道公共消息mp。消息mp可能是特定于应用场景的，并采取以下形式：我知道会话ID为XXXX的公钥的私钥。这个消息的目的是为了击败对该方案的某些已知攻击[26]。</p>
+</li>
+<li><p>多重签名协议：多重签名是签名者，聚合器和验证者之间的交互协议（参见图2的示意图）。该协议有六个步骤，如下所述。</p>
+<ol>
+<li><p>（一次性）身份设置：此步骤在每个参与者和验证者之间运行。在协议开始时，每个签名者Pi如果当前不涉及另一个签名协议，则在消息mp上生成EC-Schnorr签名σi。然后Pi将（σi，pki）发送给验证者。验证者然后执行以下检查：</p>
+<ul>
+<li>检查pki∈P.如果检查失败，检验器将中止。</li>
+<li>通过调用Verify（C，σi，pki，mp）来检查每个σi是否是pki上mp的有效EC-Schnorr签名。如果任何这些签名验证返回0，则验证程序中止。如果所有签名均有效，则协议进行到下一步。</li>
+</ul>
+<p>如果验证程序没有收到P中每个pki的σi，她也会中止。为了记录她是否收到来自Pi的签名，她使用位图Z [1，…。 。 。 ，| P |] .身份设置是一个一次性过程，随后是任意数量的下一步。只有在设置成功结束后，协议的后续步骤才能开始。</p>
+</li>
+<li><p>commitment 阶段：每个签名者Pi随后选择一个随机ki $←[1，n-1]并计算Qi = [ki] G。回想一下，G是椭圆曲线上的基点，n是G的阶数.Pi然后将Qi发送给聚合器。</p>
+</li>
+<li><p>Challenge 阶段：聚合器首先用P中的密钥计算聚合密钥。她还计算前一步骤中接收到的Qi的聚合。然后她计算r←H（Q || pk || m）mod n并将（r，Q，pk）发送给每个Pi</p>
+</li>
+<li><p>响应生成：每个签名者Pi首先检查之前收到的r的完整性。这是通过重新计算H（Q || pk || m）并检查它是否等于接收到的r来完成的。如果检查失败，则Pi会中止协议或者生成si←（ki -r·ski）mod n并将si发送给聚合器。</p>
+</li>
+<li><p>响应聚合：聚合器计算聚合响应s = Pi si mod n并建立聚合签名σ=（r，s）。然后，她将（m，σ）发送给验证者。</p>
+</li>
+<li><p>签名验证：Verifier现在检查签名是否有效。她执行以下步骤：</p>
+<ul>
+<li>将P中的公钥集中为pk0。</li>
+<li>通过调用，检查σ是否为m上公钥pk0的有效EC-Schnorr签名</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>有点难理解，以下比较偏好理解的角度来说。</p>
+<p>多重签名方案基本上分两步进行。在协议的第一步中，每个节点将其公钥发送给聚合者，聚合者根据公钥的数学形式，通过简单的加法或乘法将之聚合为一个单一的公钥。</p>
+<p>例如，聚合公钥= 公钥_1 + 公钥_2 + …+公钥_n。</p>
+<p>然后聚合者将聚合公钥转发给验证者从而可以使后者验证聚合签名，与此同时聚合者也将聚合公钥发送给每个签名者让所有人签名。</p>
+<p>在第二步中，聚合者启动与每个签名者的交互协议（interactive protocol）。这个交互协议总分包含三个阶段：</p>
+<p><strong>1、提交阶段（Commit phase）：</strong>此阶段每个节点生成一些随机内容并提交给交互协议。如果你不了解什么是加密提交（cryptographic commitment），那么可以通过这种类比的方式理解：每个节点都秘密地掷骰子，然后将结果写在一张纸上并将其放在一个盒子中锁好，最后发送给聚合者。聚合者无权打开盒子。</p>
+<p><strong>2、挑战阶段（Challenge phase）：</strong>此阶段聚合者首先使用加法或乘法将所有的提交聚合为一个聚合提交，然后使用它以及聚合公钥、消息生成一个挑战，再将挑战发送到所有节点。之后挑战可用于确认所有节点都知道公钥对应的私钥。这与常规数字签名的工作方式类似，即由签名证明签名人确实知道私钥。</p>
+<p><strong>3、回应阶段（Response phase）：</strong>所有节点为了应对挑战会向挑战发送私钥进行回应，之后聚合者将聚合所有的回应。因此回应可被视为签名者知道其公钥对应的私钥的证据。</p>
+<p>因此，最后的聚合签名实际上是挑战和聚合回应的信息对，并能验证第一步生成的聚合公钥。</p>
+<p>值得注意的是，聚合签名的大小不取决于签名者的数量，它是固定的。</p>
+<p>图中蓝色的节点是聚合者。H是用于将消息m生成挑战的密码散列函数。聚合签名就是R和S的信息对。R的大小等于Ri，S的大小等于Si的。仅在知道私钥的情况下才能生成有效的回应。</p>
+<p>当验证者检查聚合签名时，它检查的不是每个单独签名者是否都正确地遵守协议，而是检查所有签名者作为一个整体是否正确地遵守协议并知道私钥。因此，验证者做出的决定是全有或全无（all-or-nothing）。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zil白皮书翻译"><span class="toc-number">1.</span> <span class="toc-text">Zil白皮书翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#加密层"><span class="toc-number">1.0.1.</span> <span class="toc-text">加密层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据层"><span class="toc-number">1.0.2.</span> <span class="toc-text">数据层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#块"><span class="toc-number">1.0.3.</span> <span class="toc-text">块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络层"><span class="toc-number">1.1.</span> <span class="toc-text">网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#网络分片"><span class="toc-number">1.1.1.</span> <span class="toc-text">网络分片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#公共信道"><span class="toc-number">1.1.2.</span> <span class="toc-text">公共信道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#新节点加入ZILLIQA"><span class="toc-number">1.1.3.</span> <span class="toc-text">新节点加入ZILLIQA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#交易分片和过程"><span class="toc-number">1.1.4.</span> <span class="toc-text">交易分片和过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#共识层"><span class="toc-number">1.2.</span> <span class="toc-text">共识层</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#实用拜占庭容错"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">实用拜占庭容错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#提高效率"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">提高效率</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Zilliqa共识"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">Zilliqa共识</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#领导者改变"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">领导者改变</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#附录A，数字签名算法"><span class="toc-number">1.2.1.</span> <span class="toc-text">附录A，数字签名算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#EC-Schnorr（单个签名者）机制"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">EC-Schnorr（单个签名者）机制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#null"><span class="toc-number">1.2.1.2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#EC-Schnorr多重签名机制"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">EC-Schnorr多重签名机制</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/zilliqa/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&text=zilliqa"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&is_video=false&description=zilliqa"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=zilliqa&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/zilliqa/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&title=zilliqa"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/zilliqa/&name=zilliqa&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

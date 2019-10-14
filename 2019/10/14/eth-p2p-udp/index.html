@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="p2p-udp在以太坊的p2p包下，discover包下的udp主要负责节点发现。以太坊的节点发现又是基于kademlia协议。 kademliakad详细解读 简单说来，kad中，每个节点由特定ID为唯一标识符。并且由ID决定K桶和两节点之间的逻辑距离。 ID由二进制表示，ID长度有几位，K桶数量就为几。K桶的划分满足，第n个K桶的节点前n-1位与自己ID的前n-1位是相同的。如ID长度为3，那">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eth_p2p_udp">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="p2p-udp在以太坊的p2p包下，discover包下的udp主要负责节点发现。以太坊的节点发现又是基于kademlia协议。 kademliakad详细解读 简单说来，kad中，每个节点由特定ID为唯一标识符。并且由ID决定K桶和两节点之间的逻辑距离。 ID由二进制表示，ID长度有几位，K桶数量就为几。K桶的划分满足，第n个K桶的节点前n-1位与自己ID的前n-1位是相同的。如ID长度为3，那">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eth_p2p_udp">
+<meta name="twitter:description" content="p2p-udp在以太坊的p2p包下，discover包下的udp主要负责节点发现。以太坊的节点发现又是基于kademlia协议。 kademliakad详细解读 简单说来，kad中，每个节点由特定ID为唯一标识符。并且由ID决定K桶和两节点之间的逻辑距离。 ID由二进制表示，ID长度有几位，K桶数量就为几。K桶的划分满足，第n个K桶的节点前n-1位与自己ID的前n-1位是相同的。如ID长度为3，那">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>eth_p2p_udp</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/eth-state/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/eth-jsre-api/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&text=eth_p2p_udp"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&is_video=false&description=eth_p2p_udp"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth_p2p_udp&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&name=eth_p2p_udp&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#p2p-udp"><span class="toc-number">1.</span> <span class="toc-text">p2p-udp</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kademlia"><span class="toc-number">1.0.1.</span> <span class="toc-text">kademlia</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#以太坊的kad"><span class="toc-number">1.0.2.</span> <span class="toc-text">以太坊的kad</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#udp"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">udp</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        eth_p2p_udp
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:54:36.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="p2p-udp"><a href="#p2p-udp" class="headerlink" title="p2p-udp"></a>p2p-udp</h2><p>在以太坊的p2p包下，discover包下的udp主要负责节点发现。以太坊的节点发现又是基于kademlia协议。</p>
+<h4 id="kademlia"><a href="#kademlia" class="headerlink" title="kademlia"></a>kademlia</h4><p><a href="http://www.yeolar.com/note/2010/03/21/kademlia/" target="_blank" rel="noopener">kad详细解读</a></p>
+<p>简单说来，kad中，每个节点由特定ID为唯一标识符。并且由ID决定K桶和两节点之间的逻辑距离。</p>
+<p>ID由二进制表示，ID长度有几位，K桶数量就为几。K桶的划分满足，第n个K桶的节点前n-1位与自己ID的前n-1位是相同的。如ID长度为3，那么K桶数量为3，自己的ID为110，那么自己的K桶划分为前0位相同(0xx）、前1位相同(10x),前2位相同(11x)这样的三个K桶。显然，在这样的分布中，满足0xx的节点就会有很多，但满足11x的节点只有111。然后两个节点之前的逻辑距离为ID的异或值，越相近的节点，异或值越小，越远的节点，异或值越大。</p>
+<p>另外，Kademlia 协议包括四种远程 RPC 操作：PING、STORE、FIND_NODE、FIND_VALUE。这些在上面的链接中都有也更详细。尤其是数据存放需要的基本步骤，都有相应提到。</p>
+<h4 id="以太坊的kad"><a href="#以太坊的kad" class="headerlink" title="以太坊的kad"></a>以太坊的kad</h4><p>以太坊的kad与上面标准的kad略有不同。</p>
+<p>先撸代码吧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bucketSize      = 16 // Kademlia bucket size</span><br><span class="line">// We keep buckets for the upper 1/15 of distances because</span><br><span class="line">// it&apos;s very unlikely we&apos;ll ever encounter a node that&apos;s closer.</span><br><span class="line">hashBits          = len(common.Hash&#123;&#125;) * 8</span><br><span class="line">nBuckets          = hashBits / 15       // Number of buckets</span><br><span class="line">bucketMinDistance = hashBits - nBuckets // Log distance of closest bucket</span><br></pre></td></tr></table></figure>
+
+<p>k桶数量nBuckets，（定为ID长度256(hash长度32byte * 8bit/byte)）/ 15。</p>
+<p>k桶大小bucketSize，即每个k桶中的节点最大数量。</p>
+<p>节点ID的计算方式(由公钥生成)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//encPubkey取hash</span><br><span class="line">func (e encPubkey) id() enode.ID &#123;</span><br><span class="line">	return enode.ID(crypto.Keccak256Hash(e[:]))</span><br><span class="line">&#125;</span><br><span class="line">//pubkey -&gt; encpubkey</span><br><span class="line">func encodePubkey(key *ecdsa.PublicKey) encPubkey &#123;</span><br><span class="line">	var e encPubkey</span><br><span class="line">	math.ReadBits(key.X, e[:len(e)/2])</span><br><span class="line">	math.ReadBits(key.Y, e[len(e)/2:])</span><br><span class="line">	return e</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>桶的基本结构</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type Table struct &#123;</span><br><span class="line">	mutex   sync.Mutex        // protects buckets, bucket content, nursery, rand</span><br><span class="line">	buckets [nBuckets]*bucket // index of known nodes by distance</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// bucket contains nodes, ordered by their last activity. the entry</span><br><span class="line">// that was most recently active is the first element in entries.</span><br><span class="line">type bucket struct &#123;</span><br><span class="line">   entries      []*node // live entries, sorted by time of last contact</span><br><span class="line">   replacements []*node // recently seen nodes to be used if revalidation fails</span><br><span class="line">   ips          netutil.DistinctNetSet</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>buckets是所有桶，是一个定长数组，其中，(0&lt;index&lt;nBuckets)的index代表index桶。然后节点的id经过计算映射到某个桶。桶里的节点们又是一个数组，entries数组中为优先可用的节点，他们按上一次联系的时间排序，最最近联系的节点排在数组的最前面。如果entries中某节点在revalidation时失败了，会从replacements中找出某个来代替..</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//增。如果对应的桶b, b.entries的长度没超过最大数量的话，就增加到entries中，否则增加到replacements中</span><br><span class="line">func (tab *Table) add(n *node) &#123;</span><br><span class="line">   if n.ID() == tab.self.ID() &#123;</span><br><span class="line">      return</span><br><span class="line">   &#125;</span><br><span class="line">   tab.mutex.Lock()</span><br><span class="line">   defer tab.mutex.Unlock()</span><br><span class="line">   b := tab.bucket(n.ID())</span><br><span class="line">   if !tab.bumpOrAdd(b, n) &#123;</span><br><span class="line">      // Node is not in table. Add it to the replacement list.</span><br><span class="line">      tab.addReplacement(b, n)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//删，找到node对应的桶，然后从桶中把节点删除了</span><br><span class="line">func (tab *Table) delete(node *node) &#123;</span><br><span class="line">	tab.mutex.Lock()</span><br><span class="line">	defer tab.mutex.Unlock()</span><br><span class="line"></span><br><span class="line">	tab.deleteInBucket(tab.bucket(node.ID()), node)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//查，查呢是返回所有桶中距离target最近的nresults个节点</span><br><span class="line">func (tab *Table) closest(target enode.ID, nresults int) *nodesByDistance &#123;</span><br><span class="line">	// This is a very wasteful way to find the closest nodes but</span><br><span class="line">	// obviously correct. I believe that tree-based buckets would make</span><br><span class="line">	// this easier to implement efficiently.</span><br><span class="line">	close := &amp;nodesByDistance&#123;target: target&#125;</span><br><span class="line">	for _, b := range &amp;tab.buckets &#123;</span><br><span class="line">		for _, n := range b.entries &#123;</span><br><span class="line">			close.push(n, nresults)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return close</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>主线逻辑操作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">func (tab *Table) loop() &#123;</span><br><span class="line">  ...</span><br><span class="line">  loop:</span><br><span class="line">	for &#123;</span><br><span class="line">		select &#123;</span><br><span class="line">		case &lt;-refresh.C:  //定时刷新，</span><br><span class="line">			tab.seedRand() //更新随机种子</span><br><span class="line">			if refreshDone == nil &#123;</span><br><span class="line">				refreshDone = make(chan struct&#123;&#125;)</span><br><span class="line">				go tab.doRefresh(refreshDone)  //进行刷新，刷新完成往refreshDone通道中通知</span><br><span class="line">			&#125;</span><br><span class="line">		case req := &lt;-tab.refreshReq: //上层请求刷新，上层有可能需要知道刷新完成时间，故req通道用于通知刷新完成</span><br><span class="line">			waiting = append(waiting, req)  //记录下所有的刷新请求通道</span><br><span class="line">			if refreshDone == nil &#123;</span><br><span class="line">				refreshDone = make(chan struct&#123;&#125;)</span><br><span class="line">				go tab.doRefresh(refreshDone)</span><br><span class="line">			&#125;</span><br><span class="line">		case &lt;-refreshDone:  //刷新完成后，关闭所有请求通道，通知上层已刷新完成</span><br><span class="line">			for _, ch := range waiting &#123;</span><br><span class="line">				close(ch)</span><br><span class="line">			&#125;</span><br><span class="line">			waiting, refreshDone = nil, nil //清空waiting数组，和refreshDone通道</span><br><span class="line">		case &lt;-revalidate.C:</span><br><span class="line">			go tab.doRevalidate(revalidateDone)</span><br><span class="line">		case &lt;-revalidateDone:</span><br><span class="line">			revalidate.Reset(tab.nextRevalidateTime())</span><br><span class="line">		case &lt;-copyNodes.C:</span><br><span class="line">			go tab.copyLiveNodes()</span><br><span class="line">		case &lt;-tab.closeReq:</span><br><span class="line">			break loop</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//刷新方法</span><br><span class="line">func (tab *Table) doRefresh(done chan struct&#123;&#125;) &#123;</span><br><span class="line">  defer close(done)</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  //通过自己为target去找neighbor，前提是需要自己有secp256k1字段，v4版本的node里是含有secp256k1的，即v4版本是满足这个if条件。load后key中的值为node的公钥</span><br><span class="line">  var key ecdsa.PublicKey</span><br><span class="line">  if err := tab.self.Load((*enode.Secp256k1)(&amp;key)); err == nil &#123;</span><br><span class="line">	tab.lookup(encodePubkey(&amp;key), false)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  //⭐️通过随机target去找neighbor。这里的疑问是注释中提到为什么不使用kad本来刷新的方式是因为findnode taget是512bit,这里为什么是512bit? (是因为findnode target是公钥，公钥长度是64byte/512bit) 后半句说不容易生成一个属于所选桶的sha3前镜像，kad本来刷新的方式是选择最近最少使用的桶，所以这里的意思是知道桶了，但是node的ID是经过hash生成的，hash的范围确定，但倒回去找ID就很复杂的意思吗</span><br><span class="line">// The Kademlia paper specifies that the bucket refresh should</span><br><span class="line">// perform a lookup in the least recently used bucket. We cannot</span><br><span class="line">// adhere to this because the findnode target is a 512bit value</span><br><span class="line">// (not hash-sized) and it is not easily possible to generate a</span><br><span class="line">// sha3 preimage that falls into a chosen bucket.</span><br><span class="line">// We perform a few lookups with a random target instead.</span><br><span class="line">  for i := 0; i &lt; 3; i++ &#123;</span><br><span class="line">	 var target encPubkey</span><br><span class="line">	 crand.Read(target[:])</span><br><span class="line">	 tab.lookup(target, false)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">//下面看一下关键方法lookup</span><br><span class="line">func (tab *Table) lookup(targetKey encPubkey, refreshIfEmpty bool) []*node &#123;</span><br><span class="line">	var (</span><br><span class="line">		target         = enode.ID(crypto.Keccak256Hash(targetKey[:]))  //targetid：由公钥进行hash得来</span><br><span class="line">		asked          = make(map[enode.ID]bool)  //保存询问过的节点，以免重复询问</span><br><span class="line">		seen           = make(map[enode.ID]bool)  //保存回复过的节点，防止询问的节点多次回复</span><br><span class="line">		reply          = make(chan []*node, alpha) //节点回复的通道，alpha为并发量，每次三个</span><br><span class="line">		pendingQueries = 0   //待定的查询数量，即询问了 但没回复的数量</span><br><span class="line">		result         *nodesByDistance  //查询结果</span><br><span class="line">	)</span><br><span class="line">	//将自己列为询问过的节点</span><br><span class="line">	asked[tab.self.ID()] = true</span><br><span class="line"></span><br><span class="line">    //将现有的k桶节点们填充到result中</span><br><span class="line">	for &#123;</span><br><span class="line">		tab.mutex.Lock()</span><br><span class="line">		//从自己的所有桶中找出离target最近的bucketSize个节点</span><br><span class="line">		result = tab.closest(target, bucketSize)</span><br><span class="line">		tab.mutex.Unlock()</span><br><span class="line">		//如果桶中有节点或者refreshIfEmpty为false，跳出循环</span><br><span class="line">		if len(result.entries) &gt; 0 || !refreshIfEmpty &#123;</span><br><span class="line">			break</span><br><span class="line">		&#125;</span><br><span class="line">		//如果k桶中无节点，则请求刷新(doRefresh -&gt; 从种子节点中出发..)</span><br><span class="line">		&lt;-tab.refresh()</span><br><span class="line">		//请求一次刷新，将refreshIfEmpty置为false,防止一直无节点，一直在这里循环，相当于这个for循环最多只执行两次</span><br><span class="line">		refreshIfEmpty = false</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	for &#123;</span><br><span class="line">		//向近的节点询问节点，询问过的就不再询问，并且每次询问的节点数&lt;alpha,即每次只询问最近的alpha个节点。之前一直卡在为什么外层要for循环，难道不是每次问的都是相同的吗？还真的不是..要是相同的话，pendingQueries的值就不会++，这个询问for循环就不会再进行了，然后等回答完毕这个方法就完毕了。之所以桶里的前alpha个会不一样，是因为在后面从reply中读出的为问到的节点们，然后添加到本桶里的时候会影响整个排序，result中的应该是最近的就在前面。所以这个就是不断问到新的节点后，不断查询到离自己比较近的节点。到没有最近的节点后，就不再询问。</span><br><span class="line">		for i := 0; i &lt; len(result.entries) &amp;&amp; pendingQueries &lt; alpha; i++ &#123;</span><br><span class="line">			n := result.entries[i]</span><br><span class="line">			if !asked[n.ID()] &#123;</span><br><span class="line">				asked[n.ID()] = true</span><br><span class="line">				pendingQueries++</span><br><span class="line">				//向节点n询问targetKey的节点们</span><br><span class="line">				go tab.findnode(n, targetKey, reply)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		//所有人都回复了，就不再询问了</span><br><span class="line">		if pendingQueries == 0 &#123;</span><br><span class="line">			// we have asked all closest nodes, stop the search</span><br><span class="line">			break</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		//&lt;-reply是最迷惑的，这个是每次从reply中读出一个回复，一个回复为一个节点回复的他的桶节点们，然后range它的桶节点，添加到本桶中</span><br><span class="line">		// wait for the next reply</span><br><span class="line">		for _, n := range &lt;-reply &#123;</span><br><span class="line">			if n != nil &amp;&amp; !seen[n.ID()] &#123;</span><br><span class="line">				seen[n.ID()] = true</span><br><span class="line">				//result.push方法，result中数组的长度为bucketSize，且按离target的距离排序，有点像距离最“近”堆排序..</span><br><span class="line">				result.push(n, bucketSize)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		//有过一次回复，pendingQueries递减</span><br><span class="line">		pendingQueries--</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return result.entries</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">//findnode方法</span><br><span class="line">func (tab *Table) findnode(n *node, targetKey encPubkey, reply chan&lt;- []*node) &#123;</span><br><span class="line">	//从db中读出向n节点查询出错的次数(这个出错次数应该会影响n节点的名誉吧)</span><br><span class="line">	fails := tab.db.FindFails(n.ID())</span><br><span class="line">	//调用上层通信向n节点发出查询消息</span><br><span class="line">	r, err := tab.net.findnode(n.ID(), n.addr(), targetKey)</span><br><span class="line"></span><br><span class="line">	//这里看着是直接就返回了消息和错误..看样子tab.net.findnode是同步的..</span><br><span class="line">	//如果返回错误或者节点数量为0，都视为失败，出错次数fails++并更新db。如果fails次数达到一定，则会从tab中删除这个节点</span><br><span class="line">	if err != nil || len(r) == 0 &#123;</span><br><span class="line">		fails++</span><br><span class="line">		tab.db.UpdateFindFails(n.ID(), fails)</span><br><span class="line">		log.Trace(&quot;Findnode failed&quot;, &quot;id&quot;, n.ID(), &quot;failcount&quot;, fails, &quot;err&quot;, err)</span><br><span class="line">		if fails &gt;= maxFindnodeFailures &#123;</span><br><span class="line">			log.Trace(&quot;Too many findnode failures, dropping&quot;, &quot;id&quot;, n.ID(), &quot;failcount&quot;, fails)</span><br><span class="line">			tab.delete(n)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; else if fails &gt; 0 &#123;</span><br><span class="line">		//如果这次成功了，以前失败过，则可抵消以前的出错次数</span><br><span class="line">		tab.db.UpdateFindFails(n.ID(), fails-1)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 尽可能添加多个node,尽管他们之中可能有些不在线，但是我们会在revalidation时删除他们</span><br><span class="line">	for _, n := range r &#123;</span><br><span class="line">		tab.add(n)</span><br><span class="line">	&#125;</span><br><span class="line">	//回复成功</span><br><span class="line">	reply &lt;- r</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>revalidation的代码就不粘贴了，做的事情是，随机一个桶，找出这个桶里最后一个节点，然后向这个节点发出ping，如果这个节点回复了，就把他移到桶的最前方。如果没回复，就这个桶里的当前情况要么删除它要么替换它。</p>
+<p>⭐️其实还是有疑问的，就是虽然桶的index是确定的，但target是随机的，那么每次target随机，各个桶里节点跟target的距离就会不一样，各个桶里的节点是不是会变化很大。</p>
+<p>解: 因为桶里存放的节点的逻辑距离是固定的，又因为每个桶的大小（16）是固定的，只有当桶中有空位时，节点才会被添加进桶。所以我的结论是，桶里节点的变化不会很大，顺序可能会经常变，随机目标是为了查找新的距离自身近的节点（即为了查找前大半部分桶中的节点），再就是为了保持桶的活性（即桶后小半部分桶中的节点）。</p>
+<h5 id="udp"><a href="#udp" class="headerlink" title="udp"></a>udp</h5><p>kad使用udp进行通信。作为tab.net。好玩的是上面的tab.net.findnode如何实现同步的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">func (t *udp) findnode(toid enode.ID, toaddr *net.UDPAddr, target encPubkey) ([]*node, error) &#123;</span><br><span class="line">   // If we haven&apos;t seen a ping from the destination node for a while, it won&apos;t remember</span><br><span class="line">   // our endpoint proof and reject findnode. Solicit a ping first.</span><br><span class="line">   if time.Since(t.db.LastPingReceived(toid)) &gt; bondExpiration &#123;</span><br><span class="line">      t.ping(toid, toaddr)</span><br><span class="line">      t.waitping(toid)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   nodes := make([]*node, 0, bucketSize)</span><br><span class="line">   nreceived := 0</span><br><span class="line">   errc := t.pending(toid, neighborsPacket, func(r interface&#123;&#125;) bool &#123;</span><br><span class="line">      reply := r.(*neighbors)</span><br><span class="line">      for _, rn := range reply.Nodes &#123;</span><br><span class="line">         nreceived++</span><br><span class="line">         n, err := t.nodeFromRPC(toaddr, rn)</span><br><span class="line">         if err != nil &#123;</span><br><span class="line">            log.Trace(&quot;Invalid neighbor node received&quot;, &quot;ip&quot;, rn.IP, &quot;addr&quot;, toaddr, &quot;err&quot;, err)</span><br><span class="line">            continue</span><br><span class="line">         &#125;</span><br><span class="line">         nodes = append(nodes, n)</span><br><span class="line">      &#125;</span><br><span class="line">      return nreceived &gt;= bucketSize</span><br><span class="line">   &#125;)</span><br><span class="line">   t.send(toaddr, findnodePacket, &amp;findnode&#123;</span><br><span class="line">      Target:     target,</span><br><span class="line">      Expiration: uint64(time.Now().Add(expiration).Unix()),</span><br><span class="line">   &#125;)</span><br><span class="line">   return nodes, &lt;-errc</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面可以看到findnode是发出了一个findnode包，然后等回复会回调pending的callback。但这个方法确实是同步的，就是说返回的话，就说明收到了回复，callback也回调了。是怎么做到的呢。真的很好玩，利用了errc通道。就是最后一句<code>return nodes, &lt;-errc</code>，只有errc通道读出消息来，才会返回数据，这也是callback设计的精妙之处吧。这么设计真的是精妙，get到了。</p>
+<p>udp处理的工作主要是进行通信。通信类型有两组，(发ping - 回pong)、(发findnode - 回neighbors)</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#p2p-udp"><span class="toc-number">1.</span> <span class="toc-text">p2p-udp</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kademlia"><span class="toc-number">1.0.1.</span> <span class="toc-text">kademlia</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#以太坊的kad"><span class="toc-number">1.0.2.</span> <span class="toc-text">以太坊的kad</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#udp"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">udp</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&text=eth_p2p_udp"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&is_video=false&description=eth_p2p_udp"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth_p2p_udp&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&title=eth_p2p_udp"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth-p2p-udp/&name=eth_p2p_udp&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

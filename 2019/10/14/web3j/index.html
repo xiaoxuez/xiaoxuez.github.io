@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="web3j的使用特性 通过Java类型的JSON-RPC与Ethereum客户端进行交互 支持所有的JSON-RPC方法类型 支持所有Geth和Parity方法，用于管理账户和签署交易 同步或异步的发送客户端请求 可从Solidity ABI文件自动生成Java只能合约功能包  重点是交互的手段是JSON-RPC！ web3j可以监听事件、发送交易等等，发送交易时上链后方才返回结果。即内部也有监听">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web3j">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/web3j/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="web3j的使用特性 通过Java类型的JSON-RPC与Ethereum客户端进行交互 支持所有的JSON-RPC方法类型 支持所有Geth和Parity方法，用于管理账户和签署交易 同步或异步的发送客户端请求 可从Solidity ABI文件自动生成Java只能合约功能包  重点是交互的手段是JSON-RPC！ web3j可以监听事件、发送交易等等，发送交易时上链后方才返回结果。即内部也有监听">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web3j">
+<meta name="twitter:description" content="web3j的使用特性 通过Java类型的JSON-RPC与Ethereum客户端进行交互 支持所有的JSON-RPC方法类型 支持所有Geth和Parity方法，用于管理账户和签署交易 同步或异步的发送客户端请求 可从Solidity ABI文件自动生成Java只能合约功能包  重点是交互的手段是JSON-RPC！ web3j可以监听事件、发送交易等等，发送交易时上链后方才返回结果。即内部也有监听">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>web3j</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/fabric/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/eth-state/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/web3j/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/web3j/&text=web3j"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/web3j/&is_video=false&description=web3j"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web3j&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/web3j/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/web3j/&name=web3j&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#web3j的使用"><span class="toc-number">1.</span> <span class="toc-text">web3j的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特性"><span class="toc-number">1.0.1.</span> <span class="toc-text">特性</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        web3j
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:55:36.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="web3j的使用"><a href="#web3j的使用" class="headerlink" title="web3j的使用"></a>web3j的使用</h2><h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><ul>
+<li>通过Java类型的JSON-RPC与Ethereum客户端进行交互</li>
+<li>支持所有的JSON-RPC方法类型</li>
+<li>支持所有Geth和Parity方法，用于管理账户和签署交易</li>
+<li>同步或异步的发送客户端请求</li>
+<li>可从Solidity ABI文件自动生成Java只能合约功能包</li>
+</ul>
+<p>重点是交互的手段是JSON-RPC！</p>
+<p>web3j可以监听事件、发送交易等等，发送交易时上链后方才返回结果。即内部也有监听事件。一直很好奇监听事件是怎么做的，实时推送？</p>
+<p>简单翻了下源码，并不是推送，而是轮询。</p>
+<p>因为是从智能合约接手入web3j，故从合约生成的java类入手，发现需要上链的方法返回的都是TransactionReceipt类型，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public RemoteCall&lt;TransactionReceipt&gt; addUser(byte[] name, String addr, byte[] pk_pre, byte[] pk_bk) &#123;</span><br><span class="line">    final Function function = new Function(</span><br><span class="line">            FUNC_ADDUSER,</span><br><span class="line">            Arrays.&lt;Type&gt;asList(new org.web3j.abi.datatypes.generated.Bytes32(name),</span><br><span class="line">                    new org.web3j.abi.datatypes.Address(addr),</span><br><span class="line">                    new org.web3j.abi.datatypes.generated.Bytes32(pk_pre),</span><br><span class="line">                    new org.web3j.abi.datatypes.generated.Bytes32(pk_bk)),</span><br><span class="line">            Collections.&lt;TypeReference&lt;?&gt;&gt;emptyList());</span><br><span class="line">    return executeRemoteCallTransaction(function);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从executeRemoteCallTransaction入手，跟踪进去。看到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">TransactionReceipt executeTransaction(String data, BigInteger weiValue, String funcName) throws TransactionException, IOException &#123;</span><br><span class="line">    TransactionReceipt receipt = this.send(this.contractAddress, data, weiValue, this.gasProvider.getGasPrice(funcName), this.gasProvider.getGasLimit(funcName));</span><br><span class="line">    if (!receipt.isStatusOK()) &#123;</span><br><span class="line">        throw new TransactionException(String.format(&quot;Transaction has failed with status: %s. Gas used: %d. (not-enough gas?)&quot;, receipt.getStatus(), receipt.getGasUsed()));</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return receipt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原来交易失败，总是抛出not-enough gas异常是在这里抛出的，根据返回receipt的status判断。</p>
+<p>再跟着send方法进去，终于进入到transactionManager，离真相很近了。</p>
+<p>然后找到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protected TransactionReceipt executeTransaction(BigInteger gasPrice, BigInteger gasLimit, String to, String data, BigInteger value) throws IOException, TransactionException &#123;</span><br><span class="line">     EthSendTransaction ethSendTransaction = this.sendTransaction(gasPrice, gasLimit, to, data, value);</span><br><span class="line">     return this.processResponse(ethSendTransaction);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>processResponse肯定就是等待返回结果的地方了。然后内部是调用this.transactionReceiptProcessor.waitForTransactionReceipt，再进去就是个抽象类了。找了一下，在TransactionManager中，实现的具体类是PollingTransactionReceiptProcessor。所以..答案就在这里了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">private TransactionReceipt getTransactionReceipt(String transactionHash, long sleepDuration, int attempts) throws IOException, TransactionException &#123;</span><br><span class="line">       Optional&lt;TransactionReceipt&gt; receiptOptional = this.sendTransactionReceiptRequest(transactionHash);</span><br><span class="line"></span><br><span class="line">       for(int i = 0; i &lt; attempts; ++i) &#123;</span><br><span class="line">           if (receiptOptional.isPresent()) &#123;</span><br><span class="line">               return (TransactionReceipt)receiptOptional.get();</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           try &#123;</span><br><span class="line">               Thread.sleep(sleepDuration);</span><br><span class="line">           &#125; catch (InterruptedException var8) &#123;</span><br><span class="line">               throw new TransactionException(var8);</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           receiptOptional = this.sendTransactionReceiptRequest(transactionHash);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       throw new TransactionException(&quot;Transaction receipt was not generated after &quot; + sleepDuration * (long)attempts / 1000L + &quot; seconds for transaction: &quot; + transactionHash);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这里可以看到，是每隔sleepDuration就轮询查询一次。sleepDuration的值默认为15s, 查询次数默认最多为40。</strong></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#web3j的使用"><span class="toc-number">1.</span> <span class="toc-text">web3j的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特性"><span class="toc-number">1.0.1.</span> <span class="toc-text">特性</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/web3j/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/web3j/&text=web3j"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/web3j/&is_video=false&description=web3j"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=web3j&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/web3j/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/web3j/&title=web3j"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/web3j/&name=web3j&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

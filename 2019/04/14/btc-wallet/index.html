@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="比特币钱包gocoin学习笔记 https://github.com/piotrnar/gocoin Gocoin is a full Bitcoin solution written in Go language (golang). The software architecture is focused on maximum performance of the node and cold s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="btc_wallet">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/04/14/btc-wallet/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="比特币钱包gocoin学习笔记 https://github.com/piotrnar/gocoin Gocoin is a full Bitcoin solution written in Go language (golang). The software architecture is focused on maximum performance of the node and cold s">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="btc_wallet">
+<meta name="twitter:description" content="比特币钱包gocoin学习笔记 https://github.com/piotrnar/gocoin Gocoin is a full Bitcoin solution written in Go language (golang). The software architecture is focused on maximum performance of the node and cold s">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>btc_wallet</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/04/14/fabric-pbft/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/04/14/btc/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/14/btc-wallet/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&text=btc_wallet"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&is_video=false&description=btc_wallet"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=btc_wallet&body=Check out this article: https://github.com/xiaoxuez/2019/04/14/btc-wallet/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&name=btc_wallet&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#比特币钱包gocoin学习笔记"><span class="toc-number">1.</span> <span class="toc-text">比特币钱包gocoin学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#blockdb"><span class="toc-number">1.1.</span> <span class="toc-text">blockdb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unspent-db"><span class="toc-number">1.2.</span> <span class="toc-text">unspent_db</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wallet-db-go"><span class="toc-number">1.3.</span> <span class="toc-text">wallet/db.go</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分叉处理"><span class="toc-number">1.4.</span> <span class="toc-text">分叉处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于地址"><span class="toc-number">1.5.</span> <span class="toc-text">关于地址</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        btc_wallet
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-14T14:41:55.000Z" itemprop="datePublished">2019-04-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/btc/">btc</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="比特币钱包gocoin学习笔记"><a href="#比特币钱包gocoin学习笔记" class="headerlink" title="比特币钱包gocoin学习笔记"></a>比特币钱包gocoin学习笔记</h3><blockquote>
+<p><a href="https://github.com/piotrnar/gocoin">https://github.com/piotrnar/gocoin</a></p>
+<p><strong>Gocoin</strong> is a full <strong>Bitcoin</strong> solution written in Go language (golang).</p>
+<p>The software architecture is focused on maximum performance of the node and cold storage security of the wallet.</p>
+<p>The <strong>wallet</strong> is designed to be used offline. It is deterministic and password seeded. As long as you remember the password, you do not need any backups ever. Wallet can be used without the client, but with the provided <strong>balio</strong> tool instead.</p>
+<p>The <strong>client</strong> (p2p node) is an application independent from the <strong>wallet</strong>. It keeps the entire UTXO set in RAM, providing the best block processing performance on the market.</p>
+</blockquote>
+<h4 id="blockdb"><a href="#blockdb" class="headerlink" title="blockdb"></a>blockdb</h4><ul>
+<li>cache, 缓存池，新产生block，添加入缓存池，当缓存池满了之后，踢掉最老使用的block</li>
+<li>写缓存channel，当channel满了之后，flush channel 到db文件中</li>
+</ul>
+<h4 id="unspent-db"><a href="#unspent-db" class="headerlink" title="unspent_db"></a>unspent_db</h4><p>如介绍中提到的，会将所有的utxo都存在内存里。</p>
+<ul>
+<li>map, key为txid, v为txid下的所有的outs。问题是key的长度为8？txid长度为32，只取前8位？不会存在冲突吗</li>
+<li>update为整体修改，即txid下所有的outs。</li>
+<li>存于文件，程序启动时从文件读取，必要时存入文件(如程序退出时)</li>
+</ul>
+<h4 id="wallet-db-go"><a href="#wallet-db-go" class="headerlink" title="wallet/db.go"></a>wallet/db.go</h4><p>账户系统，addr - utxo - balance</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">	AllBalancesP2KH, AllBalancesP2SH, AllBalancesP2WKH map[[20]byte]*OneAllAddrBal</span><br><span class="line">	AllBalancesP2WSH                                   map[[32]byte]*OneAllAddrBal</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">type OneAllAddrInp [utxo.UtxoIdxLen + 4]byte</span><br><span class="line"></span><br><span class="line">type OneAllAddrBal struct &#123;</span><br><span class="line">	Value   uint64 // Highest bit of it means P2SH</span><br><span class="line">	unsp    []OneAllAddrInp</span><br><span class="line">	unspMap map[OneAllAddrInp]bool</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看起来主要是存于内存中，map的key为addr，OneAllAddrInp为txid的前8位(unspend_db中map的key)+n(第几个out)</p>
+<p>其中，根据out中script可以判断是什么地址的签名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">if out.IsP2KH() &#123;</span><br><span class="line">		copy(uidx[:], out.PKScr[3:23])</span><br><span class="line">		rec = AllBalancesP2KH[uidx]</span><br><span class="line">		if rec == nil &#123;</span><br><span class="line">			rec = &amp;OneAllAddrBal&#123;&#125;</span><br><span class="line">			AllBalancesP2KH[uidx] = rec</span><br><span class="line">		&#125;</span><br><span class="line">&#125; else if out.IsP2SH() &#123;</span><br><span class="line">	copy(uidx[:], out.PKScr[2:22])</span><br><span class="line">	rec = AllBalancesP2SH[uidx]</span><br><span class="line">	if rec == nil &#123;</span><br><span class="line">		rec = &amp;OneAllAddrBal&#123;&#125;</span><br><span class="line">		AllBalancesP2SH[uidx] = rec</span><br><span class="line">	&#125;</span><br><span class="line">&#125; else if out.IsP2WPKH() &#123;</span><br><span class="line">	copy(uidx[:], out.PKScr[2:22])</span><br><span class="line">	rec = AllBalancesP2WKH[uidx]</span><br><span class="line">	if rec == nil &#123;</span><br><span class="line">		rec = &amp;OneAllAddrBal&#123;&#125;</span><br><span class="line">		AllBalancesP2WKH[uidx] = rec</span><br><span class="line">	&#125;</span><br><span class="line">&#125; else if out.IsP2WSH() &#123;</span><br><span class="line">	var uidx [32]byte</span><br><span class="line">	copy(uidx[:], out.PKScr[2:34])</span><br><span class="line">	rec = AllBalancesP2WSH[uidx]</span><br><span class="line">	if rec == nil &#123;</span><br><span class="line">		rec = &amp;OneAllAddrBal&#123;&#125;</span><br><span class="line">		AllBalancesP2WSH[uidx] = rec</span><br><span class="line">	&#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	continue</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func (out *UtxoTxOut) IsP2KH() bool &#123;</span><br><span class="line">	return len(out.PKScr) == 25 &amp;&amp; out.PKScr[0] == 0x76 &amp;&amp; out.PKScr[1] == 0xa9 &amp;&amp;</span><br><span class="line">		out.PKScr[2] == 0x14 &amp;&amp; out.PKScr[23] == 0x88 &amp;&amp; out.PKScr[24] == 0xac</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (r *UtxoTxOut) IsP2SH() bool &#123;</span><br><span class="line">	return len(r.PKScr) == 23 &amp;&amp; r.PKScr[0] == 0xa9 &amp;&amp; r.PKScr[1] == 0x14 &amp;&amp; r.PKScr[22] == 0x87</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (r *UtxoTxOut) IsP2WPKH() bool &#123;</span><br><span class="line">	return len(r.PKScr) == 22 &amp;&amp; r.PKScr[0] == 0 &amp;&amp; r.PKScr[1] == 20</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (r *UtxoTxOut) IsP2WSH() bool &#123;</span><br><span class="line">	return len(r.PKScr) == 34 &amp;&amp; r.PKScr[0] == 0 &amp;&amp; r.PKScr[1] == 32</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="分叉处理"><a href="#分叉处理" class="headerlink" title="分叉处理"></a>分叉处理</h4><p>首先，收到来自peer的区块都会存下来，只是使用trust字段来表面这是主链上的块还是分叉链上的块。在保存到磁盘时同样会保存trust字段。</p>
+<p>其次，如果出现分叉了，会统计两条链的算力(这里为什么不是统计区块高度而是难度值让我有点费解)，然后如果分叉链的算力大于主链，会进行主链重置。跟eth的处理类似，首先找到共同的主块(分叉开始的地方)，然后废除的一方进行utxo的undo, 块的删除，然后新链进行utxo的doing。</p>
+<p>代码大致位于lib/chain/下，如blockdb.go,chain_accept.go等</p>
+<p>分叉算力统计算法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// Returns true if b1 has more POW than b2</span><br><span class="line">func (b1 *BlockTreeNode) MorePOW(b2 *BlockTreeNode) bool &#123;</span><br><span class="line">	var b1sum, b2sum float64</span><br><span class="line">	for b1.Height &gt; b2.Height &#123;</span><br><span class="line">		b1sum += btc.GetDifficulty(b1.Bits())</span><br><span class="line">		b1 = b1.Parent</span><br><span class="line">	&#125;</span><br><span class="line">	for b2.Height &gt; b1.Height &#123;</span><br><span class="line">		b2sum += btc.GetDifficulty(b2.Bits())</span><br><span class="line">		b2 = b2.Parent</span><br><span class="line">	&#125;</span><br><span class="line">	for b1 != b2 &#123;</span><br><span class="line">		b1sum += btc.GetDifficulty(b1.Bits())</span><br><span class="line">		b2sum += btc.GetDifficulty(b2.Bits())</span><br><span class="line">		b1 = b1.Parent</span><br><span class="line">		b2 = b2.Parent</span><br><span class="line">	&#125;</span><br><span class="line">	return b1sum &gt; b2sum</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关于地址"><a href="#关于地址" class="headerlink" title="关于地址"></a>关于地址</h4><p>之前想通过input中的script直接算出地址，是不可行的。</p>
+<p>普通的<em>P2PKH</em>的input中签名包含两部分pk+sig，所以拿到是可以通过pk解析出地址的。</p>
+<p>但P2SH script的签名是不包含pk的，所以是解析不到的。</p>
+<p>普遍而言，还是在out中找好了</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#比特币钱包gocoin学习笔记"><span class="toc-number">1.</span> <span class="toc-text">比特币钱包gocoin学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#blockdb"><span class="toc-number">1.1.</span> <span class="toc-text">blockdb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unspent-db"><span class="toc-number">1.2.</span> <span class="toc-text">unspent_db</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wallet-db-go"><span class="toc-number">1.3.</span> <span class="toc-text">wallet/db.go</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分叉处理"><span class="toc-number">1.4.</span> <span class="toc-text">分叉处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于地址"><span class="toc-number">1.5.</span> <span class="toc-text">关于地址</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/14/btc-wallet/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&text=btc_wallet"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&is_video=false&description=btc_wallet"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=btc_wallet&body=Check out this article: https://github.com/xiaoxuez/2019/04/14/btc-wallet/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&title=btc_wallet"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/14/btc-wallet/&name=btc_wallet&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

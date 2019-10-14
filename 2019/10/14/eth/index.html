@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="以太坊基本认识和理解笔记基本架构图图….. 核心模块: 基础结构，共识算法，网络模块，其它模块。这几个模块的内容，跟比特币的模块有点像啊。 合约层是使用Solidity语言编写的智能合约，其运行在EVM以太坊虚拟机上，并会通过HTTP-RPC或JSON-RPC调用和以太坊的核心层交互。 以太坊架构的最上层是DApp应用层，它通过Web3.js这种JavaScript API和智能合约层进行交互。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eth">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/eth/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="以太坊基本认识和理解笔记基本架构图图….. 核心模块: 基础结构，共识算法，网络模块，其它模块。这几个模块的内容，跟比特币的模块有点像啊。 合约层是使用Solidity语言编写的智能合约，其运行在EVM以太坊虚拟机上，并会通过HTTP-RPC或JSON-RPC调用和以太坊的核心层交互。 以太坊架构的最上层是DApp应用层，它通过Web3.js这种JavaScript API和智能合约层进行交互。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eth">
+<meta name="twitter:description" content="以太坊基本认识和理解笔记基本架构图图….. 核心模块: 基础结构，共识算法，网络模块，其它模块。这几个模块的内容，跟比特币的模块有点像啊。 合约层是使用Solidity语言编写的智能合约，其运行在EVM以太坊虚拟机上，并会通过HTTP-RPC或JSON-RPC调用和以太坊的核心层交互。 以太坊架构的最上层是DApp应用层，它通过Web3.js这种JavaScript API和智能合约层进行交互。">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>eth</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/eth-contract/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/eth-build/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth/&text=eth"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth/&is_video=false&description=eth"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth/&name=eth&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以太坊基本认识和理解笔记"><span class="toc-number">1.</span> <span class="toc-text">以太坊基本认识和理解笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本架构图"><span class="toc-number">1.0.1.</span> <span class="toc-text">基本架构图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本概念"><span class="toc-number">1.0.2.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ether"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">ether</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#gas"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">gas</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#账户"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">账户</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#消息和交易"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">消息和交易</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#状态转换"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">状态转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#代码执行"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">代码执行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#区块链和采矿"><span class="toc-number">1.0.2.7.</span> <span class="toc-text">区块链和采矿</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#应用"><span class="toc-number">1.0.2.8.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#令牌系统"><span class="toc-number">1.0.2.8.1.</span> <span class="toc-text">令牌系统</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#金融衍生产品和稳定价值货币"><span class="toc-number">1.0.2.8.2.</span> <span class="toc-text">金融衍生产品和稳定价值货币</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#身份和声誉系统"><span class="toc-number">1.0.2.8.3.</span> <span class="toc-text">身份和声誉系统</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分散的文件存储"><span class="toc-number">1.0.2.8.4.</span> <span class="toc-text">分散的文件存储</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分散的自治组织"><span class="toc-number">1.0.2.8.5.</span> <span class="toc-text">分散的自治组织</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        eth
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:50:23.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="以太坊基本认识和理解笔记"><a href="#以太坊基本认识和理解笔记" class="headerlink" title="以太坊基本认识和理解笔记"></a>以太坊基本认识和理解笔记</h2><h4 id="基本架构图"><a href="#基本架构图" class="headerlink" title="基本架构图"></a>基本架构图</h4><p>图…..</p>
+<p>核心模块: 基础结构，共识算法，网络模块，其它模块。这几个模块的内容，跟比特币的模块有点像啊。</p>
+<p>合约层是使用Solidity语言编写的智能合约，其运行在EVM以太坊虚拟机上，并会通过HTTP-RPC或JSON-RPC调用和以太坊的核心层交互。</p>
+<p>以太坊架构的最上层是DApp应用层，它通过Web3.js这种JavaScript API和智能合约层进行交互。</p>
+<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><h5 id="ether"><a href="#ether" class="headerlink" title="ether"></a>ether</h5><p>ether为以太坊中的内置货币。例如，矿工挖出新矿时，奖励的便是ether。它的主要目的是提供主要流动性层，以实现各种数字资产之间的有效交换，更重要的是提供支付交易费用的机制。</p>
+<ul>
+<li><p>首先，谁需要ether呢？</p>
+<ol>
+<li>打算开发使用ethereum区块链的应用的开发者。</li>
+<li>想要在ethereum区块链上访问并与智能合同交互的用户。</li>
+</ol>
+</li>
+<li><p>其次，ether与bitcoin的关系是什么呢？</p>
+<blockquote>
+<p>Ethereum would never be possible without bitcoin—both the technology and the currency—and we see ourselves not as a competing currency but as complementary within the digital ecosystem. Ether is to be treated as “crypto-fuel”, a token whose purpose is to pay for computation, and is not intended to be used as or considered a currency, asset, share or anything else.</p>
+</blockquote>
+</li>
+</ul>
+<p>​         意思呢，就是二者并非竞争关系，而是互相补充的关系。ether的目的是计算付费，并不打算用作货币，资产，股票或其他任何东西。在一些以太坊的生态中，ether与bitcoin是可以进行价值兑换的。</p>
+<h5 id="gas"><a href="#gas" class="headerlink" title="gas"></a>gas</h5><p>gas为计算花费的基本单位。通常，一步的计算花费1gas，但是一些操作耗费更高的气体量，因为它们在计算上更昂贵，或者增加了作为状态的一部分必须存储的数据量。交易数据中的每个字节的费用5gas,收费系统的目的是要求攻击者按比例支付她们消费的每种资源，包括计算量，带宽和存储量。</p>
+<p>一笔交易，除了需要包含接收方，发件人签名，ether的数量，之外，还需要包含数据字段（可选），一个STARTGAS值，表示允许执行事务执行的最大计算步骤数，和一个GASPRICE值，即为每gas的花费的ether。</p>
+<p>举个例子，现有一笔交易，内容为发送的ether为10，STARTGAS为2000，GASPRICE为0.001，和一个64bytes的数据，那么计算允许的所需要的ether为单价*数量=2000 * 0.001=2。 比较详细的交易如下</p>
+<ol>
+<li><p>检查交易是否有效</p>
+</li>
+<li><p>检查发送方账户是否至少含有2000*0.001=2 ether, 如果有，则从发送方账户中减去2 ether</p>
+</li>
+<li><p>总共有2000gas, 假设交易长度为170bytes, 每bytes 5gas,那么减去850，剩余1150gas</p>
+</li>
+<li><p>从发送方账户余额中减去发送的10 ether, 并添加到合约账户中</p>
+</li>
+<li><p>运行代码进行计算，假设计算过程消耗了187gas, 那么剩余1150-187=963gas</p>
+</li>
+<li><p>将963gas转换为ether, 此项交易中单价是0.001，那么返回到发送方的ether为0.963</p>
+</li>
+</ol>
+<h5 id="账户"><a href="#账户" class="headerlink" title="账户"></a>账户</h5><p> 在以太坊中，状态由账户对象组成，每个账户都有一个20byte的地址，状态转换是账户之间价值和信息的直接转移。以太坊账户包含四个字段：</p>
+<ul>
+<li>nonce, 用来确保每笔交易柜台一次只能处理</li>
+<li>账户当前的ether余额</li>
+<li>账户的合约代码，如果存在的话</li>
+<li>账户的存储空间，默认为空</li>
+</ul>
+<p>通常，有两种账户，外部的个人拥有的账户，使用私钥进行控制； 以及合约账户，被合约代码控制。个人账户能够发送消息以及创建并签署交易。合约账户收到其激活码可读写内存，发送消息以及创建新的合约</p>
+<h5 id="消息和交易"><a href="#消息和交易" class="headerlink" title="消息和交易"></a>消息和交易</h5><p>交易需要包含以下内容：</p>
+<ul>
+<li>消息的收件人</li>
+<li>识别发件人的签名</li>
+<li>发送的ether数量</li>
+<li>可选的数据字段</li>
+<li>一个<code>STARTGAS</code>值，表示允许执行事务执行的最大计算步骤数</li>
+<li>一个<code>GASPRICE</code>值，表示发件人按计算步骤支付的费用</li>
+</ul>
+<p>消息包含：</p>
+<ul>
+<li>消息的发送者（隐式）</li>
+<li>消息的收件人</li>
+<li>与消息一起传输的ether数量</li>
+<li>可选的数据字段</li>
+<li>一个<code>STARTGAS</code>值</li>
+</ul>
+<p>从本质上讲，消息就像一个交易，除了它是由合同产生的而不是由外部参与者产生的。当一个正在执行代码的合同执行<code>CALL</code>操作码时，产生一条消息，该操作码产生并执行一条消息。就像一个交易，一条消息导致收件人账户运行其代码。因此，合约可以与外部参与者完全相同的方式与其他合约有关系。</p>
+<p>请注意，交易或合同分配的gas限额适用于该交易和所有子执行消耗的gas量。例如，如果外部参与者A向B发送1000个gas的事务，并且B在向C发送消息之前消耗600gas，并且C的内部执行在返回之前消耗300gas，则B在运行之前可以花费另外100个gas。</p>
+<p>请注意，消息在回复方面与事务等效：如果消息执行耗尽，那么该消息的执行以及该执行触发的所有其他执行都会恢复，但父执行不需要恢复。这意味着合同可以调用另一份合同是“安全的”，就好像A用G气调用B一样，那么A的执行保证最多会损失G气。最后，请注意，有一个操作码<code>CREATE</code>可以创建合同; 其执行机制通常与执行机制类似<code>CALL</code>，但执行输出决定了新创建合同的代码。</p>
+<h5 id="状态转换"><a href="#状态转换" class="headerlink" title="状态转换"></a>状态转换</h5><p>以太坊状态转换功能<code>APPLY(S,TX) -&gt; S&#39;</code>可以定义如下：</p>
+<ol>
+<li><p>检查交易是否格式正确（即具有正确数量的值），签名是否有效，并且nonce与发件人帐户中的nonce相匹配。如果不是，则返回错误。</p>
+</li>
+<li><p>计算交易费用<code>STARTGAS * GASPRICE</code>，并从签名确定发送地址。从发件人帐户余额中扣除费用并增加发件人的nonce。如果没有足够的余额可用，请返回错误。</p>
+</li>
+<li><p>初始化<code>GAS = STARTGAS</code>并在每个字节中取出一定数量的气体以支付交易中的字节数。</p>
+</li>
+<li><p>将交易金额从发件人的帐户转移到收款帐户。如果接收帐户尚不存在，请创建它。如果接收账户是合同，则运行合同代码以完成或直到执行用完为止。</p>
+</li>
+<li><p>如果由于发件人没有足够的资金或代码执行耗尽而导致价值转移失败，请恢复除支付费用之外的所有状态更改，并将费用添加到矿工帐户。</p>
+</li>
+<li><p>否则，将所有剩余天然气的费用退还给发送方，并将支付的天然气费用发送给矿工</p>
+</li>
+</ol>
+<h5 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h5><p>合约中的代码采用low-level,基于堆栈的字节码语言编写，称为”以太网虚拟机代码”或”EVM代码”。该代码由一系列字节组成，其中每个字节表示一个操作。一般来说，代码执行是在当前程序计数器(从零开始)重复执行操作，然后将程序计数器递增1，直到代码结束或错误<code>STOP</code>或<code>RETURN</code>指令被检测到的一个无限循环。这些操作可以访问三种类型的存储空间：</p>
+<ol>
+<li>堆栈，后进先出容器，其值可以被压入和弹出</li>
+<li>内存。一个无限扩展的字节数组</li>
+<li>合同的长期存储，一个key/value的存储，与计算结束后重置的堆栈和内存不同，存储长期存在。</li>
+</ol>
+<p>代码还可以访问传入消息的值，发送者和数据以及块头数据，代码也可以返回一个字节数组作为输出。</p>
+<p>EVM代码的正式执行模型非常简单。当以太坊虚拟机运行时，它的完整计算状态可以由元组定义<code>(block_state, transaction, message, code, memory, stack, pc, gas)</code>，其中<code>block_state</code>是包含所有帐户并包括余额和存储的全局状态。在每一轮执行开始时，当前的指令是通过取<code>pc</code>第<code>code</code>（或0 <code>pc &gt;= len(code)</code>）个字节的第n个字节来找到的，并且每条指令都有它自己的定义，以表明它如何影响元组。例如，<code>ADD</code>从堆叠中弹出两个物品并推动它们的总和，减<code>gas</code>1和增<code>pc</code>1，<code>SSTORE</code>从堆栈中弹出前两个项目，并将第二个项目插入到第一个项目指定的索引处的合同存储器中。虽然有很多方法可以通过即时编译来优化以太坊虚拟机的执行，但以太坊的基本实现可以通过几百行代码完成。</p>
+<h5 id="区块链和采矿"><a href="#区块链和采矿" class="headerlink" title="区块链和采矿"></a>区块链和采矿</h5><p>以太坊的区块链和比特币的区块链有很多地方相似，也有不同的地方。最大的不同点在于，以太坊区块包含交易列表及最新状态二者的副本，除此之外，在区块中还存储了两个其他的值，区块号，和难度（计算难度）。以太坊中的基本块验证算法如下：</p>
+<ol>
+<li>检查前面的块引用是否存在并且是有效的。</li>
+<li>检查块的时间戳大于引用的前一个块的时间戳，并且在未来15分钟内</li>
+<li>检查块号，难度，交易根，叔叔根和气体限制（各种低级以太坊特定概念）是否有效。</li>
+<li>检查块的工作证明是否有效。</li>
+<li>让我们<code>S[0]</code>成为上一个区块结束时的状态吧。</li>
+<li>让<code>TX</code>块成为具有<code>n</code>个交易的交易清单。对于所有<code>i</code>的<code>0...n-1</code>设置<code>S[i+1] = APPLY(S[i],TX[i])</code>。如果任何应用程序返回一个错误，或者如果在这个点上阻塞的气体总量超过了这个数量<code>GASLIMIT</code>，返回一个错误。</li>
+<li>我们<code>S_FINAL</code>是<code>S[n]</code>，而且将支付给矿工块奖励。</li>
+<li>检查状态的Merkle树根<code>S_FINAL</code>是否等于块头中提供的最终状态根。如果是，则该块有效; 否则，它是无效的。</li>
+</ol>
+<p>这种方法乍一看似乎效率很低，因为它需要在每个块中存储整个状态，但实际上效率应该与比特币相当。原因是状态存储在树状结构中，并且在每个块之后只需要改变树的一小部分。因此，一般来说，在两个相邻块之间，绝大多数树应该是相同的，因此数据可以被存储一次并且使用指针（即子树的散列）被引用两次。一种称为“Patricia树”的特殊树被用来实现这一点，包括对Merkle树概念的修改，允许节点被插入和删除，而不仅仅是有效地改变。另外，因为所有的状态信息都是最后一个块的一部分，没有必要存储整个区块链的历史——如果可以应用到比特币上，就可以计算出在太空中节省5-20x的成本。</p>
+<p>就物理硬件而言，一个常见问题是在哪里执行合同代码。这有一个简单的答案：执行合同代码的过程是状态转换函数的定义的一部分，它是块验证算法的一部分，所以如果一个事务被添加到块<code>B</code>中，该事务生成的代码执行将被执行所有节点现在和将来都会下载并验证块<code>B</code>。</p>
+<h5 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h5><p>总的来说，在以太坊之上有三种类型的应用程序。第一类是金融应用程序，为用户提供更强大的管理方式，并使用他们的资金签订合同。这包括子货币，金融衍生品，套期保值合约，储蓄钱包，遗嘱以及最终甚至是一些类别的全面雇佣合同。第二类是半金融应用，涉及金钱，但也有非常重要的非货币方面的工作; 一个完美的例子就是为计算问题的解决方案自我实施奖励。最后，还有诸如在线投票和分散治理等应用程序，这些应用程序根本没有财务。</p>
+<p>该章节并不完全，仅摘取了介绍部分，详细内容还需到<a href="https://github.com/ethereum/wiki/wiki/White-Paper">以太坊白皮书</a>中查阅</p>
+<h6 id="令牌系统"><a href="#令牌系统" class="headerlink" title="令牌系统"></a>令牌系统</h6><p>区块链上的代币系统有许多应用程序，从代表资产（如美元或黄金）的子货币到公司股票，代表智能财产的单个代币，安全不可伪造的优惠券，甚至与常规值完全无关的代币系统，用作点激励制度。令牌系统在Ethereum中实现起来非常简单。要理解的关键是，所有货币或标记系统基本上都是一个数据库，只有一个操作：从A中减去X个单位并将X个单位给予B，但条件是（1）A至少有X个单位交易和（2）交易由A批准。实现令牌系统所需的一切就是将该逻辑实施到合同中。</p>
+<h6 id="金融衍生产品和稳定价值货币"><a href="#金融衍生产品和稳定价值货币" class="headerlink" title="金融衍生产品和稳定价值货币"></a>金融衍生产品和稳定价值货币</h6><p>金融衍生工具是“智能合约”中最常见的应用，也是最简单的代码实现之一。实施金融合同面临的主要挑战是，其中大部分要求参考外部价格报价; 例如，一个非常理想的应用程序是一种智能合约，可以抵御以太币（或另一种加密货币）相对于美元的波动性，但这样做需要合约知道ETH / USD的价值。最简单的方法是通过由特定方（例如纳斯达克）维护的“数据馈送”合同，以便该方能够根据需要更新合同，并提供一个接口，以允许其他合同发送向该合同发送消息并取回提供价格的响应。</p>
+<h6 id="身份和声誉系统"><a href="#身份和声誉系统" class="headerlink" title="身份和声誉系统"></a>身份和声誉系统</h6><p>所有的最早的替代性加密货币，<a href="http://namecoin.org/" target="_blank" rel="noopener">Namecoin</a>试图使用类似比特币的<a href="http://namecoin.org/" target="_blank" rel="noopener">区块</a>链来提供名称注册系统，用户可以在公共数据库中将他们的名称与其他数据一起注册。主要引用的用例是<a href="http://en.wikipedia.org/wiki/Domain_Name_System" target="_blank" rel="noopener">DNS</a>系统，将域名（比如“bitcoin.org”）（或者在Namecoin的例子中，“bitcoin.bit”）映射到IP地址。其他用例包括电子邮件认证和潜在更高级的信誉系统。</p>
+<h6 id="分散的文件存储"><a href="#分散的文件存储" class="headerlink" title="分散的文件存储"></a>分散的文件存储</h6><p>以太坊合同可以允许开发分散式文件存储生态系统，个人用户可以通过租用自己的硬盘来赚取少量的资金，未使用的空间可以用来进一步降低文件存储成本。</p>
+<p>这种设备的关键在于我们称之为“分散式Dropbox合同”。该合同的工作如下。首先，将所需数据分成块，对每个块进行隐私加密，并从中构建一个Merkle树。然后用合约规则规定，每N个块，合约将在Merkle树中选择一个随机索引（使用之前的块散列，可从合同代码访问，作为随机源），并将X ether赋予第一个实体为该交易提供一个简化的支付验证类似树中该特定索引处块的所有权证明。当用户想要重新下载他们的文件时，他们可以使用微支付通道协议（例如，支付每32千字节1个szabo）来恢复文件;</p>
+<p>该协议的一个重要特点是，虽然看起来好像一个人相信许多随机节点不会决定忘记文件，但可以通过秘密共享将文件分割成许多块，从而将风险降低到接近于零，并且看合同，看看每件作品仍然在某个节点中。如果合同仍在支付金钱，那么它提供了一个密码证明，表明某人仍在存储该文件。</p>
+<h6 id="分散的自治组织"><a href="#分散的自治组织" class="headerlink" title="分散的自治组织"></a>分散的自治组织</h6><p>“分散式自治组织”的一般概念是拥有一定数量的成员或股东的虚拟实体的概念，这些成员或股东可能拥有67％的多数股东有权利用该实体的资金并修改其代码。成员们将共同决定组织如何分配资金。分配DAO资金的方法可以从赏金，工资到甚至更多外来机制（如内部货币）以奖励工作。这基本上复制了传统公司或非营利组织的法律标志，但仅使用加密区块链技术执行。</p>
+<p>参考地址如下</p>
+<ol>
+<li><a href="http://baijiahao.baidu.com/s?id=1595831842043592716&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">http://baijiahao.baidu.com/s?id=1595831842043592716&amp;wfr=spider&amp;for=pc</a></li>
+<li><a href="https://github.com/ethereum/wiki/wiki/White-Paper">https://github.com/ethereum/wiki/wiki/White-Paper</a></li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#以太坊基本认识和理解笔记"><span class="toc-number">1.</span> <span class="toc-text">以太坊基本认识和理解笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本架构图"><span class="toc-number">1.0.1.</span> <span class="toc-text">基本架构图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本概念"><span class="toc-number">1.0.2.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ether"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">ether</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#gas"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">gas</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#账户"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">账户</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#消息和交易"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">消息和交易</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#状态转换"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">状态转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#代码执行"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">代码执行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#区块链和采矿"><span class="toc-number">1.0.2.7.</span> <span class="toc-text">区块链和采矿</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#应用"><span class="toc-number">1.0.2.8.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#令牌系统"><span class="toc-number">1.0.2.8.1.</span> <span class="toc-text">令牌系统</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#金融衍生产品和稳定价值货币"><span class="toc-number">1.0.2.8.2.</span> <span class="toc-text">金融衍生产品和稳定价值货币</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#身份和声誉系统"><span class="toc-number">1.0.2.8.3.</span> <span class="toc-text">身份和声誉系统</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分散的文件存储"><span class="toc-number">1.0.2.8.4.</span> <span class="toc-text">分散的文件存储</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#分散的自治组织"><span class="toc-number">1.0.2.8.5.</span> <span class="toc-text">分散的自治组织</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth/&text=eth"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth/&is_video=false&description=eth"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth/&title=eth"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth/&name=eth&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

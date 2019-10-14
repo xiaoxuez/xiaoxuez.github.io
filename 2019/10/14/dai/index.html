@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="dai合约学习从github上克隆下来源码。目录结构为 123456789101112131415src    ├── cat.sol   //面向用户的清算CDP网关合约    ├── dai.sol   //Dai稳定币合约    ├── end.sol  //    ├── flap.sol  //当系统有盈余时，负责购买和燃烧MKR    ├── flip.sol    ├── flop.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dai">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/dai/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="dai合约学习从github上克隆下来源码。目录结构为 123456789101112131415src    ├── cat.sol   //面向用户的清算CDP网关合约    ├── dai.sol   //Dai稳定币合约    ├── end.sol  //    ├── flap.sol  //当系统有盈余时，负责购买和燃烧MKR    ├── flip.sol    ├── flop.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://img.chainnews.com/material/images/a527abfe7199a3eb00887ea7f13e8293.jpg">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dai">
+<meta name="twitter:description" content="dai合约学习从github上克隆下来源码。目录结构为 123456789101112131415src    ├── cat.sol   //面向用户的清算CDP网关合约    ├── dai.sol   //Dai稳定币合约    ├── end.sol  //    ├── flap.sol  //当系统有盈余时，负责购买和燃烧MKR    ├── flip.sol    ├── flop.">
+<meta name="twitter:image" content="https://img.chainnews.com/material/images/a527abfe7199a3eb00887ea7f13e8293.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>dai</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/dai-code/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/eth-casper/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/dai/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/dai/&text=dai"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/dai/&is_video=false&description=dai"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=dai&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/dai/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/dai/&name=dai&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dai"><span class="toc-number">1.</span> <span class="toc-text">dai</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#合约学习"><span class="toc-number">1.0.1.</span> <span class="toc-text">合约学习</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合约词汇表"><span class="toc-number">1.0.2.</span> <span class="toc-text">合约词汇表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#常用"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">常用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#认证-auth"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">认证(auth)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CDP引擎-vat"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">CDP引擎 vat</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#稳定费用-jug"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">稳定费用 jug</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#清算-cat"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">清算 cat</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#结算-vow"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">结算 vow</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#拍卖-flop-flip-flap"><span class="toc-number">1.0.2.7.</span> <span class="toc-text">拍卖 flop flip flap</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全球结算-end"><span class="toc-number">1.0.2.8.</span> <span class="toc-text">全球结算  end</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本知识点"><span class="toc-number">1.0.3.</span> <span class="toc-text">基本知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#用户类型"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">用户类型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#货币"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">货币</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#信贷系统"><span class="toc-number">1.0.3.3.</span> <span class="toc-text">信贷系统</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#清算操作"><span class="toc-number">1.0.3.4.</span> <span class="toc-text">清算操作</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        dai
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:52:04.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="dai"><a href="#dai" class="headerlink" title="dai"></a>dai</h2><h4 id="合约学习"><a href="#合约学习" class="headerlink" title="合约学习"></a>合约学习</h4><p>从<a href="https://github.com/makerdao/dss">github</a>上克隆下来源码。目录结构为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">    ├── cat.sol   //面向用户的清算CDP网关合约</span><br><span class="line">    ├── dai.sol   //Dai稳定币合约</span><br><span class="line">    ├── end.sol  //</span><br><span class="line">    ├── flap.sol  //当系统有盈余时，负责购买和燃烧MKR</span><br><span class="line">    ├── flip.sol</span><br><span class="line">    ├── flop.sol  //当系统有坏账时，负责发行和出售MKR</span><br><span class="line">    ├── join.sol  //负责发行和燃烧DAI的适配器(DAI? ETH抵押品？)</span><br><span class="line">    ├── jug.sol</span><br><span class="line">    ├── lib.sol</span><br><span class="line">    ├── pot.sol</span><br><span class="line">    ├── spot.sol</span><br><span class="line">    ├── test</span><br><span class="line">    ├── vat.sol  //CDP核心引擎，DAI系统记账</span><br><span class="line">    └── vow.sol</span><br></pre></td></tr></table></figure>
+
+<h4 id="合约词汇表"><a href="#合约词汇表" class="headerlink" title="合约词汇表"></a>合约词汇表</h4><h5 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h5><ul>
+<li><code>guy</code>，<code>usr</code>：一些地址</li>
+<li><code>wad</code>：一些数量的标记，通常作为一个固定点整数，十进制位数为10 ^ 18。</li>
+<li><code>ray</code>：一个固定位数整数，十进制位数为10 ^ 27。</li>
+<li><code>rad</code>：一个固定位数整数，十进制位数为10 ^ 45。</li>
+<li><code>file</code>：管理一些配置值</li>
+</ul>
+<h5 id="认证-auth"><a href="#认证-auth" class="headerlink" title="认证(auth)"></a>认证(auth)</h5><ul>
+<li><code>auth</code>：检查地址是否可以调用此方法</li>
+<li><code>ward</code>：允许调用authed方法的地址</li>
+<li><code>rely</code>：允许一个地址调用authed方法，或将一个地址添加到ward中</li>
+<li><code>deny</code>：禁止一个地址调用authed方法，或将一个地址从ward中移除</li>
+</ul>
+<h5 id="CDP引擎-vat"><a href="#CDP引擎-vat" class="headerlink" title="CDP引擎 vat"></a>CDP引擎 vat</h5><ul>
+<li><p><code>CDP</code>：抵押债务位置</p>
+</li>
+<li><p><code>gem</code>：抵押代币，数据类型为map(byte32)map(address)uint256, 某类型抵押代币下某地址的抵押个数</p>
+</li>
+<li><p><code>dai</code>：稳定代币</p>
+</li>
+<li><p><code>sin</code>：antioin令牌（系统债务，不属于任何<code>urn</code>）</p>
+</li>
+<li><p><code>ilk</code>：抵押品类型</p>
+<ul>
+<li><code>rate</code>：稳定债务乘数（累计稳定费）</li>
+<li><code>take</code>：抵押余额乘数</li>
+<li><code>Ink</code>：抵押品总余额 ?代码里好像没了</li>
+<li><code>Art</code>：总稳定债务</li>
+<li><code>spot</code>：具有安全边际的抵押品价格，即每单位抵押品允许的最大稳定币</li>
+<li><code>line</code>：特定抵押品类型的债务上限</li>
+<li><code>dust</code>：CDP的最低可能债务</li>
+</ul>
+</li>
+<li><p><code>Line</code>：所有抵押品类型的总债务上限</p>
+</li>
+<li><p><code>init</code>：创建一个新的抵押品类型</p>
+</li>
+<li><p><code>urn</code>：一个特定的CDP</p>
+<ul>
+<li><code>ink</code>：抵押品余额</li>
+<li><code>art</code>：未偿还稳定债务</li>
+</ul>
+</li>
+<li><p><code>debt</code>：发行的稳定币总量</p>
+</li>
+<li><p><code>vice</code>：系统债务总量</p>
+</li>
+<li><p><code>slip</code>：修改用户的抵押品余额(操作gem)</p>
+</li>
+<li><p><code>flux</code>：在用户之间转移抵押品(操作gem)</p>
+</li>
+<li><p><code>move</code>：在用户之间转移stablecoin</p>
+</li>
+<li><p><code>grab</code>：清算CDP，(只做记录，记录为抵押物减少(增加)，抵押品余额增加(减少)？)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function grab(bytes32 i, address u, address v, address w, int dink, int dart) external note auth &#123;</span><br><span class="line">      Urn storage urn = urns[i][u];</span><br><span class="line">      Ilk storage ilk = ilks[i];</span><br><span class="line"></span><br><span class="line">      urn.ink = add(urn.ink, dink);</span><br><span class="line">      urn.art = add(urn.art, dart);</span><br><span class="line">      ilk.Art = add(ilk.Art, dart);</span><br><span class="line"></span><br><span class="line">      int dtab = mul(ilk.rate, dart);</span><br><span class="line"></span><br><span class="line">      gem[i][v] = sub(gem[i][v], dink);</span><br><span class="line">      sin[w]    = sub(sin[w],    dtab);</span><br><span class="line">      vice      = sub(vice,      dtab);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>heal</code>：创建/销毁等量的稳定币和系统债务（<code>vice</code>）</p>
+</li>
+<li><p><code>fold</code>：修改债务乘数，创造/销毁相应的债务?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function fold(bytes32 i, address u, int rate) external note auth &#123;</span><br><span class="line">      require(live == 1);</span><br><span class="line">      Ilk storage ilk = ilks[i];</span><br><span class="line">      ilk.rate = add(ilk.rate, rate);</span><br><span class="line">      int rad  = mul(ilk.Art, rate);</span><br><span class="line">      dai[u]   = add(dai[u], rad);</span><br><span class="line">      debt     = add(debt,   rad);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>toll</code>：修改抵押品乘数，创建/销毁相应的抵押品</p>
+</li>
+<li><p><code>suck</code>：铸造稳定币（占比<code>vice</code>）</p>
+</li>
+<li><p><code>frob</code>：修改CDP</p>
+<ul>
+<li><code>lock</code>：将抵押品转移到CDP</li>
+<li><code>free</code>：从CDP转移抵押品</li>
+<li><code>draw</code>：增加CDP债务，创造Dai</li>
+<li><code>wipe</code>：减少CDP债务，摧毁Dai</li>
+<li><code>dink</code>：抵押品的变化</li>
+<li><code>dart</code>：债务变动</li>
+<li><code>calm</code>：当CDP仍处于抵押品和总债务上限时，这是真的</li>
+<li><code>cool</code>：当稳定债务没有增加时，这是真的</li>
+<li><code>firm</code>：当抵押品余额没有减少时为真</li>
+<li><code>safe</code>：当CDP的抵押品与债务比率高于抵押品的清算比率时为真</li>
+</ul>
+</li>
+<li><p><code>fork</code>：拆分CDP - 二进制批准或拆分/合并CDP</p>
+<ul>
+<li><code>dink</code>：交换抵押品的数量</li>
+<li><code>dart</code>：交换的稳定债务金额</li>
+</ul>
+</li>
+<li><p><code>wish</code>：检查地址是否允许修改另一个地址的gem或dai余额</p>
+<ul>
+<li><code>hope</code>：启用<code>wish</code>一对地址</li>
+<li><code>nope</code>：禁用<code>wish</code>一对地址</li>
+</ul>
+</li>
+</ul>
+<h5 id="稳定费用-jug"><a href="#稳定费用-jug" class="headerlink" title="稳定费用 jug"></a>稳定费用 jug</h5><ul>
+<li><code>duty</code>：稳定费</li>
+<li><code>base</code>：全球稳定费</li>
+<li><code>rho</code>：最后一次收集这种抵押品时间</li>
+<li><code>drip</code>：确定增加</li>
+</ul>
+<h5 id="清算-cat"><a href="#清算-cat" class="headerlink" title="清算 cat"></a>清算 cat</h5><ul>
+<li><code>mat</code>：清算比率</li>
+<li><code>chop</code>：清算罚款</li>
+<li><code>lump</code>：清算数量，即任何一次清算事件所涵盖的固定债务数量</li>
+<li><code>bite</code>：开始清算CDP</li>
+<li><code>flip</code>：清算CDP的抵押品以支付固定数额的债务</li>
+</ul>
+<h5 id="结算-vow"><a href="#结算-vow" class="headerlink" title="结算 vow"></a>结算 vow</h5><ul>
+<li><code>sin</code>：债务队列</li>
+<li><code>Sin</code>：队列中的总债务</li>
+<li><code>Woe</code>：非排队的非拍卖债务总额</li>
+<li><code>Ash</code>：拍卖总债务</li>
+<li><code>Awe</code>：债务总额</li>
+<li><code>Joy</code>：总盈余</li>
+<li><code>fess</code>：向队列添加债务</li>
+<li><code>flog</code>：从队列中实现债务</li>
+<li><code>wait</code>：队列的长度</li>
+<li><code>heal</code>：取消盈余和债务</li>
+<li><code>kiss</code>：取消盈余和拍卖债务</li>
+<li><code>sump</code>：债务拍卖手数，即任何一次债务拍卖所涵盖的固定债务数量</li>
+<li><code>bump</code>：剩余拍卖手数，即任何一次剩余拍卖所出售的固定剩余数量</li>
+<li><code>hump</code>：在剩余拍卖可能之前必须超过剩余缓冲</li>
+</ul>
+<h5 id="拍卖-flop-flip-flap"><a href="#拍卖-flop-flip-flap" class="headerlink" title="拍卖 flop flip flap"></a>拍卖 flop flip flap</h5><ul>
+<li><code>flip</code>：抵押品拍卖（使用稳定币进行交易？）</li>
+<li><code>flop</code>：债务拍卖（通过膨胀MKR和出售稳定币来偿还债务)(以稳定币购买MKR？)</li>
+<li><code>flap</code>：剩余拍卖（出售MKR的稳定币)（以MKR来购买稳定币）</li>
+<li><code>lot</code>：拍卖数量</li>
+<li><code>bid</code>：提供的数量 <code>lot</code></li>
+<li><code>tab</code>：总dai将被提高（<code>flip</code>拍卖中）</li>
+<li><code>guy</code>：高出价者</li>
+<li><code>gal</code>：拍卖收入的获得者</li>
+<li><code>ttl</code>：出价终身</li>
+<li><code>beg</code>：最低出价增加</li>
+<li><code>tau</code>：最长拍卖时间</li>
+<li><code>end</code>：拍卖结束时</li>
+<li><code>kick</code>：开始拍卖</li>
+<li><code>tick</code>：重新开始拍卖</li>
+<li><code>tend</code>：出价，增加出价大小</li>
+<li><code>dent</code>：出价，减少手数</li>
+<li><code>deal</code>：要求中标</li>
+</ul>
+<h5 id="全球结算-end"><a href="#全球结算-end" class="headerlink" title="全球结算  end"></a>全球结算  end</h5><ul>
+<li><code>when</code>：结算时间</li>
+<li><code>wait</code>：处理冷却时间长度（允许不足的CDP为<code>skim</code>med）</li>
+<li><code>debt</code>：在系统盈余/赤字被吸收后，出色的稳定供应量</li>
+<li><code>tag</code>：结算时每种抵押品的价格</li>
+<li><code>gap</code>：考虑到不合标准的CDP，每个抵押品的差额</li>
+<li><code>fix</code>：现金价格<code>ilk</code>（每稳定金额）</li>
+<li><code>bag</code>：无法转移的稳定币准备交换抵押品</li>
+<li><code>out</code>：已交换的给定地址的稳定币的数量</li>
+<li><code>cage</code>：冻结系统，取消<code>flip</code>/ <code>flop</code>拍卖，开始冷却期</li>
+<li><code>cage(ilk)</code>：设定结算价格</li>
+<li><code>skim</code>：取消CDP债务，取得抵押担保，但留下过剩</li>
+<li><code>skip</code>：可选择取消现场拍卖</li>
+<li><code>free</code>：从CDP中删除抵押品</li>
+<li><code>thaw</code>：修复了稳定币的总供应量</li>
+<li><code>flow</code>：计算<code>fix</code>同类产品的价格，可能<code>cage</code>用盈余/赤字调整价格</li>
+<li><code>pack</code>：把一些稳定的金币放入<code>bag</code>准备中<code>cash</code></li>
+<li><code>cash</code>：交换一些<code>bag</code>给定的稳定币<code>gem</code>，与<code>bag</code>大小成比例的份额</li>
+</ul>
+<h4 id="基本知识点"><a href="#基本知识点" class="headerlink" title="基本知识点"></a>基本知识点</h4><h5 id="用户类型"><a href="#用户类型" class="headerlink" title="用户类型"></a>用户类型</h5><p>Maker 主要有三种 user case。作为普通想使用稳定货币的人，他们可以在交易所用美元或者人民币购买 DAI，然后用来交易、支付甚至竞猜。</p>
+<p>第二个是比较高级的用户，他们锁定自己的抵押资产，借 DAI 进行杠杆交易。</p>
+<p>第三个是更深参与系统中的用户，他们持有 MKR 管理型货币，维护系统，同时如果管理得当获益。</p>
+<h5 id="货币"><a href="#货币" class="headerlink" title="货币"></a>货币</h5><p>在 Maker 体系中有两种主要的货币。第一个是 DAI，稳定货币。他是一种有资产背书的硬通货，在无需准许的信贷系统中生成。也就是说，任何用户可以锁定他们有价值的数字资产，然后生成 DAI。系统用动态的目标利率去调节 DAI 的价格。在第一版 DAI 里，我们会保持 DAI 的价格在 1：1 美元左右浮动。</p>
+<p>第二种代币是 MKR，也就是 Maker。MKR 是管理型代币。拥有 MKR 的用户组成一个去中心化的管理社区，他们决定哪种有价值的数字资产可以作为抵押资产，清算比例等等。作为对他们服务的回报，当用户赎回抵押物的时候，他们不仅要返还 DAI，还要加上一小部分费用，其中一部分费用会被用来购买并销毁 MKR 以关闭抵押债仓。也就是说 MKR 是信贷系统的燃料。</p>
+<h5 id="信贷系统"><a href="#信贷系统" class="headerlink" title="信贷系统"></a>信贷系统</h5><p>用户如果要借 DAI，他们首先要建立一个抵押债仓（CDP），然后将数字资产作为抵押物，生成 DAI。然后他可以用 DAI 去做多他看好的资产。最后买回 DAI，偿还 DAI 和一部分费用拿回抵押资产。</p>
+<p>我们在这张图中可以看到，抵押物的价值始终大于 DAI 的价值。这是因为抵押物的价值会有波动，我们要确保 DAI 有足够的抵押。如果抵押物升值并没有太大影响，意味着 DAI 有更足够的抵押。但是如果抵押物减值，系统需要对此做出反应。</p>
+<p>当抵押物价值低于清算值，CDP 会被清算。抵押物会被强制平仓，用来回购 DAI，以保证 DAI 的偿付能力。可以想象为 margin call(追加保证金)。</p>
+<p>那么，在这一次的发布中，我们会用什么作为抵押资产呢。我们叫做 pooled-ETH，以太池。在之后的发布中，我们会引入多重资产抵押。目前我们还在开发多重资产抵押的过程中，在这一次的发布中，我们用以太池作为抵押代币。</p>
+<p>他的运行机制是：用户首先将 ETH 放入合同中，然后回收到相应比例的 ETH 兑换凭证，PETH。起初，PETH 和 ETH 的比例是一比一。但是这一比例会随着系统的表现而改变。</p>
+<p>如果系统运行良好，所有的 CDP 在偿还时会不断产生费用。一部分费用会被用来回购和销毁 PETH。销毁 PETH 意味着剩下的 PETH 可以兑换更多的 ETH。对于大多数用户来说，他们也许会抵押 PETH，用来借 DAI，然后做多资产。用户也可以选择持有 PETH，获得费用收益。</p>
+<p>当黑天鹅时间发生时，抵押物的价格大幅度下降，甚至低于 DAI 的价格，清算机制都来不及应对。这时候系统会通过增发 PETH 来回购 DAI 以支撑抵押不足的 DAI。</p>
+<p>当用户关闭 CDP 时，一部分费用会用来回购销毁 PETH，另一部分费用会用来购买 MKR，作为管理费用。</p>
+<h5 id="清算操作"><a href="#清算操作" class="headerlink" title="清算操作"></a>清算操作</h5><p><img src="https://img.chainnews.com/material/images/a527abfe7199a3eb00887ea7f13e8293.jpg" alt="img"></p>
+<ul>
+<li><p>触发发生清算</p>
+<p>预言机根据现在 PETH 的价格反馈给 Maker 平台。Maker平台需要抵押资产的实时价格信息以决定何时触动清算。也就是说需要看户机拿到这个价格，根据这个价格是否发生清算。</p>
+</li>
+</ul>
+<ul>
+<li><p>发生清算</p>
+<p>当此时发生清算了，预言机触发反馈给看户机，看护机在 CDP 清算的时候参与债务拍卖和抵押资产拍卖 。看护机也会围绕目标价格交易 Dai。当市场价格高于目标价格的时候，看护机将出售 Dai 。同理，当市场价格低于目标价格的时候，看护机将买入 Dai。这样做的是为了从市场长期价格趋同目标价格中获益。注：看户机只是做一个策略，它决定什么时候进行出售。当出售的时候他会根据系统喂价直接与以太坊使用者和看护机进行交易的智能合约。当 CDP 被清算，系统会立即回收其抵押品。CDP 持有者会收到去除债务、稳定费用和清算罚金后的剩余抵押资产。这里分两种情况：</p>
+<ul>
+<li><p>第一种，正常情况</p>
+<p>PETH 抵押资产将会在流动性供给合约中出售，看护机可以自动交易 Dai 购买 PETH。所有支付的 Dai会从流通中立即销毁，直到 CDP 债务数量被消除。如果在去除 CDP 债务后还有剩余的 Dai，这部分 Dai会被用来购买并销毁 PETH，从而提高 PETH 可兑换 ETH 的比例。这对 PETH 持有者来说将会是收益。</p>
+</li>
+<li><p>第二种，非正常的情况下</p>
+<p>如果出售的 PETH 未能募集到足够的 Dai 以偿付整个债务，系统会连续增发并出售 PETH。以这种方式新创造出来的 PETH 会降低 PETH 可兑换ETH 的比例，从而使得 PETH 持有者收益减少。</p>
+</li>
+</ul>
+<p>在清算发生时，Maker 平台会购买 CDP 中的抵押物并逐渐通过自动竞卖的方式售出。竞卖的机制可以让系统即使在无法获得价格信息的时候，处理 CDP。为了能够回购 CDP 中的抵押资产并用来出售，系统会首先募集足够的 Dai 以偿付 CDP 的债务。这一过程叫做债务竞卖，通过增发 MKR的供给并以竞卖的方式出售给竞卖参与者。</p>
+<p>与此同时，CDP 中的抵押资产会以抵押资产竞卖的方式出售，CDP 债务和清算罚金的部分会用来回购并销毁 MKR。这可以直接抵销在债务竞卖中增发的MKR。如果有足够的 Dai 用来偿付 CDP 中的债务加上清算罚金，那么抵押竞卖会转换到反向竞卖机制，竞卖最少的抵押品 - 任何剩余的抵押品都会归还给CDP 的原所有者。</p>
+</li>
+</ul>
+<ul>
+<li><p>流动性供给合约 (单一抵押阶段过渡性机制)</p>
+<p>在单一抵押资产 Dai 的阶段，清算的过程叫做流动性供给合约。根据系统喂价直接与以太坊使用者和看护机进行交易的智能合约。当 CDP被清算，系统会立即回收其抵押品。CDP 持有者会收到去除债务、稳定费用和清算罚金后的剩余抵押资产。</p>
+<p>PETH 抵押资产将会在流动性供给合约中出售，看护机可以自动交易 Dai 购买 PETH。所有支付的 Dai 会从流通中立即销毁，直到 CDP债务数量被消除。如果在去除 CDP 债务后还有剩余的 Dai，这部分 Dai 会被用来购买并销毁 PETH ，从而提高 PETH 可兑换 ETH的比例。这对 PETH 持有者来说将会是收益。</p>
+<p>如果出售的 PETH 未能募集到足够的 Dai 以偿付整个债务，系统会连续增发并出售 PETH。以这种方式新创造出来的 PETH 会降低 PETH 可兑换ETH 的比例，从而使得 PETH 持有者收益减少。</p>
+</li>
+</ul>
+<ul>
+<li><p>债务竞卖和抵押资产竞卖（多种抵押阶段机制）</p>
+<p>在清算发生时，Maker 平台会购买 CDP 中的抵押物并逐渐通过自动竞卖的方式售出。</p>
+<p>竞卖的机制可以让系统即使在无法获得价格信息的时候，处理 CDP。为了能够回购 CDP 中的抵押资产并用来出售，系统会首先募集足够的 Dai 以偿付 CDP 的债务。这一过程叫做债务竞卖，通过增发 MKR的供给并以竞卖的方式出售给竞卖参与者。与此同时，CDP 中的抵押资产会以抵押资产竞卖的方式出售，CDP 债务和清算罚金的部分会用来回购并销毁 MKR 。这可以直接抵销在债务竞卖中增发的 MKR。如果有足够的 Dai 用来偿付 CDP 中的债务加上清算罚金，那么抵押竞卖会转换到反向竞卖机制，竞卖最少的抵押品 - 任何剩余的抵押品都会归还给 CDP的原所有者。</p>
+</li>
+</ul>
+<ul>
+<li><p>清算期间会发生什么</p>
+<p>当 Keeper 关闭 CDP 并将其发送到流动性提供合同（LPC）时，清算就会发生，而 LPC 又会在 Dai Dashboard 上提供 CDP资产。一旦履行了债务义务，未售出的 PETH 抵押品将返还给 CDP 所有者。</p>
+<p>操作顺序如下：</p>
+<ul>
+<li>违约的 CDP 已关闭。</li>
+<li>罚款费用适用于 DAI 债务。</li>
+<li>LPC 移除了足够的 PETH 抵押品以满足当前 Oracle 价格的债务。</li>
+<li>CDP 所有者现在能够从关闭位置移除他们的剩余抵押品。</li>
+<li>被扣押的 PETH 在 dai.makerdao.com 上出售，其激励折扣称为 Boom / Bust Spread ，适用于该值。</li>
+<li>出售 PETH 所赚取的 DAI 被烧毁以消灭 CDP 债务。</li>
+<li>如果销售中存在过量的 DAI ，那么它将被 PETH 出售，然后燃烧，从而增加剩余 PETH 的价值。</li>
+<li>如果出售的 DAI 不足，那么 PETH 将被发行并出售以弥补不足。这会稀释池的总价值。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>清算后剩余多少抵押品</p>
+<p>简化公式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（抵押品 × Oracle 价格 × PETH / ETH 比率） - （清算罚款 × 稳定性债务） - 稳定性债务 =（剩余抵押品 ×Oracle 价格） DAI</span><br></pre></td></tr></table></figure>
+
+<p>假设：</p>
+<ul>
+<li><p>一个 ETH 的 Oracle 价格是 350USD</p>
+</li>
+<li><p>锁定 PETH 总数为 10 ETH</p>
+</li>
+<li><p>PETH / ETH 的比率为 1.012</p>
+</li>
+<li><p>清算罚款为 13％</p>
+</li>
+<li><p>CDP 的稳定债务为 1000 DAI</p>
+<p>计算为(10 × 350 × 1.012) − (13% × 1000) − 1000 = 2412 DAI 或 6.891428571 ETH</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>清算价格</p>
+<p>可以使用以下简化公式来确定抵押品的价值必须达到多远才能触发结算：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（稳定债务 × 清算比率）/（抵押品 × PETH / ETH 比率）= 清算价格</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<ul>
+<li><p>一个 ETH 的值是 350 USD</p>
+</li>
+<li><p>总赌注 PETH 为 12</p>
+</li>
+<li><p>PETH / ETH 的比率为 1.012</p>
+</li>
+<li><p>清算比率为 150％</p>
+</li>
+<li><p>稳定债务是 1000 DAI</p>
+<p>计算为(1000 × 1.5) ÷ (12 × 1.012) = 123.51 USD</p>
+<p>在 CDP 被认为不安全并且有被清算的风险之前，ETH 的价格需要降至 123.51 美元。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>计算抵押比率</p>
+<p>如果希望通过查看抵押品与债务的比率来确定抵押物的健康状况，与清算价格相反，可以使用以下简化公式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（锁定 PETH × ETH 价格 × PETH / ETH 比率）÷ 稳定性债务 × 100 = 抵押比率</span><br></pre></td></tr></table></figure>
+
+<p>举例：</p>
+<ul>
+<li>一个 ETH 的值是 350 USD</li>
+<li>总赌注 PETH 为 12</li>
+<li>PETH / ETH 的比率为 1.012</li>
+<li>稳定债务是 1000 DAI</li>
+</ul>
+<p>计算为(12 × 350 × 1.012) ÷ 1000 × 100 = 425.04%</p>
+<p>CDP 的抵押比率为 425.04％。</p>
+</li>
+</ul>
+<ul>
+<li><p>降低清算价格</p>
+<p>CDP 所有者面临的主要挑战是在高度不可预测的市场中保持安全的杠杆状态。如果 CDP 接近清算价格，用户可以添加更多抵押品或返回 DAI以降低风险。如果用户坚信基础抵押品的未来价值，用户可以决定为他的抵押物增加更多。或者，如果用户希望降低价格波动的风险，他可以通过将 DAI 返还给自己的CDP 来偿还债务。降低清算风险的最佳方法是偿还 DAI ，因为清算价格会更有效地降低。</p>
+<p>假设：</p>
+<ul>
+<li>一个 ETH 的值是 350 USD</li>
+<li>总赌注 PETH 为 12</li>
+<li>PETH / ETH 的比率为 1.012</li>
+<li>清算比率为 150％</li>
+<li>稳定债务是 1000 DAI</li>
+</ul>
+<p>目前的清算价格：</p>
+<p>(1000 × 1.5 ) ÷ (12 × 1.012) = 123.51 USD</p>
+<p>清算价格变动，增加 700 美元的抵押品：</p>
+<p>(1000 × 1.5 ) ÷ (14 × 1.012) = 105.87 USD</p>
+<p>清算价格变动，取消 700 美元的债务：</p>
+<p>(300 × 1.5 ) ÷ (12 × 1.012) = 37.05 USD</p>
+<p>我们可以看到，通过返还 DAI 而不是增加更多抵押品，显着降低了清算价格。</p>
+</li>
+</ul>
+<ul>
+<li><p>如何出售抵押品</p>
+<p>当 Keeper 清算不安全的 CDP 时，流动性提供合同（LPC）确保在 Dai Dashboard 上出售抵押品。销售价格由应用了特殊修饰符的Oracle Feed确定。此修饰符通常采用折扣的形式，然后应用于必须回收的未偿还债务。这种额外的“差价”旨在通过向抵押品买方提供优于市场价格来激励系统的快速资本重组。用户可以在仪表板上购买已被 LPC 占用的 PETH 。出售的任何 DAI 盈余都可以用 PETH 购买。</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dai"><span class="toc-number">1.</span> <span class="toc-text">dai</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#合约学习"><span class="toc-number">1.0.1.</span> <span class="toc-text">合约学习</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合约词汇表"><span class="toc-number">1.0.2.</span> <span class="toc-text">合约词汇表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#常用"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">常用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#认证-auth"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">认证(auth)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CDP引擎-vat"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">CDP引擎 vat</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#稳定费用-jug"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">稳定费用 jug</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#清算-cat"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">清算 cat</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#结算-vow"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">结算 vow</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#拍卖-flop-flip-flap"><span class="toc-number">1.0.2.7.</span> <span class="toc-text">拍卖 flop flip flap</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全球结算-end"><span class="toc-number">1.0.2.8.</span> <span class="toc-text">全球结算  end</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本知识点"><span class="toc-number">1.0.3.</span> <span class="toc-text">基本知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#用户类型"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">用户类型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#货币"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">货币</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#信贷系统"><span class="toc-number">1.0.3.3.</span> <span class="toc-text">信贷系统</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#清算操作"><span class="toc-number">1.0.3.4.</span> <span class="toc-text">清算操作</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/dai/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/dai/&text=dai"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/dai/&is_video=false&description=dai"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=dai&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/dai/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/dai/&title=dai"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/dai/&name=dai&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="ES数组对象，以及Kibana相关操作好久未写过博客，一晃就年底。 前两天需求是在Kibana里生成曲线，关键是数据类型是数组对象。稍微走了写歪路，下面从数据类型开始说起。 数据 mapping: 12345678910data: &amp;#123;	properties: &amp;#123;		data_value: &amp;#123;			type: &amp;quot;long&amp;quot;		&amp;#125;,		ind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elastic_kibana">
+<meta property="og:url" content="https://github.com/xiaoxuez/2017/10/14/elastic-kibana/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="ES数组对象，以及Kibana相关操作好久未写过博客，一晃就年底。 前两天需求是在Kibana里生成曲线，关键是数据类型是数组对象。稍微走了写歪路，下面从数据类型开始说起。 数据 mapping: 12345678910data: &amp;#123;	properties: &amp;#123;		data_value: &amp;#123;			type: &amp;quot;long&amp;quot;		&amp;#125;,		ind">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="elastic_kibana">
+<meta name="twitter:description" content="ES数组对象，以及Kibana相关操作好久未写过博客，一晃就年底。 前两天需求是在Kibana里生成曲线，关键是数据类型是数组对象。稍微走了写歪路，下面从数据类型开始说起。 数据 mapping: 12345678910data: &amp;#123;	properties: &amp;#123;		data_value: &amp;#123;			type: &amp;quot;long&amp;quot;		&amp;#125;,		ind">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>elastic_kibana</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/14/kibana-timeline/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/elastic-search-dsl/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&text=elastic_kibana"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&is_video=false&description=elastic_kibana"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=elastic_kibana&body=Check out this article: https://github.com/xiaoxuez/2017/10/14/elastic-kibana/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&name=elastic_kibana&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES数组对象，以及Kibana相关操作"><span class="toc-number">1.</span> <span class="toc-text">ES数组对象，以及Kibana相关操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据"><span class="toc-number">1.1.</span> <span class="toc-text">数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scripted-Fields"><span class="toc-number">1.2.</span> <span class="toc-text">Scripted Fields</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        elastic_kibana
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-10-14T13:54:17.000Z" itemprop="datePublished">2017-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/elk/">elk</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="ES数组对象，以及Kibana相关操作"><a href="#ES数组对象，以及Kibana相关操作" class="headerlink" title="ES数组对象，以及Kibana相关操作"></a>ES数组对象，以及Kibana相关操作</h2><p>好久未写过博客，一晃就年底。</p>
+<p>前两天需求是在Kibana里生成曲线，关键是数据类型是数组对象。稍微走了写歪路，下面从数据类型开始说起。</p>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><ul>
+<li><p>mapping:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data: &#123;</span><br><span class="line">	properties: &#123;</span><br><span class="line">		data_value: &#123;</span><br><span class="line">			type: &quot;long&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">		index: &#123;</span><br><span class="line">			type: &quot;long&quot;</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//example1:</span><br><span class="line">&#123;data: [&#123;index: 0, data_value: 200&#125;, &#123;index: 1, data_value: 300&#125;]&#125;</span><br><span class="line"></span><br><span class="line">//example2:</span><br><span class="line">&#123;data: [&#123;index: 0, data_value: 200&#125;]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>即data为数组对象，每次含有的index的有可能是多个，有可能是1个。</p>
+</li>
+<li><p>数组对象在es中的存储</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//example1:</span><br><span class="line">&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">  	 index: [0, 1],</span><br><span class="line">  	 data_value: [200, 300],</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在ElasticSearch中对数组对象的访问可通过data.index，data.data_value的形式进行。示例中example1的存储如上所示，0和200，1和300之间的关系其实就不再存在了。</p>
+<p>当时我的需求是，需要对index进行分桶，针对每个index，求出metric。如在index=0的桶里，求data.data_value的max,桶里边只有example1和example2的数据，理想中的max应该是200,但求出来发现是300…问题就在存储上，data.data_value在存储上其实是[200, 300],与index=0还是1一点关系都没有..</p>
+<p>如果非要实现对index=0下求data_value的max呢?</p>
+</li>
+</ul>
+<h3 id="Scripted-Fields"><a href="#Scripted-Fields" class="headerlink" title="Scripted Fields"></a>Scripted Fields</h3><p>当时需求是在Kibana上实现，故以下皆以Kibana作例，若是单纯的写ES的查询或聚合语句，可直接参考script内容。</p>
+<p><a href="https://www.elastic.co/guide/en/kibana/current/scripted-fields.html" target="_blank" rel="noopener">How to create Kibana Script Fields</a></p>
+<p> 在ES中支持查询返回一个script value,即在查询时就进行相应的script计算。<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-script-fields.html" target="_blank" rel="noopener">elasticsearch script fields starting</a>.</p>
+<p> 既然是script，自然就灵活很多，可以通过添加新的字段，将上面的数组对象中的值转换为key-value格式的，那么在聚合统计操作中选择对应的key即可。</p>
+<p> 具体操作为，在Kibana中选择Management中的Index Patterns,选中对应index,选择Scripted field，新建一个(Add Scripted Field)。Name填入如data_index_0,Language选择painless,Type选择为number。script内容为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  if(params[&apos;_source&apos;][&apos;data&apos;] != null) &#123;</span><br><span class="line">	  for(def item : params[&apos;_source&apos;][&apos;data&apos;]) &#123;</span><br><span class="line">	     if(item.index == 0)</span><br><span class="line">	       return item.data_value;</span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;</span><br><span class="line">return null;</span><br></pre></td></tr></table></figure>
+
+<p> 最后选择创建字段即可，在Discover页面中即可看到每条数据中都增加了data_index_0,其值为index=0时对应的data_value。这样就将对象数组中的数据搬出来以key-value的方式存在了。另外，官方在介绍Scripted Fields时说明尽量不要使用_source字段，会使搜索变慢，以后在使用的过程中最好还是使用doc。如获得data.index的方式为doc[‘data.index’].values,返回值为List。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ES数组对象，以及Kibana相关操作"><span class="toc-number">1.</span> <span class="toc-text">ES数组对象，以及Kibana相关操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据"><span class="toc-number">1.1.</span> <span class="toc-text">数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scripted-Fields"><span class="toc-number">1.2.</span> <span class="toc-text">Scripted Fields</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&text=elastic_kibana"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&is_video=false&description=elastic_kibana"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=elastic_kibana&body=Check out this article: https://github.com/xiaoxuez/2017/10/14/elastic-kibana/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&title=elastic_kibana"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2017/10/14/elastic-kibana/&name=elastic_kibana&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="项目选择为go-ethereum，即geth。（原来geth是go-ethereum的简称..）。geth是以太坊、Whisper（去中心化通信协议）和Swarm（去中心化文件系统）节点的一个实现。用于接入以太坊网络，进行账户管理、交易、挖矿、智能合约相关的操作的以太坊客户端。另外，geth是一种CLI应用。 环境配置 环境为mac 按照官方文档进行配置就好。采用的是克隆go-ethereum仓库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eth_build">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/eth-build/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="项目选择为go-ethereum，即geth。（原来geth是go-ethereum的简称..）。geth是以太坊、Whisper（去中心化通信协议）和Swarm（去中心化文件系统）节点的一个实现。用于接入以太坊网络，进行账户管理、交易、挖矿、智能合约相关的操作的以太坊客户端。另外，geth是一种CLI应用。 环境配置 环境为mac 按照官方文档进行配置就好。采用的是克隆go-ethereum仓库">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eth_build">
+<meta name="twitter:description" content="项目选择为go-ethereum，即geth。（原来geth是go-ethereum的简称..）。geth是以太坊、Whisper（去中心化通信协议）和Swarm（去中心化文件系统）节点的一个实现。用于接入以太坊网络，进行账户管理、交易、挖矿、智能合约相关的操作的以太坊客户端。另外，geth是一种CLI应用。 环境配置 环境为mac 按照官方文档进行配置就好。采用的是克隆go-ethereum仓库">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>eth_build</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/eth/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/eth-rlp/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth-build/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&text=eth_build"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&is_video=false&description=eth_build"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth_build&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth-build/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&name=eth_build&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        eth_build
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:49:01.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>项目选择为go-ethereum，即geth。（原来geth是go-ethereum的简称..）。geth是以太坊、Whisper（去中心化通信协议）和Swarm（去中心化文件系统）节点的一个实现。用于接入以太坊网络，进行账户管理、交易、挖矿、智能合约相关的操作的以太坊客户端。另外，geth是一种CLI应用。</p>
+<p>环境配置</p>
+<p>环境为mac</p>
+<p>按照<a href>官方文档</a>进行配置就好。采用的是克隆go-ethereum仓库的方式进行配置。</p>
+<p>注意的点是，go版本很关键。刚开始下载的go版本就为1.7.+,然后在进行make geth的时候报错了..然后重新brew install go，搞到go版本1.10.+，然后进行make geth还是报错..无奈下载官方建议1.9.+，顺利通过…</p>
+<p>make解读，使用make命令时调用makefile文件，查看makefile代码，其实make all/make geth其实就是使用go对cmd/目录下各工具进行代码打包成可执行文件。生成文件位于cmd/bin下。</p>
+<p>make完成后将cmd/bin目录添加到环境变量中，方便之后使用。</p>
+<p>创建3个目录文件夹，分别存放3个账户数据。 —datadir node1 为指定Data directory for the databases and keystore。创建3个账户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xiaoxuez$ ls</span><br><span class="line">node1	node2	node3</span><br><span class="line">xiaoxuez$ geth --datadir node1 account new</span><br></pre></td></tr></table></figure>
+
+<p>生成创世块，需要定义.json文件，puppeth工具可以帮忙快速生成创世快文件。puppeth源代码位于cmd/下，make的时候如果只make etheruem的话就只会生成ethereum的可执行文件，make all就都有了~  实在没有的话就单独生成一次。可参照</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/env.sh go run build/ci.go install ./cmd/puppeth/</span><br></pre></td></tr></table></figure>
+
+<p>回到正题，puppeth的使用直接见命令行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">$ puppeth</span><br><span class="line">+-----------------------------------------------------------+</span><br><span class="line">| Welcome to puppeth, your Ethereum private network manager |</span><br><span class="line">|                                                           |</span><br><span class="line">| This tool lets you create a new Ethereum network down to  |</span><br><span class="line">| the genesis block, bootnodes, miners and ethstats servers |</span><br><span class="line">| without the hassle that it would normally entail.         |</span><br><span class="line">|                                                           |</span><br><span class="line">| Puppeth uses SSH to dial in to remote servers, and builds |</span><br><span class="line">| its network components out of Docker containers using the |</span><br><span class="line">| docker-compose toolset.                                   |</span><br><span class="line">+-----------------------------------------------------------+</span><br><span class="line"></span><br><span class="line">Please specify a network name to administer (no spaces or hyphens, please)</span><br><span class="line">&gt; helloworldprivate</span><br><span class="line"></span><br><span class="line">Sweet, you can set this via --network=helloworldprivate next time!</span><br><span class="line"></span><br><span class="line">INFO [04-10|13:45:58] Administering Ethereum network           name=helloworldprivate</span><br><span class="line">WARN [04-10|13:45:58] No previous configurations found         path=/Users/xiaoxuez/.puppeth/helloworldprivate</span><br><span class="line"></span><br><span class="line">What would you like to do? (default = stats)</span><br><span class="line"> 1. Show network stats</span><br><span class="line"> 2. Configure new genesis</span><br><span class="line"> 3. Track new remote server</span><br><span class="line"> 4. Deploy network components</span><br><span class="line">&gt; 2</span><br><span class="line"></span><br><span class="line">Which consensus engine to use? (default = clique) #共识选择，可直接选择pow,这里我选择的是poa,(不消耗计算力, 可以用于私链测试开发)</span><br><span class="line"> 1. Ethash - proof-of-work</span><br><span class="line"> 2. Clique - proof-of-authority</span><br><span class="line">&gt; 2</span><br><span class="line"></span><br><span class="line">How many seconds should blocks take? (default = 15)  #5s出一个块</span><br><span class="line">&gt; 5</span><br><span class="line"></span><br><span class="line">Which accounts are allowed to seal? (mandatory at least one)  #输入有签名权限的账户</span><br><span class="line">&gt; 0x1186c97871079e86e9adcf11f56b90caa3619ea4</span><br><span class="line">&gt; 0x34c72adc7499cce01530dc27e67810a79fdbd8ea</span><br><span class="line">&gt; 0xb37fe8ba7afbeb5e57139e55e737a34574e91a74</span><br><span class="line">&gt; 0x</span><br><span class="line"></span><br><span class="line">Which accounts should be pre-funded? (advisable at least one)  #输入有预留余额的账户</span><br><span class="line">&gt; 0xb37fe8ba7afbeb5e57139e55e737a34574e91a74</span><br><span class="line">&gt; 0x34c72adc7499cce01530dc27e67810a79fdbd8ea</span><br><span class="line">&gt; 0x1186c97871079e86e9adcf11f56b90caa3619ea4</span><br><span class="line">&gt; 0x</span><br><span class="line"></span><br><span class="line">Specify your chain/network ID if you want an explicit one (default = random) #输入私链ID, 直接输入回车,已默认随机数作为私链ID</span><br><span class="line">&gt;</span><br><span class="line">INFO [04-10|13:47:49] Configured new genesis block</span><br><span class="line"></span><br><span class="line">What would you like to do? (default = stats)</span><br><span class="line"> 1. Show network stats</span><br><span class="line"> 2. Manage existing genesis</span><br><span class="line"> 3. Track new remote server</span><br><span class="line"> 4. Deploy network components</span><br><span class="line">&gt; 2</span><br><span class="line"></span><br><span class="line"> 1. Modify existing fork rules</span><br><span class="line"> 2. Export genesis configuration</span><br><span class="line"> 3. Remove genesis configuration</span><br><span class="line">&gt; 2</span><br><span class="line"></span><br><span class="line">Which file to save the genesis into? (default = helloworldprivate.json)</span><br><span class="line">&gt;</span><br><span class="line">INFO [04-10|13:48:00] Exported existing genesis block</span><br><span class="line"></span><br><span class="line">What would you like to do? (default = stats)</span><br><span class="line"> 1. Show network stats</span><br><span class="line"> 2. Manage existing genesis</span><br><span class="line"> 3. Track new remote server</span><br><span class="line"> 4. Deploy network components</span><br><span class="line">&gt; ^C</span><br><span class="line">$ ls  #结束后会在当前文件夹下看到导出的.json文件</span><br><span class="line">helloworldprivate.json	node1			node2			node3</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是使用.json文件生成创世块了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#init:Bootstrap and initialize a new genesis block</span><br><span class="line">$ geth --datadir node1 init helloworldprivate.json</span><br><span class="line">$ geth --datadir node1 --port 30000 --nodiscover --unlock &apos;0&apos; --password ./node1/password console</span><br><span class="line">#启动geth, --port: Network listening port ，指定和其他节点链接所用的端口号</span><br><span class="line">#               --nodiscover: Disables the peer discovery mechanism (manual peer addition)关闭节点发现机制，防止加入有同样初始配置的陌生节点，后续手动配置节点网络，</span><br><span class="line">#               --unlock: Comma separated list of accounts to unlock, 解锁的账户，以逗号分隔，账户要转帐或者部署合约，需要先解锁</span><br><span class="line">#               console: 进入控制台，不加console的话，也可在geth启动后通过geth attach</span><br><span class="line">ipc:node0/geth.ipc来访问</span><br><span class="line">#               --rpc: 表示开启http-rpc服务</span><br><span class="line">                --rpcport: 指定http-rpc服务监听端口，默认为8545</span><br><span class="line">                --ws:</span><br><span class="line">                --wsport:</span><br><span class="line">                --allow-insecure-unlock</span><br></pre></td></tr></table></figure>
+
+<p>同样，目前启动3个节点，使用不同端口来模拟多节点，另起终端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ geth --datadir node2 init helloworldprivate.json</span><br><span class="line">$ geth --datadir node2 --port 30001 --nodiscover --unlock &apos;0&apos; --password ./node2/password console</span><br><span class="line"></span><br><span class="line">$ geth --datadir node3 init helloworldprivate.json</span><br><span class="line">$ geth --datadir node3 --port 30002 --nodiscover --unlock &apos;0&apos; --password ./node3/password console</span><br></pre></td></tr></table></figure>
+
+<p>三个启动时候unlock 的值都是’0’,  之前在每个节点文件下都只创建了一个账户，所以解锁的就是各个节点下的账户，即目前三个账户都是解锁。这里的小疑问是要起3个初始块，猜测是相同初始配置的节点才能加入到同一个网络中。</p>
+<p>console进入的控制台是一个交互式的JavaScript执行环境，在这里面可以执行JavaScript代码。这个环境里也内置了一些用来操作以太坊的JavaScript对象，例如</p>
+<ul>
+<li>eth：包含一些跟操作区块链相关的方法；</li>
+<li>net：包含一些查看p2p网络状态的方法；</li>
+<li>admin：包含一些与管理节点相关的方法；</li>
+<li>miner：包含启动&amp;停止挖矿的一些方法；</li>
+<li>personal：主要包含一些管理账户的方法；</li>
+<li>txpool：包含一些查看交易内存池的方法；</li>
+<li>web3：包含了以上对象，还包含一些单位换算的方法。</li>
+</ul>
+<p>常见命令有：</p>
+<ul>
+<li><p>personal.newAccount()：创建账户；</p>
+</li>
+<li><p>personal.unlockAccount()：解锁账户；</p>
+</li>
+<li><p>eth.accounts：枚举系统中的账户；</p>
+</li>
+<li><p>eth.getBalance()：查看账户余额，返回值的单位是 Wei（Wei 是以太坊中最小货币面额单位，类似比特币中的<code>聪</code>，1 ether = 10^18 Wei）； <code>web3.fromWei(eth.getBalance(e), &quot;ether&quot;)</code></p>
+<p><code>web3.toWei(&#39;1&#39;, &#39;ether&#39;)</code></p>
+</li>
+</ul>
+<ul>
+<li><p>eth.blockNumber：列出区块总数；blockNumber为eth的属性，直接查看即可</p>
+</li>
+<li><p>eth.getTransaction()：获取交易；</p>
+</li>
+<li><p>eth.getBlock()：获取区块；如eth.getBlock(“pending”, true).transactions 查看当前待确认交易。或通过区块号查看eth.getBlock(4)</p>
+</li>
+<li><p>miner.start()：开始挖矿；</p>
+</li>
+<li><p>miner.stop()：停止挖矿；</p>
+</li>
+<li><p>web3.fromWei()：Wei 换算成以太币；</p>
+</li>
+<li><p>web3.toWei()：以太币换算成 Wei；如amount = web3.toWei(5,’ether’)</p>
+</li>
+<li><p>txpool.status：交易池中的状态；</p>
+</li>
+<li><p>admin.addPeer()：连接到其他节点；</p>
+</li>
+</ul>
+<p>接下来，添加peer节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; admin.peers #查看当前节点链接的节点</span><br><span class="line">&gt; net.peerCount #查看当前节点链接的节点数</span><br></pre></td></tr></table></figure>
+
+<p>目前三个节点都是没有链接的，所以admin.peers的结果为[]。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; admin.nodeInfo.enode #查看节点地址，地址组成为encode://&lt;节点id&gt;@ip地址：端口</span><br><span class="line">&quot;enode://0480c837fc76671a8d8ee78b74fd04f9439762cc2e2e668b8604dda964c679ec8dd10f8347d7066707a315db8ad5c141e9d5a5b98f3a790660792f4469086f21@[::]:30000?discport=0&quot;</span><br></pre></td></tr></table></figure>
+
+<p>查看node1节点地址，在node2, node3的console中使用admin.addPeer，将node1分别添加到node2,node3中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; admin.addPeer(&quot;enode://0480c837fc76671a8d8ee78b74fd04f9439762cc2e2e668b8604dda964c679ec8dd10f8347d7066707a315db8ad5c141e9d5a5b98f3a790660792f4469086f21@[::]:30000?discport=0&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>再使用admin.peers查看的时候，可以看到node1链接上2个节点（node2, node3）,node2和node3各自链接上1个节点（node1）</p>
+<p>也可使用配置文件的形式添加节点，在节点的datadir下新建static-node.json, 将需要连接的节点地址写入，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">&quot;enode://0480c837fc76671a8d8ee78b74fd04f9439762cc2e2e668b8604dda964c679ec8dd10f8347d7066707a315db8ad5c141e9d5a5b98f3a790660792f4469086f21@[::]:30000?discport=0&quot;,</span><br><span class="line">&quot;enode://79671ba7d09a4e6d16a64128e2cb24f544ec8740084e1ceb1abcac7b1c2b8a37dae812653360caf30ceff782265b124c1e6ce1d547dc6854bafb85596795751c@[::]:30001?discport=0&quot;,</span><br><span class="line">&quot;enode://3237c4eaf0dbf55b459eef14c4ecffe987b5179e482399b282bc5ab3d1559dd8461a9d39460810bf0d8c276fb13a9950eca5c38890dbf11d9dccdb1b61231a78@[::]:30002?discport=0&quot;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>或者直接在geth启动行中添加 - -bootnodes enode:….</p>
+<p>那么在geth启动的时候会自动链接。链接到的节点就互相发现组成以太坊私链网络了</p>
+<p>当组成网络之后，就可以开始挖矿了。在某个节点下，调用miner.start()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; miner.start()</span><br><span class="line">INFO [04-10|17:59:10] Transaction pool price threshold updated price=18000000000</span><br><span class="line">INFO [04-10|17:59:10] Starting mining operation</span><br><span class="line">null</span><br><span class="line">&gt; INFO [04-10|17:59:10] Commit new mining work                   number=1 txs=2 uncles=0 elapsed=1.058ms</span><br><span class="line">INFO [04-10|17:59:10] Successfully sealed new block            number=1 hash=3b7e10…38d85e</span><br><span class="line">INFO [04-10|17:59:10] 🔨 mined potential block                  number=1 hash=3b7e10…38d85e</span><br><span class="line">INFO [04-10|17:59:10] Commit new mining work                   number=2 txs=0 uncles=0 elapsed=285.156µs</span><br><span class="line">INFO [04-10|17:59:15] Successfully sealed new block            number=2 hash=1bb861…fbcb78</span><br></pre></td></tr></table></figure>
+
+<p>正常情况是这个样子..  不正常的情况，其一需要先解锁账户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WARN [04-10|17:55:49] Block sealing failed                     err=&quot;authentication needed: password or unlock&quot;</span><br><span class="line">&gt; personal.unlockAccount(eth.accounts[0])</span><br></pre></td></tr></table></figure>
+
+<p>其二，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; miner.start()</span><br><span class="line"></span><br><span class="line">null</span><br></pre></td></tr></table></figure>
+
+<p>返回null, 是不得行的~，解决方式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; miner.setEtherbase(eth.accounts[0])</span><br><span class="line">true</span><br><span class="line">&gt; miner.start()</span><br></pre></td></tr></table></figure>
+
+<p>在某个节点下，提交一个交易，如,  to为账户地址，查看账户地址为eth.accounts</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; eth.sendTransaction(&#123;from: eth.accounts[0], to: &quot;b6deeb049de5fb90345b5b84dd1faf2d56c6929e&quot;, value: web3.toWei(200, &quot;ether&quot;)&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>如果miner没有关掉的话，几秒后就会有含有交易的block产出,  txs为block包含的交易数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INFO [04-10|17:59:15] Imported new chain segment               blocks=2 txs=1 mgas=0.042 elapsed=1.348ms  mgasps=31.157 number=2 hash=1bb861…fbcb78 cache=2.47kB</span><br></pre></td></tr></table></figure>
+
+<p>挖矿，挖到一个区块之后就停止挖矿可使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; miner.start(1);admin.sleepBlocks(1);miner.stop();</span><br></pre></td></tr></table></figure>
+
+<p>当然，还有可能是网速原因… 过几分钟再试就好了。</p>
+<p>智能合约</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install solc</span><br></pre></td></tr></table></figure>
+
+<p>…..</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">geth attach http://0.0.0.0:1112</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;/Applications/Ethereum Wallet.app/Contents/MacOS/Ethereum Wallet&quot; --rpc http://localhost:8545</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    --rpcapi=&quot;db,eth,net,web3,personal,web3&quot; --rpc --rpcaddr 0.0.0.0 -rpcport 1112 --mine</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">eth.sendTransaction(&#123;from:eth.accounts[0], data:&quot;0x0100f862a00000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000809471562b71999873db5b286df957af199ec94617f78568656c6c6f80808080&quot;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>编译android</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make android</span><br><span class="line"></span><br><span class="line">./build/env.sh xgo --go=latest --dest=build/bin -v --targets=android-23/arm64 ./cmd/geth</span><br><span class="line"></span><br><span class="line">glide mirror set golang.org/x/text  /home/users/qiangmzsx/var/golang/golang.org/x/text</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eth.sendTransaction(&#123;from: eth.accounts[0], to: &quot;0x71562b71999873DB5b286dF957af199Ec94617F7&quot;, value: 200000&#125;)</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth-build/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&text=eth_build"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&is_video=false&description=eth_build"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth_build&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth-build/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&title=eth_build"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth-build/&name=eth_build&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

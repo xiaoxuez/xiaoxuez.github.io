@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="fabric consensus event源码解析代码位置为 fabric/consensus/… 想写pbft的代码解析来着。看到里面的事件流，设计得很赞，学习一下。 Manager 事件管理主要实现的功能是事件通道的处理，通过相关接口，写入数据到通道中，数据处理方提供处理方法即可，不需关注通道的实现。 12345678//首先，接口事件要做的事主要是，内部提供一个事件通道，暴露出往通道写数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fabric_code_consensus_event">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="fabric consensus event源码解析代码位置为 fabric/consensus/… 想写pbft的代码解析来着。看到里面的事件流，设计得很赞，学习一下。 Manager 事件管理主要实现的功能是事件通道的处理，通过相关接口，写入数据到通道中，数据处理方提供处理方法即可，不需关注通道的实现。 12345678//首先，接口事件要做的事主要是，内部提供一个事件通道，暴露出往通道写数据">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fabric_code_consensus_event">
+<meta name="twitter:description" content="fabric consensus event源码解析代码位置为 fabric/consensus/… 想写pbft的代码解析来着。看到里面的事件流，设计得很赞，学习一下。 Manager 事件管理主要实现的功能是事件通道的处理，通过相关接口，写入数据到通道中，数据处理方提供处理方法即可，不需关注通道的实现。 12345678//首先，接口事件要做的事主要是，内部提供一个事件通道，暴露出往通道写数据">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>fabric_code_consensus_event</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/04/14/btc-data-dat/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/04/14/fabric-pbft/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&text=fabric_code_consensus_event"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&is_video=false&description=fabric_code_consensus_event"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=fabric_code_consensus_event&body=Check out this article: https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&name=fabric_code_consensus_event&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#fabric-consensus-event源码解析"><span class="toc-number">1.</span> <span class="toc-text">fabric consensus event源码解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Manager-事件管理"><span class="toc-number">1.0.1.</span> <span class="toc-text">Manager 事件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Receiver接口"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">Receiver接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Manager实现"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">Manager实现</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Timer"><span class="toc-number">1.0.2.</span> <span class="toc-text">Timer</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        fabric_code_consensus_event
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-14T15:07:25.000Z" itemprop="datePublished">2019-04-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/fabric/">fabric</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="fabric-consensus-event源码解析"><a href="#fabric-consensus-event源码解析" class="headerlink" title="fabric consensus event源码解析"></a>fabric consensus event源码解析</h2><p>代码位置为 fabric/consensus/…</p>
+<p>想写pbft的代码解析来着。看到里面的事件流，设计得很赞，学习一下。</p>
+<h4 id="Manager-事件管理"><a href="#Manager-事件管理" class="headerlink" title="Manager 事件管理"></a>Manager 事件管理</h4><p>主要实现的功能是事件通道的处理，通过相关接口，写入数据到通道中，数据处理方提供处理方法即可，不需关注通道的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//首先，接口事件要做的事主要是，内部提供一个事件通道，暴露出往通道写数据的接口，以及数据处理接收方法，接收方法由Receiver提供，Magager的实现者需要实现数据从通道读出来，回调给接收者的过程。</span><br><span class="line">type Manager interface &#123;</span><br><span class="line">	Inject(Event)         //一个暂时的接口，跳过了通道，直接给到接收者，只限于Manager本线程使用，因为没有了通道做数据保护</span><br><span class="line">	Queue() chan&lt;- Event  //提供一个只写通道，用于往通道内写数据</span><br><span class="line">	SetReceiver(Receiver) //设置接收者，接收者需要实现接收方法，在Receiver接口中有具体方法定义</span><br><span class="line">	Start()               // 启动Manager线程</span><br><span class="line">	Halt()                // 停止manager线程</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Receiver接口"><a href="#Receiver接口" class="headerlink" title="Receiver接口"></a>Receiver接口</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type Receiver interface &#123;</span><br><span class="line">	//事件处理的地方会调用这个方法传递事件给到Receiver,注意到这个设计的是返回值也是Event事件，这个在之后的地方进行详细解释</span><br><span class="line">	ProcessEvent(e Event) Event</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Manager实现"><a href="#Manager实现" class="headerlink" title="Manager实现"></a>Manager实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">type managerImpl struct &#123;</span><br><span class="line">	threaded  //提供一个exit的通道，作为从外面结束线程的信号，包括Halt方法的实现</span><br><span class="line">	receiver Receiver  //接收者</span><br><span class="line">	events   chan Event //数据通道</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之前说manager是一个事件通道的处理，那么，业务逻辑一定是不断循环，从通道中读出数据，然后调用接收者的方法传递给接收者。所以代码是..</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">func (em *managerImpl) Start() &#123;</span><br><span class="line">    //开启子线程</span><br><span class="line">	go em.eventLoop()</span><br><span class="line">&#125;</span><br><span class="line">func (em *managerImpl) eventLoop() &#123;</span><br><span class="line">	for &#123;</span><br><span class="line">		select &#123;</span><br><span class="line">		case next := &lt;-em.events:</span><br><span class="line">			em.Inject(next)</span><br><span class="line">		case &lt;-em.exit:</span><br><span class="line">			logger.Debug(&quot;eventLoop told to exit&quot;)</span><br><span class="line">			return</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//传递Event给receiver</span><br><span class="line">func (em *managerImpl) Inject(event Event) &#123;</span><br><span class="line">	if em.receiver != nil &#123;</span><br><span class="line">		SendEvent(em.receiver, event)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//调用receiver.PeoceesEvent方法将事件传递给接收者</span><br><span class="line">func SendEvent(receiver Receiver, event Event) &#123;</span><br><span class="line">	next := event</span><br><span class="line">	for &#123;</span><br><span class="line">		// 如果ProcessEvent方法返回值不为空，则作为新的事件，继续处理</span><br><span class="line">		next = receiver.ProcessEvent(next)</span><br><span class="line">		if next == nil &#123;</span><br><span class="line">			break</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ProcessEvent设计为有返回值，且为Event，当返回值不为空，则作为新的事件进行处理，直到返回值为空。当然，因为是同一个receiver，如果设计为返回值为空，然后在ProcessEvent里直接进行递归调用，感觉也是一样的。但这样写的话，在ProcessEvent就会干净很多。</p>
+<h4 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h4><p>go源码包中是有time包的，为什么还要封装一个timer呢，原因是封装的timer一旦被reset或stop，就算倒计时触发事件了，事件也不会传递到事件队列中。</p>
+<p>既然提到go中原time包，多嘴一句，time包中的timer也是具体stop和reset方法，但可以看到官方函数解释</p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; Stop does not close the channel, to prevent a read from the channel succeeding incorrectly</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>即stop方法不会关闭通道，一般使用timer的定时器或ticker，都是监听通道是否有值，就意味着即使stop掉定时器，但通道还是在的，监听通道的程序不会退出。</p>
+<p>好了，下面说明event中封装的Timer吧。</p>
+<p>直接看实现吧，接口就略过了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// newTimer creates a new instance of timerImpl</span><br><span class="line">func newTimerImpl(manager Manager) Timer &#123;</span><br><span class="line">	et := &amp;timerImpl&#123;</span><br><span class="line">		startChan: make(chan *timerStart),</span><br><span class="line">		stopChan:  make(chan struct&#123;&#125;),</span><br><span class="line">		threaded:  threaded&#123;make(chan struct&#123;&#125;)&#125;,</span><br><span class="line">		manager:   manager,</span><br><span class="line">	&#125;</span><br><span class="line">	go et.loop()</span><br><span class="line">	return et</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意到结构体中有manager的引用，实现的定时器为，当开启定时器时，需要传入定时时间，和event事件，当时间触发时，把event事件传递给manager.receiver，传递方式为manager中的传递方式。故主要代码为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">func (et *timerImpl) loop() &#123;</span><br><span class="line">	var eventDestChan chan&lt;- Event //内部缓存通道</span><br><span class="line">	var event Event //事件</span><br><span class="line"></span><br><span class="line">	for &#123;</span><br><span class="line">		select &#123;</span><br><span class="line">		case start := &lt;-et.startChan:</span><br><span class="line">			//计时开始，时间为start.duration，事件为start.event</span><br><span class="line">			if et.timerChan != nil &#123;</span><br><span class="line">				if start.hard &#123;</span><br><span class="line">					logger.Debug(&quot;Resetting a running timer&quot;)</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					continue</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			logger.Debug(&quot;Starting timer&quot;)</span><br><span class="line">			et.timerChan = time.After(start.duration)</span><br><span class="line">			if eventDestChan != nil &#123;</span><br><span class="line">				logger.Debug(&quot;Timer cleared pending event&quot;)</span><br><span class="line">			&#125;</span><br><span class="line">			event = start.event</span><br><span class="line">			eventDestChan = nil</span><br><span class="line">		case &lt;-et.stopChan:</span><br><span class="line">			//结束计时</span><br><span class="line">			if et.timerChan == nil &amp;&amp; eventDestChan == nil &#123;</span><br><span class="line">				logger.Debug(&quot;Attempting to stop an unfired idle timer&quot;)</span><br><span class="line">			&#125;</span><br><span class="line">			et.timerChan = nil</span><br><span class="line">			logger.Debug(&quot;Stopping timer&quot;)</span><br><span class="line">			if eventDestChan != nil &#123;</span><br><span class="line">				logger.Debug(&quot;Timer cleared pending event&quot;)</span><br><span class="line">			&#125;</span><br><span class="line">			eventDestChan = nil</span><br><span class="line">			event = nil</span><br><span class="line">		case &lt;-et.timerChan:</span><br><span class="line">			//倒计时触发，这里好绕，倒计时触发，仅仅只是将事件传递通道的引用缓存下来</span><br><span class="line">			logger.Debug(&quot;Event timer fired&quot;)</span><br><span class="line">			et.timerChan = nil</span><br><span class="line">			eventDestChan = et.manager.Queue()</span><br><span class="line">		case eventDestChan &lt;- event:</span><br><span class="line">			//如果事件传递通道不为空，且event也不为空，则将event传递给事件通道中 eventDestChan &lt;- event这一句话就竟然能实现这么多件事！</span><br><span class="line">			logger.Debug(&quot;Timer event delivered&quot;)</span><br><span class="line">			eventDestChan = nil</span><br><span class="line">		case &lt;-et.exit:</span><br><span class="line">			//退出</span><br><span class="line">			logger.Debug(&quot;Halting timer&quot;)</span><br><span class="line">			return</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码看到，倒计时触发的时候，并不是立即直接将event送入通道，而是将通道缓存下来，等到下一次select，再执行将事件送入通道的事。<strong>在nil通道上发送和接受将永远被阻塞，在select中，如果其通道是nil，它将永远不会被选择</strong>。所以，上述eventDestChan如果为nil, case eventDestChan &lt;- event的语句就不会被选择。eventDestChan不为nil时，就能被选择了，select的用法是不是感觉很赞！</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#fabric-consensus-event源码解析"><span class="toc-number">1.</span> <span class="toc-text">fabric consensus event源码解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Manager-事件管理"><span class="toc-number">1.0.1.</span> <span class="toc-text">Manager 事件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Receiver接口"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">Receiver接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Manager实现"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">Manager实现</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Timer"><span class="toc-number">1.0.2.</span> <span class="toc-text">Timer</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&text=fabric_code_consensus_event"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&is_video=false&description=fabric_code_consensus_event"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=fabric_code_consensus_event&body=Check out this article: https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&title=fabric_code_consensus_event"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/04/14/fabric-code-consensus-event/&name=fabric_code_consensus_event&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

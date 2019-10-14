@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="wallet connection练习使用的库是kotlin的https://github.com/WalletConnect/kotlin-walletconnect-lib 然后下载下来，导入到as中…曲折而又艰辛。  什么gradle和kotlin版本问题 1classpath &amp;apos;com.android.tools.build:gradle:3.4.1&amp;apos;  在项目buil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wallet_connection">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/wallet-connection/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="wallet connection练习使用的库是kotlin的https://github.com/WalletConnect/kotlin-walletconnect-lib 然后下载下来，导入到as中…曲折而又艰辛。  什么gradle和kotlin版本问题 1classpath &amp;apos;com.android.tools.build:gradle:3.4.1&amp;apos;  在项目buil">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wallet_connection">
+<meta name="twitter:description" content="wallet connection练习使用的库是kotlin的https://github.com/WalletConnect/kotlin-walletconnect-lib 然后下载下来，导入到as中…曲折而又艰辛。  什么gradle和kotlin版本问题 1classpath &amp;apos;com.android.tools.build:gradle:3.4.1&amp;apos;  在项目buil">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>wallet_connection</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/crypto/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/12/how-to-set-up-a-blog/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/wallet-connection/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&text=wallet_connection"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&is_video=false&description=wallet_connection"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=wallet_connection&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/wallet-connection/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&name=wallet_connection&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#wallet-connection"><span class="toc-number">1.</span> <span class="toc-text">wallet connection</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        wallet_connection
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:31:54.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/blockchain/">blockchain</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="wallet-connection"><a href="#wallet-connection" class="headerlink" title="wallet connection"></a>wallet connection</h2><p>练习使用的库是kotlin的<a href="https://github.com/WalletConnect/kotlin-walletconnect-lib">https://github.com/WalletConnect/kotlin-walletconnect-lib</a></p>
+<p>然后下载下来，导入到as中…曲折而又艰辛。</p>
+<ul>
+<li><p>什么gradle和kotlin版本问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classpath &apos;com.android.tools.build:gradle:3.4.1&apos;</span><br></pre></td></tr></table></figure>
+
+<p>在项目build.gradle中加入</p>
+</li>
+<li><p>sample:app不是module</p>
+<p>在settings.gradle中修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include &apos;:lib&apos; , &apos;:sample:app&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>云镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenLocal()</span><br><span class="line">        maven &#123; url &apos;http://maven.aliyun.com/nexus/content/repositories/central&apos; &#125;</span><br><span class="line">        maven &#123; url &apos;http://maven.aliyun.com/nexus/content/groups/public&apos; &#125;</span><br><span class="line">        maven &#123; url &apos;http://maven.aliyun.com/nexus/content/repositories/google&apos; &#125;</span><br><span class="line">        maven &#123; url &apos;http://maven.aliyun.com/nexus/content/repositories/gradle-plugin&apos; &#125;</span><br><span class="line">        maven &#123; url &quot;https://maven.google.com&quot; &#125;</span><br><span class="line">        /**不需要fabric就不需要此项*/</span><br><span class="line">        maven &#123; url &apos;http://s3.amazonaws.com/fabric-artifacts/public&apos; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">~</span><br></pre></td></tr></table></figure>
+
+<p> init.gradle为上述内容，添加到~/.gradle目录下</p>
+</li>
+<li><p>正常情况下就能编译好了，如果出现代码版本不兼容的问题，就根据代码提示修改下</p>
+</li>
+</ul>
+<p>然后就能正常运行和编译啦。</p>
+<p>粘贴一个test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">class WalletConnectBridgeRepositoryIntegrationTest &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Integration test that can be used with the wallet connect example dapp</span><br><span class="line">     */</span><br><span class="line">    @Test</span><br><span class="line">    fun approveSession() &#123;</span><br><span class="line">        val client = OkHttpClient.Builder().pingInterval(1000, TimeUnit.MILLISECONDS).build()</span><br><span class="line">        val moshi = Moshi.Builder().build()</span><br><span class="line">        val sessionDir = File(&quot;build/tmp/&quot;).apply &#123; mkdirs() &#125;</span><br><span class="line">        val sessionStore = FileWCSessionStore(File(sessionDir, &quot;test_store.json&quot;).apply &#123; createNewFile() &#125;, moshi)</span><br><span class="line">        //wc:33...为扫码扫出来的结果</span><br><span class="line">        val config = Session.Config.fromWCUri(&quot;wc:79870fae-c04f-479e-8241-085e96603f2b@1?bridge=http%3A%2F%2F192.168.20.18%3A8000%2Fapi%2Fv1%2Fws&amp;key=db8147b92d96a62cb1a2181dd3f9076cfd8eceaeba01feb8becfb965754e6f3e&quot;)</span><br><span class="line">        val session = WCSession(</span><br><span class="line">            config,</span><br><span class="line">            MoshiPayloadAdapter(moshi),</span><br><span class="line">            sessionStore,</span><br><span class="line">            OkHttpTransport.Builder(client, moshi),</span><br><span class="line">            Session.PeerMeta(name = &quot;WC Unit Test&quot;)</span><br><span class="line">        )</span><br><span class="line">        session.addCallback(object : Session.Callback &#123;</span><br><span class="line">            //相关的状态会回调，如建立连接，连接断掉</span><br><span class="line">            override fun onStatus(status: Session.Status) &#123;</span><br><span class="line">                System.out.println(&quot;onStatus: $status&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">            //网页有请求，会接收到回调</span><br><span class="line">            override fun onMethodCall(call: Session.MethodCall) &#123;</span><br><span class="line"></span><br><span class="line">                if (call is Session.MethodCall.SessionRequest) &#123;</span><br><span class="line">                    //Session.MethodCall.SessionRequest授权请求</span><br><span class="line">                    //回复账户地址，代表授权此账户地址</span><br><span class="line">                    session.approve(listOf(&quot;0x32C772DCCF8DCddd3e271B213a0027c22C98Fd1e&quot;), 1L)</span><br><span class="line">                &#125; else if (call is Session.MethodCall.SendTransaction) &#123;</span><br><span class="line">                    //Session.MethodCall.SessionRequest发送交易请求</span><br><span class="line">                    // 可拿到call.to, call.from, call.data 等信息，后进行签名交易，并发送，然后回复处理成功</span><br><span class="line">                    session.approveRequest(call.id, &quot;ok&quot;)</span><br><span class="line">                &#125; else if(call is Session.MethodCall.Custom) &#123;</span><br><span class="line">                    //自定义方法和参数</span><br><span class="line">                    //根据call.params call.method进行处理后签名交易，并发送，然后回复处理成功</span><br><span class="line">                    session.approveRequest(call.id, &quot;ok&quot;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        //创建连接</span><br><span class="line">        session.init()</span><br><span class="line">        Thread.sleep(2000000)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    fun approveSession1() &#123;</span><br><span class="line">        val client = OkHttpClient.Builder().pingInterval(1000, TimeUnit.MILLISECONDS).build()</span><br><span class="line">        val moshi = Moshi.Builder().build()</span><br><span class="line">        val sessionDir = File(&quot;build/tmp/&quot;).apply &#123; mkdirs() &#125;</span><br><span class="line">        val sessionStore = FileWCSessionStore(File(sessionDir, &quot;test_store.json&quot;).apply &#123; createNewFile() &#125;, moshi)</span><br><span class="line">        val key = ByteArray(32).also &#123; Random().nextBytes(it) &#125;.toNoPrefixHexString()</span><br><span class="line">        val topic  = ByteArray(32).also &#123; Random().nextBytes(it) &#125;.toNoPrefixHexString()</span><br><span class="line">        println(&quot;topic: &quot; + topic)</span><br><span class="line">        println(&quot;key : $key&quot;)</span><br><span class="line">        val config = Session.Config(topic, &quot;http://192.168.20.18:5000&quot;, key)</span><br><span class="line">        val session = WCSession(</span><br><span class="line">                config,</span><br><span class="line">                MoshiPayloadAdapter(moshi),</span><br><span class="line">                sessionStore,</span><br><span class="line">                OkHttpTransport.Builder(client, moshi),</span><br><span class="line">                Session.PeerMeta(name = &quot;WC Unit Test&quot;)</span><br><span class="line">        )</span><br><span class="line">        session.addCallback(object : Session.Callback &#123;</span><br><span class="line">            override fun onStatus(status: Session.Status) &#123;</span><br><span class="line">                System.out.println(&quot;onStatus: $status&quot;)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            override fun onMethodCall(call: Session.MethodCall) &#123;</span><br><span class="line">                System.out.println(&quot;onMethodCall: $call&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        session.offer()</span><br><span class="line">        Thread.sleep(5000)</span><br><span class="line">        println(&quot;==========================&quot;)</span><br><span class="line">        val id = Random().nextLong()</span><br><span class="line">        println(&quot;id: &quot;+ id)</span><br><span class="line">        val p = session.performMethodCall(Session.MethodCall.Custom(id, &quot;tttt&quot;,  listOf(1,2,&quot;3&quot;,4,&quot;5&quot;)), callback = &#123; resp -&gt;</span><br><span class="line">            println(resp)</span><br><span class="line">        &#125;)</span><br><span class="line">        println(p)</span><br><span class="line">        Thread.sleep(100000)</span><br><span class="line">        session.kill()</span><br><span class="line">        Thread.sleep(200000)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#wallet-connection"><span class="toc-number">1.</span> <span class="toc-text">wallet connection</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/wallet-connection/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&text=wallet_connection"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&is_video=false&description=wallet_connection"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=wallet_connection&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/wallet-connection/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&title=wallet_connection"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/wallet-connection/&name=wallet_connection&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

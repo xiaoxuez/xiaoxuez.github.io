@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="logstash_config组成部分为： input, filter, output文档介绍 value A plugin can require that the value for a setting be a certain type, such as boolean, list, or hash.   Array users =&amp;gt; [ {id =&amp;gt; 1, name =&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elastic_logstash">
+<meta property="og:url" content="https://github.com/xiaoxuez/2017/10/14/elastic-logstash/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="logstash_config组成部分为： input, filter, output文档介绍 value A plugin can require that the value for a setting be a certain type, such as boolean, list, or hash.   Array users =&amp;gt; [ {id =&amp;gt; 1, name =&amp;gt;">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="elastic_logstash">
+<meta name="twitter:description" content="logstash_config组成部分为： input, filter, output文档介绍 value A plugin can require that the value for a setting be a certain type, such as boolean, list, or hash.   Array users =&amp;gt; [ {id =&amp;gt; 1, name =&amp;gt;">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>elastic_logstash</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/14/elastic-painless/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/kibana-plugin-development/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&text=elastic_logstash"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&is_video=false&description=elastic_logstash"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=elastic_logstash&body=Check out this article: https://github.com/xiaoxuez/2017/10/14/elastic-logstash/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&name=elastic_logstash&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#logstash-config"><span class="toc-number">1.</span> <span class="toc-text">logstash_config</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#value"><span class="toc-number">1.1.</span> <span class="toc-text">value</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#this-is-a-comment"><span class="toc-number"></span> <span class="toc-text">this is a comment</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#filter"><span class="toc-number">0.1.</span> <span class="toc-text">filter</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#drop-example"><span class="toc-number">0.1.0.1.</span> <span class="toc-text">drop example:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#input"><span class="toc-number">0.2.</span> <span class="toc-text">input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#output"><span class="toc-number">0.3.</span> <span class="toc-text">output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter-1"><span class="toc-number">0.4.</span> <span class="toc-text">filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#config"><span class="toc-number">0.5.</span> <span class="toc-text">config</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#为正则匹配运算符，"><span class="toc-number"></span> <span class="toc-text">=~  为正则匹配运算符，</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EXAMPLE"><span class="toc-number">1.</span> <span class="toc-text">EXAMPLE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#a-zA-Z-a-zA-Z-正则匹配类名"><span class="toc-number"></span> <span class="toc-text">([a-zA-Z]+[.][a-zA-Z]+)[.].  正则匹配类名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">0.1.</span> <span class="toc-text">Example</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#filter-aggregate"><span class="toc-number">0.1.1.</span> <span class="toc-text">filter-aggregate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#filter-basic-grok"><span class="toc-number">0.1.2.</span> <span class="toc-text">filter-basic-grok</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#坑"><span class="toc-number">1.</span> <span class="toc-text">坑</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        elastic_logstash
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-10-14T13:55:27.000Z" itemprop="datePublished">2017-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/elk/">elk</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="logstash-config"><a href="#logstash-config" class="headerlink" title="logstash_config"></a>logstash_config</h2><p>组成部分为： input, filter, output<br><a href="https://www.elastic.co/guide/en/logstash/current/configuration-file-structure.html" target="_blank" rel="noopener">文档介绍</a></p>
+<h3 id="value"><a href="#value" class="headerlink" title="value"></a>value</h3><blockquote>
+<p>A plugin can require that the value for a setting be a certain type, such as boolean, list, or hash.</p>
+</blockquote>
+<ul>
+<li><p>Array</p>
+<p>users =&gt; [ {id =&gt; 1, name =&gt; bob}, {id =&gt; 2, name =&gt; jane} ]</p>
+</li>
+<li><p>Lists</p>
+<p>path =&gt; [ “/var/log/messages”, “/var/log/*.log” ]</p>
+<pre><code>uris =&gt; [ &quot;http://elastic.co&quot;, &quot;http://example.net&quot; ]</code></pre></li>
+<li><p>Boolean</p>
+<p>ssl_enable =&gt; true</p>
+</li>
+<li><p>Bytes</p>
+<p>my_bytes =&gt; “1113”   # 1113 bytes</p>
+<pre><code>my_bytes =&gt; &quot;10MiB&quot;  # 10485760 bytes
+my_bytes =&gt; &quot;100kib&quot; # 102400 bytes
+my_bytes =&gt; &quot;180 mb&quot; # 180000000 bytes</code></pre></li>
+<li><p>Codec</p>
+<p>codec =&gt; “json”</p>
+<pre><code>//更多类型https://www.elastic.co/guide/en/logstash/current/codec-plugins.html</code></pre></li>
+<li><p>Hash</p>
+<p>match =&gt; {</p>
+<pre><code>  &quot;field1&quot; =&gt; &quot;value1&quot;
+  &quot;field2&quot; =&gt; &quot;value2&quot;
+  ...
+}</code></pre></li>
+<li><p>Number</p>
+<p>port =&gt; 33</p>
+</li>
+<li><p>Password</p>
+<p>my_password =&gt; “password”</p>
+</li>
+<li><p>URI</p>
+<p>my_uri =&gt; “<a href="http://foo:bar@example.net&quot;" target="_blank" rel="noopener">http://foo:bar@example.net&quot;</a></p>
+</li>
+<li><p>Path</p>
+<p>my_path =&gt; “/tmp/logstash”</p>
+</li>
+<li><p>String</p>
+<p>name =&gt; “Hello world”</p>
+<pre><code>name =&gt; &apos;It\&apos;s a beautiful day&apos;</code></pre></li>
+<li><p>Comments</p>
+<h1 id="this-is-a-comment"><a href="#this-is-a-comment" class="headerlink" title="this is a comment"></a>this is a comment</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">input &#123; # comments can appear at the end of a line, too</span><br><span class="line">  # ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><ul>
+<li><p>mutate</p>
+<p>mutate { replace =&gt; { “type” =&gt; “file_test” } }</p>
+</li>
+<li><p>grok</p>
+<blockquote>
+<p>Parses unstructured event data into fields</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grok &#123;</span><br><span class="line">  match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;COMBINEDAPACHELOG&#125;&quot; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/logstash-plugins/logstash-patterns-core/blob/master/patterns/grok-patterns">patterns的集合</a></p>
+</li>
+<li><p>date</p>
+<p>date {</p>
+<pre><code>      match =&gt; [ &quot;timestamp&quot; , &quot;dd/MMM/yyyy:HH:mm:ss Z&quot; ]
+}</code></pre></li>
+</ul>
+<ul>
+<li><p>json</p>
+<blockquote>
+<p>Parses JSON events</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="drop-example"><a href="#drop-example" class="headerlink" title="drop example:"></a>drop example:</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">filter &#123;</span><br><span class="line">	    grok &#123;</span><br><span class="line">            match =&gt; [&quot;message&quot;,&quot;%&#123;TIMESTAMP_ISO8601:logtime&#125; \[%&#123;NUMBER&#125;\] \(\(%&#123;WORD&#125;\)\) %&#123;WORD:loglevel&#125; %&#123;GREEDYDATA:other&#125;&quot;]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if [loglevel]!= &quot;ERROR&quot; &#123;</span><br><span class="line">            drop &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="input"><a href="#input" class="headerlink" title="input"></a>input</h3><p><a href="https://www.elastic.co/guide/en/logstash/current/plugins-inputs-file.html" target="_blank" rel="noopener">file</a></p>
+<h3 id="output"><a href="#output" class="headerlink" title="output"></a>output</h3><h3 id="filter-1"><a href="#filter-1" class="headerlink" title="filter"></a>filter</h3><ul>
+<li><p>grok</p>
+<pre><code> 消息解析，消息以按行为单位进行解析。基本格式为
+
+   grok {
+match =&gt; { &quot;message&quot; =&gt; &quot;%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}&quot; }
+  }</code></pre></li>
+</ul>
+<blockquote>
+<p>Grok sits on top of regular expressions, so any regular expressions are valid in grok as well.</p>
+</blockquote>
+<p>   其中，可将正则组成pattern，如”%{IP:client}” IP为pattern的类型, client为变量名，解析出来的变量如client可在后面进行使用。<br>   <a href="https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html#_custom_patterns" target="_blank" rel="noopener">自定义pattern</a>,总结方式就是在某文件下创建pattern解析方式，如</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> # contents of ./patterns/extra:</span><br><span class="line">JAVA_CLASS ([a-zA-Z]+[.][a-zA-Z]+)[.]*.*</span><br></pre></td></tr></table></figure>
+
+<p>再在grok中增加字段patterns_dir，patterns_dir为文件夹，非文件。如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  grok &#123;</span><br><span class="line">	  patterns_dir =&gt; [&quot;/Users/xiaoxuez/Library/apache/logstash-5.4.2/patterns&quot;]</span><br><span class="line">	  match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;TIMESTAMP_ISO8601:timestamp&#125; %&#123;JAVA_CLASS:producer&#125; %&#123;WORD:printer&#125; %&#123;GREEDYDATA:content&#125;&quot; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><p> config中还可以使用<a href>if条件语句</a>，如  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">filter &#123;</span><br><span class="line"> 	...</span><br><span class="line"> 	if ([producer] =~ /[m].*/) &#123;</span><br><span class="line"> 		# do ..</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		 drop &#123; &#125;  #该条消息丢掉 不进入output</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>   }</p>
+<h1 id="为正则匹配运算符，"><a href="#为正则匹配运算符，" class="headerlink" title="=~  为正则匹配运算符，"></a>=~  为正则匹配运算符，</h1><h2 id="EXAMPLE"><a href="#EXAMPLE" class="headerlink" title="EXAMPLE"></a>EXAMPLE</h2><p>file使用正则匹配</p>
+<pre><code>path =&gt; &quot;/var/log/%{type}.%{+yyyy.MM.dd.HH}&quot;</code></pre><p>使用变量用[]，如[path]</p>
+<h1 id="a-zA-Z-a-zA-Z-正则匹配类名"><a href="#a-zA-Z-a-zA-Z-正则匹配类名" class="headerlink" title="([a-zA-Z]+[.][a-zA-Z]+)[.].  正则匹配类名"></a>([a-zA-Z]+[.][a-zA-Z]+)[.]<em>.</em>  正则匹配类名</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">json&#123;</span><br><span class="line">     source =&gt; &quot;content&quot;</span><br><span class="line">     target =&gt; &quot;content&quot;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> mutate &#123;</span><br><span class="line">        add_field =&gt; &#123;</span><br><span class="line">          &quot;event_type&quot; =&gt; &quot;%&#123;[jsoncontent][type]&#125;&quot;</span><br><span class="line">          &quot;event_msg&quot; =&gt; &quot;%&#123;[jsoncontent][event]&#125;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​<br>​<br>​    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  #控制打印的</span><br><span class="line">if ([producer] == &quot;STUDIO&quot; ) &#123;</span><br><span class="line">    mutate &#123; replace =&gt; &#123; &quot;type&quot; =&gt; &quot;System_Airguru_Log&quot; &#125; &#125;</span><br><span class="line">&#125; else if ([producer] =~ /[m].*/) &#123;</span><br><span class="line">    json&#123;</span><br><span class="line">          source =&gt; &quot;content&quot;</span><br><span class="line">          target =&gt; &quot;jsoncontent&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    mutate &#123;</span><br><span class="line">      replace =&gt; &#123; &quot;type&quot; =&gt; &quot;Stratege_Airguru_Log&quot; &#125;</span><br><span class="line">      add_field =&gt; &#123;</span><br></pre></td></tr></table></figure>
+
+<pre><code>                 &quot;event_type&quot; =&gt; &quot;%{[jsoncontent][type]}&quot;
+                 &quot;event_msg&quot; =&gt; &quot;%{[jsoncontent][event]}&quot;
+               }
+      }
+} else {
+  drop { }
+}        </code></pre><h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><h4 id="filter-aggregate"><a href="#filter-aggregate" class="headerlink" title="filter-aggregate"></a>filter-aggregate</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">  file &#123;</span><br><span class="line">    path =&gt; &quot;$&#123;PROJECT&#125;/logs/**/**/worker.log&quot;</span><br><span class="line">    start_position =&gt; &quot;beginning&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filter &#123;</span><br><span class="line">#  if [path] =~ &quot;.log&quot; &#123;</span><br><span class="line">    #消息解析，</span><br><span class="line">    grok &#123;</span><br><span class="line">			id =&gt; &quot;storm_log_filter&quot;</span><br><span class="line">      patterns_dir =&gt; [&quot;$&#123;PROJECT&#125;/patterns&quot;]</span><br><span class="line">      #match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;GREEDYDATA:unknow&#125;&quot; &#125;</span><br><span class="line">      #match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;TIMESTAMP_ISO8601:time&#125; %&#123;JAVA_CLASS:producer&#125; %&#123;WORD:printer&#125; %&#123;GREEDYDATA:content&#125;&quot; &#125;</span><br><span class="line">      match =&gt; &#123; &quot;path&quot; =&gt; &quot;.*/%&#123;WORD:topology&#125;\-%&#123;JUST_NUMBER:order&#125;\-%&#123;JUST_NUMBER:submittime&#125;/[0-9]+/worker.log&quot; &#125;</span><br><span class="line">      break_on_match =&gt; false</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    aggregate &#123;</span><br><span class="line">     task_id =&gt; &quot;%&#123;topology&#125;-%&#123;order&#125;-%&#123;submittime&#125;&quot;</span><br><span class="line">     code =&gt; &quot;map[&apos;counts&apos;] ||= 0; map[&apos;counts&apos;] += 1;&quot;</span><br><span class="line">     push_map_as_event_on_timeout =&gt; true</span><br><span class="line">     timeout_task_id_field =&gt; &quot;topology_file&quot;</span><br><span class="line">     timeout =&gt; 360 # 10 minutes timeout</span><br><span class="line">     timeout_tags =&gt; [&apos;_aggregatetimeout&apos;]</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line">  stdout &#123; codec =&gt; rubydebug &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="filter-basic-grok"><a href="#filter-basic-grok" class="headerlink" title="filter-basic-grok"></a>filter-basic-grok</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">  file &#123;</span><br><span class="line">    path =&gt; &quot;/Users/xiaoxuez/Library/apache/logstash-5.4.2/test/file_test_log.log&quot;</span><br><span class="line">    start_position =&gt; &quot;beginning&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filter &#123;</span><br><span class="line">  if [path] =~ &quot;.log&quot; &#123;</span><br><span class="line">    #消息解析，</span><br><span class="line">    grok &#123;</span><br><span class="line">      match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;TOMCAT_DATESTAMP:time&#125; %&#123;JAVACLASS:producer&#125; %&#123;WORD&#125; %&#123;GREEDYDATA:content&#125;&quot; &#125;</span><br><span class="line">      break_on_match =&gt; false</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​<br>​<br>​<br>​</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  # if ([producer] !~ /[m].*/ or &quot;_grokparsefailure&quot; in [tags]) &#123;</span><br><span class="line">    # drop &#123; &#125;</span><br><span class="line">#  &#125;</span><br><span class="line"></span><br><span class="line">  mutate &#123;</span><br><span class="line">    #  remove_field =&gt; [&quot;message&quot;]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line">  #elasticsearch &#123;</span><br><span class="line">  #  hosts =&gt; [&quot;localhost:9200&quot;]</span><br><span class="line">  #&#125;</span><br><span class="line">  #输出到 stdout#</span><br><span class="line">  stdout &#123; codec =&gt; rubydebug &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><ul>
+<li><p>调式过程中出现解析文件没报错也没任何的东西…</p>
+<p>logstash会监听文件读取信息记录的位置,所以解析过的文件，如果文件内容并没有发生变化(暂且说是内容吧，可能logstash只能监听位置改变而不能识别之前内容有所改变，这个我还未验证过..),那么再次解析的话，将不会解析以前解析过的内容。解决方式是将监听的记录删掉，记录存在于{logstash}/data/plugins/inputs/file/.sincedb*</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#logstash-config"><span class="toc-number">1.</span> <span class="toc-text">logstash_config</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#value"><span class="toc-number">1.1.</span> <span class="toc-text">value</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#this-is-a-comment"><span class="toc-number"></span> <span class="toc-text">this is a comment</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#filter"><span class="toc-number">0.1.</span> <span class="toc-text">filter</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#drop-example"><span class="toc-number">0.1.0.1.</span> <span class="toc-text">drop example:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#input"><span class="toc-number">0.2.</span> <span class="toc-text">input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#output"><span class="toc-number">0.3.</span> <span class="toc-text">output</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#filter-1"><span class="toc-number">0.4.</span> <span class="toc-text">filter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#config"><span class="toc-number">0.5.</span> <span class="toc-text">config</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#为正则匹配运算符，"><span class="toc-number"></span> <span class="toc-text">=~  为正则匹配运算符，</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EXAMPLE"><span class="toc-number">1.</span> <span class="toc-text">EXAMPLE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#a-zA-Z-a-zA-Z-正则匹配类名"><span class="toc-number"></span> <span class="toc-text">([a-zA-Z]+[.][a-zA-Z]+)[.].  正则匹配类名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">0.1.</span> <span class="toc-text">Example</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#filter-aggregate"><span class="toc-number">0.1.1.</span> <span class="toc-text">filter-aggregate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#filter-basic-grok"><span class="toc-number">0.1.2.</span> <span class="toc-text">filter-basic-grok</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#坑"><span class="toc-number">1.</span> <span class="toc-text">坑</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&text=elastic_logstash"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&is_video=false&description=elastic_logstash"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=elastic_logstash&body=Check out this article: https://github.com/xiaoxuez/2017/10/14/elastic-logstash/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&title=elastic_logstash"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2017/10/14/elastic-logstash/&name=elastic_logstash&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

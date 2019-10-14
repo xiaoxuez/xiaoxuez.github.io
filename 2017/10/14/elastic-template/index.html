@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Template.json这个文件即定义Index Templates。  Index templates allow you to define templates that will automatically be applied when new indices are created.  结构分析外层结构：12345&amp;#123;	&amp;quot;template&amp;quot;: &amp;quot;n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elastic_template">
+<meta property="og:url" content="https://github.com/xiaoxuez/2017/10/14/elastic-template/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Template.json这个文件即定义Index Templates。  Index templates allow you to define templates that will automatically be applied when new indices are created.  结构分析外层结构：12345&amp;#123;	&amp;quot;template&amp;quot;: &amp;quot;n">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="elastic_template">
+<meta name="twitter:description" content="Template.json这个文件即定义Index Templates。  Index templates allow you to define templates that will automatically be applied when new indices are created.  结构分析外层结构：12345&amp;#123;	&amp;quot;template&amp;quot;: &amp;quot;n">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>elastic_template</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/14/floodlight-sdn/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/elastic-painless/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2017/10/14/elastic-template/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&text=elastic_template"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&is_video=false&description=elastic_template"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=elastic_template&body=Check out this article: https://github.com/xiaoxuez/2017/10/14/elastic-template/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&name=elastic_template&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Template-json"><span class="toc-number">1.</span> <span class="toc-text">Template.json</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#结构分析"><span class="toc-number">1.1.</span> <span class="toc-text">结构分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#外层结构："><span class="toc-number">1.1.1.</span> <span class="toc-text">外层结构：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping-结构分析"><span class="toc-number">1.1.2.</span> <span class="toc-text">Mapping 结构分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Dynamic-Mapping"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Dynamic Mapping</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数字段分析"><span class="toc-number">1.2.</span> <span class="toc-text">参数字段分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping"><span class="toc-number">1.2.1.</span> <span class="toc-text">Mapping</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        elastic_template
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-10-14T13:55:58.000Z" itemprop="datePublished">2017-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/elk/">elk</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Template-json"><a href="#Template-json" class="headerlink" title="Template.json"></a>Template.json</h2><p>这个文件即定义<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html" target="_blank" rel="noopener">Index Templates</a>。</p>
+<blockquote>
+<p>Index templates allow you to define templates that will automatically be applied when new indices are created.</p>
+</blockquote>
+<h3 id="结构分析"><a href="#结构分析" class="headerlink" title="结构分析"></a>结构分析</h3><h4 id="外层结构："><a href="#外层结构：" class="headerlink" title="外层结构："></a>外层结构：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;template&quot;: &quot;nginx_elastic_stack_example&quot;,</span><br><span class="line">	&quot;settings&quot;: &#123;&#125;</span><br><span class="line">	&quot;mappings&quot;: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>template: 准确说来，应该叫template pattern，为能匹配到模板的index name pattern。如下面的示例</p>
+<p>//The settings and mappings will be applied to any index name that matches the te* pattern.<br>“template”: “te*”,</p>
+</li>
+<li><p>settings: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules.html" target="_blank" rel="noopener">可设置项</a>, 常见的设置项如</p>
+<p>“settings” : {</p>
+<pre><code>&quot;index&quot; : {
+    &quot;number_of_shards&quot; : 3, //定义一个索引的主分片个数，默认值是5, 这个配置在索引创建后不能修改。
+    &quot;number_of_replicas&quot; : 2 //每个主分片的复制分片个数，默认是1。这个配置可以随时在活跃的索引上修改。</code></pre></li>
+</ul>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<pre><code>以上书写格式也可写成</code></pre>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;settings&quot; : &#123;</span><br><span class="line">     &quot;index.number_of_shards&quot;: 3</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>  另外，主分片个数的意义在于，分片是存储’索引’下文档的容器，分片的个数就决定了存储的大小。</p>
+<ul>
+<li><p>mappings: 对这个的解释引用一下原文比较恰当。</p>
+<blockquote>
+<p>Mapping is the process of defining how a document, and the fields it contains, are stored and indexed.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;mappings&quot;: &#123;</span><br><span class="line">	&quot;type1&quot;: &#123;  //定义类型type1</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="Mapping-结构分析"><a href="#Mapping-结构分析" class="headerlink" title="Mapping 结构分析"></a>Mapping 结构分析</h4><blockquote>
+<p>Each index has one or more mapping types, which are used to divide the documents in an index into logical groups</p>
+</blockquote>
+<p>mapping type包含以下几项：</p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-fields.html" target="_blank" rel="noopener">Meta-fields</a>，来自文档的元数据字段，以下划线开头，包括_index, _type, _id, _source等..</li>
+<li>properties，列出文档中可能包含的字段的映射</li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-params.html" target="_blank" rel="noopener">参数项</a>，控制如何动态处理新的字段，如dynamic_templates，analyzer等..</li>
+</ul>
+<p>其中，Field的数据类型可以为：</p>
+<ul>
+<li>简单数据类型，例如text，keyword，date，long，double，boolean，ip..其中，keyword和text的区别对应的是index explicit和index full text content。</li>
+<li>嵌套的对象或<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html" target="_blank" rel="noopener">nested</a></li>
+<li>特别的类型，例如<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-point.html" target="_blank" rel="noopener">geo_point</a>，<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-shape.html" target="_blank" rel="noopener">geo_shape</a>， <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters-completion.html" target="_blank" rel="noopener">completion</a>。</li>
+</ul>
+<h5 id="Dynamic-Mapping"><a href="#Dynamic-Mapping" class="headerlink" title="Dynamic Mapping"></a>Dynamic Mapping</h5><p>你可以不用定义mapping,fields， 也可以使用es的search，这都归功于的dynamic mapping。dynamic mapping包括_default_mapping， Dynamic field mappings，Dynamic templates。<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-mapping.html" target="_blank" rel="noopener">先粘官方链接吧</a></p>
+<ul>
+<li><p>_default_mapping:</p>
+<blockquote>
+<p>The default mapping, which will be used as the base mapping for any new mapping types, can be customised by adding a mapping type with the name _default_ to an index，</p>
+</blockquote>
+<p>如示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&quot;mappings&quot;: &#123;</span><br><span class="line">    &quot;_default_&quot;: &#123;  </span><br><span class="line">      &quot;_all&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: false</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;user&quot;: &#123;&#125;, //user继承自_default_</span><br><span class="line">    &quot;blogpost&quot;: &#123;  //blogpost继承自_default_并重写了&quot;_all&quot;</span><br><span class="line">      &quot;_all&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Dynamic field mappings: 一般说来，当文档中出现之前未见过的field，es会自动添加新field到映射中，这个功能可以通过设置进行disable，在这个功能是enabled的前提下，es添加新field时会转换类型，由json的数据类型转换到es的数据类型，如string–&gt;text或keyword。其中，有的复杂类型的检测，可以自定义检测格式，例如自定义date的数据格式。官方有<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-field-mapping.html" target="_blank" rel="noopener">示例</a>。</p>
+</li>
+<li><p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-templates.html#dynamic-templates" target="_blank" rel="noopener">Dynamic templates</a>: 这个重在使用，故直接贴上了链接，官方有示例使用说明。上文提到es自动添加新field到映射中，dynamic templates为定义一些添加模板，既然是模板，就要定义匹配模板的东西..例如match_mapping_type为指定数据类型，以及通过field name进行全匹配或正则匹配或全虚拟路径匹配(如a.b.*)，然后再加上mapping决定添加的新的field的特性。</p>
+</li>
+</ul>
+<h3 id="参数字段分析"><a href="#参数字段分析" class="headerlink" title="参数字段分析"></a>参数字段分析</h3><p>待完善补全.. 暂且列出现过的..</p>
+<h4 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h4><ul>
+<li><p>fields: 适用于当一个字段有多种类型，如当搜索时，希望它是一个text，当排序或者聚合时，希望它是一个keyword。</p>
+<p>“city”: {</p>
+<pre><code>  &quot;type&quot;: &quot;text&quot;,
+  &quot;fields&quot;: {
+    &quot;raw&quot;: {
+      &quot;type&quot;:  &quot;keyword&quot;
+    }
+  }
+}</code></pre></li>
+</ul>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//用于搜索时使用city,排序或聚合时使用city.raw,</span><br><span class="line"> &quot;aggs&quot;: &#123;</span><br><span class="line">    &quot;Cities&quot;: &#123;</span><br><span class="line">      &quot;terms&quot;: &#123;</span><br><span class="line">        &quot;field&quot;: &quot;city.raw&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>norms: 耗内存，如果不关心score，就置为false，尤其是字段仅仅用于filter或aggregation</li>
+</ul>
+<blockquote>
+<p>Norms store various normalization factors that are later used at query time in order to compute the score of a document relatively to a query.</p>
+</blockquote>
+<ul>
+<li>index: 决定field的value的index方式，值为analyzed(default, treat as full-text field), not_analyzed (treat as keyword field), no。</li>
+<li>ignore_above: Strings longer than the ignore_above setting will not be indexed or stored.</li>
+<li>_all: 将所有values的内容以空格进行存储，即_all的内容大概为[“..”, “..”],可进行分析和索引，但不能存储。</li>
+<li>dynamic：控制新字段是否被动态添加，所谓新字段，是较之前消息组成的字段而言。</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Template-json"><span class="toc-number">1.</span> <span class="toc-text">Template.json</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#结构分析"><span class="toc-number">1.1.</span> <span class="toc-text">结构分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#外层结构："><span class="toc-number">1.1.1.</span> <span class="toc-text">外层结构：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping-结构分析"><span class="toc-number">1.1.2.</span> <span class="toc-text">Mapping 结构分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Dynamic-Mapping"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Dynamic Mapping</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数字段分析"><span class="toc-number">1.2.</span> <span class="toc-text">参数字段分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mapping"><span class="toc-number">1.2.1.</span> <span class="toc-text">Mapping</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2017/10/14/elastic-template/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&text=elastic_template"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&is_video=false&description=elastic_template"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=elastic_template&body=Check out this article: https://github.com/xiaoxuez/2017/10/14/elastic-template/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&title=elastic_template"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2017/10/14/elastic-template/&name=elastic_template&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="ERCERC，Etuereum Request for Comment。为了创建一个以太坊平台的标准，开发人员应当提交了一个以太坊改进方案(EIP)，改进方案中包括协议规范和合约标准，一旦EIP被委员会批准并最终确定，它就成为ERC/Core 参考自连接 Final ERC20 代币标准化的一个起点。在Ethereum平台之上发布的大多数通证（token）都使用它。它定义了以下函数接口  tota">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eth_erc">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/eth-erc/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="ERCERC，Etuereum Request for Comment。为了创建一个以太坊平台的标准，开发人员应当提交了一个以太坊改进方案(EIP)，改进方案中包括协议规范和合约标准，一旦EIP被委员会批准并最终确定，它就成为ERC/Core 参考自连接 Final ERC20 代币标准化的一个起点。在Ethereum平台之上发布的大多数通证（token）都使用它。它定义了以下函数接口  tota">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eth_erc">
+<meta name="twitter:description" content="ERCERC，Etuereum Request for Comment。为了创建一个以太坊平台的标准，开发人员应当提交了一个以太坊改进方案(EIP)，改进方案中包括协议规范和合约标准，一旦EIP被委员会批准并最终确定，它就成为ERC/Core 参考自连接 Final ERC20 代币标准化的一个起点。在Ethereum平台之上发布的大多数通证（token）都使用它。它定义了以下函数接口  tota">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>eth_erc</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/eth-jsre-api/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/dai-code/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth-erc/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&text=eth_erc"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&is_video=false&description=eth_erc"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth_erc&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth-erc/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&name=eth_erc&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#ERC"><span class="toc-number">1.</span> <span class="toc-text">ERC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Final"><span class="toc-number">2.</span> <span class="toc-text">Final</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Draft"><span class="toc-number">3.</span> <span class="toc-text">Draft</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Core"><span class="toc-number"></span> <span class="toc-text">Core</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        eth_erc
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:53:20.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="ERC"><a href="#ERC" class="headerlink" title="ERC"></a>ERC</h4><p>ERC，Etuereum Request for Comment。为了创建一个以太坊平台的标准，开发人员应当提交了一个以太坊改进方案(EIP)，改进方案中包括协议规范和合约标准，一旦EIP被委员会批准并最终确定，它就成为ERC/Core</p>
+<p>参考自<a href="https://eips.ethereum.org/erc" target="_blank" rel="noopener">连接</a></p>
+<h4 id="Final"><a href="#Final" class="headerlink" title="Final"></a>Final</h4><ul>
+<li><p>ERC20</p>
+<p>代币标准化的一个起点。在Ethereum平台之上发布的大多数通证（<code>token</code>）都使用它。它定义了以下函数接口</p>
+<ul>
+<li>totalSupply()：返回代币供给总量</li>
+<li>balanceOf(address _owner)：返回_owner的帐户余额</li>
+<li>transfer(address _to,uint256 _value)：并将数量为_value的代币转入地址_to并触发transfer事件</li>
+<li>transferFrom(address _from,address _to,uint256_value)：将地址_from中的_value数量的代币转入地址_to ，并触发transfer事件</li>
+<li>approve(address _spender,uint256 _value)：允许_spender提取限额_value的代币</li>
+<li>allowance(address _owner,address _spender）：返回_spender可从_owner提款的代币数量上限</li>
+</ul>
+<p>以上函数将触发以下事件：</p>
+<ul>
+<li>transfer(address indexed _from,address indexed _to,uint256 _value)：每次进行代币转账时都会触发</li>
+<li>approval(address indexed _owner,address indexed _spender,uint256 _value)：调用approve()方法将触发该事件</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>ERC20的补充:</p>
+<ul>
+<li>ERC223</li>
+<li>ERC62, 加了两个额外的功能， increaseSupply和decreaseSupply, 这可以增加和减少流通中的令牌供应</li>
+<li>ERC827，它允许转让Token并允许持有人允许第三方使用Token。 以太坊上的Token可以被其他应用程序重复使用，这其中也包括钱包和交易所。 当需要支持第三方动态消费限额调整时这一点非常有用。ERC827与ERC-20兼容。</li>
+</ul>
+</li>
+<li><p>ERC721</p>
+<p>描述了一个不可互换的Token，即每个Token是不同的，并且每个Token对不同的用户都有不同的价值。</p>
+<p>例子：CryptoKittes，每一个数字猫都是独立的，其价值取决于其稀缺性和用户的购买欲。</p>
+</li>
+<li><p>ERC55</p>
+<p>大小写混用的地址表示方法，通过这种表示方法表示的地址隐含了一个<strong>校验和</strong>(checksum)能够验证该地址的有效性。在此之前地址的表示为小写，加入这个之后地址可用大小写混合表示</p>
+</li>
+<li><p>ERC137</p>
+<p>Ethereum Domain Name Service (ENS)</p>
+<p>域名服务。地址-域名对应</p>
+</li>
+<li><p>ERC162</p>
+<p>Initial ENS Hash Registrar(ENS: 以太坊名称服务)。服务于137</p>
+<blockquote>
+<p>注册商负责为系统用户分配域名，并且是唯一能够更新ENS的实体; ENS注册中心节点的所有者是其注册商。注册商可能是合同或外部拥有的账户，但预计根和最高级注册商至少将作为合同实施。</p>
+<p>- EIP 137</p>
+</blockquote>
+<p>精心设计和管理的注册商对于EIP 137中描述的ENS的成功至关重要。故162则对注册商的管理协议</p>
+</li>
+<li><p>ERC165</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用来验证这个合约是否实现了特定的接口。</span><br></pre></td></tr></table></figure>
+
+<p>ERC165定义以下功能：<br> 1） 如何识别接口；<br> 2） 一个智能合约如何发布它执行的接口；<br> 3） 如何检测一个智能合约是否执行了ERC-165协议；<br> 4） 如何检测一个智能合约是否执行了一个给定的接口；</p>
+</li>
+<li><p>ERC181</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENS support for reverse resolution of Ethereum addresses</span><br></pre></td></tr></table></figure>
+
+<p>ENS支持以太坊地址的反向解析</p>
+</li>
+<li><p>ERC190</p>
+<p>智能合约包管理标准, 提供包管理工具，提高代码的可重用性和安全性</p>
+</li>
+<li><p>ERC1167</p>
+<p>最小代理合约</p>
+<p>为了以不可变的方式简单且廉价地克隆合同功能，该标准规定了一个最小字节码实现，它将所有调用委托给已知的固定地址</p>
+</li>
+<li><p>681</p>
+<p>交易请求URL格式</p>
+<p>表示各种交易的标准方式，尤其是Ethers和ERC＃20令牌中的付款请求作为URL。</p>
+</li>
+</ul>
+<h4 id="Draft"><a href="#Draft" class="headerlink" title="Draft"></a>Draft</h4><ul>
+<li><p>1046</p>
+<p>扩展ERC20令牌接口以支持与ERC721令牌相同的元数据标准。</p>
+</li>
+<li><p>1062</p>
+<p>将IPFS哈希形式化为ENS（以太坊名称服务）解析器</p>
+<blockquote>
+<p>将IPFS base58字符串映射到ENS解析器时，首先我们将Base58转换为二进制缓冲区，将缓冲区转换为十六进制加密格式，然后保存到合同中。一旦我们想要获取由特定ENS表示的IPFS资源地址，我们可以先找到以十六进制格式存储的映射信息，将十六进制格式提取到二进制缓冲区，最后将其转换为IPFS Base58地址字符串</p>
+</blockquote>
+</li>
+<li><p>1066</p>
+<p>状态码。定义了适用于以太坊智能合约的广泛适用的状态代码。目前调用以太坊智能合约，返回状态要么<code>revert</code>需要人为干预，要么返回布尔通过/失败状态。该标准概述了与HTTP状态相同的一组共同的以太坊状态代码（ESC）。这提供了一组共享信号，允许智能合约自动响应情况，向用户公开本地化错误消息等。</p>
+</li>
+<li><p>1077</p>
+<p>Executable Signed Messages refunded by the contract</p>
+<p>没怎么看懂..好像是允许第三方帮忙提交交易。如在现有的支付(如apple pay)上进行支付以太坊</p>
+</li>
+<li><p>1078</p>
+<p>使用ENS子域名进行登录/注册</p>
+<p>使用这种方式的话，与auth令牌有点相似。子身份连接到现有身份</p>
+</li>
+<li><p>1080</p>
+<p>允许实现扩展ERC-20或ERC-791的令牌的标准API。该标准提供了恢复被盗或丢失帐户的基本功能，以及提供令牌的退款。</p>
+</li>
+<li><p>1081</p>
+<p>用于在以太坊上发行奖励的标准合同和界面，可用于任何类型的任务，在任何ERC20令牌或ETH中支付。</p>
+<p>为了鼓励以太坊奖金的跨平台互操作性，以及更容易的声誉跟踪，StandardBounties(1081)可以以公开可审计和不可变的方式促进资金管理，以换取与完成任务相对应的可交付成果。</p>
+</li>
+<li><p>1123</p>
+<p>190(包管理)的修订版</p>
+</li>
+<li><p>1129</p>
+<p>以太坊网络上DAPP和服务的公告标准化</p>
+</li>
+<li><p>1132</p>
+<p>通过Token锁定功能扩展ERC20</p>
+<p>ERC20标准的扩展，具有在合同中对Token进行时间锁定的方法。</p>
+</li>
+<li><p>1154</p>
+<p>oracle接口</p>
+</li>
+<li><p>1155</p>
+<p>用于管理多个token类型的标准接口。单个部署的合约可以包括可替换token、不可替换token或其他配置(如，半可替换的token)。20是要求每个token单独部署合约，721是不可替换的token组合单独部署。1155则相当于20+721</p>
+</li>
+<li><p>1175</p>
+<p>所有代币的钱包和商店标准（erc20）</p>
+<p>钱包与经过验证的合同创建的商店之间的相互信任允许您通过简单的流程支付和购买物品。</p>
+</li>
+<li><p>1178</p>
+<p>多类令牌标准</p>
+</li>
+<li><p>1185</p>
+<p>在ENS中存储DNS记录</p>
+<p>此EIP定义了ENS的解析程序配置文件，该配置文件提供用于存储和查找DNS记录的功能。这允许ENS用作权威DNS信息的存储。</p>
+</li>
+<li><p>1191</p>
+<p>将链ID添加到混合大小写校验和地址编码</p>
+<p>该EIP通过可选地将EIP-155定义的链ID添加到校验和计算来扩展EIP-55。</p>
+</li>
+<li><p>1202</p>
+<p>投票标准</p>
+</li>
+<li><p>1271</p>
+<p>在合约中验证签名方法</p>
+</li>
+<li><p>1261</p>
+<p>会员验证Token</p>
+<p>在智能合约中实现会员验证Token</p>
+</li>
+<li><p>1207</p>
+<p>DAuth访问委派标准。智能合约之间的”OAuth”</p>
+</li>
+<li><p>1203</p>
+<p>多级Token标准</p>
+<p>于1178有点类型，但似乎更有优势</p>
+</li>
+<li><p>1319</p>
+<p>包注册表界面，1123的伴随者，定义了智能合约包清单的标准。</p>
+</li>
+<li><p>1328</p>
+<p>WalletConnect标准URI格式。遵循831 URI格式</p>
+</li>
+<li><p>1386</p>
+<p>认证管理合约</p>
+<p>管理其证明签名密钥以及针对诸如吊销和验证等操作的链外发布的证明。(有点像授权/取消授权)</p>
+</li>
+<li><p>1387</p>
+<p>启用隐私的Merkle Tree认证</p>
+</li>
+<li><p>1388</p>
+<p>证明发行人管理清单</p>
+<p>1386、1387、1388都是差不多的认证相关，作者也是一样</p>
+</li>
+<li><p>1417</p>
+<p>投票标准。</p>
+<p>于1261(会员) 一起使用的投票标准</p>
+</li>
+<li><p>1438</p>
+<p>dapp组建(头像)和通用钱包</p>
+<p>代码的重用性方向</p>
+</li>
+<li><p>1444</p>
+<p>具有信号到文本的本地化消息传递。本地消息的可读文本。有几种机器有效的方式来表示意图，状态，状态转换和其他语义信号，包括布尔值，枚举和ERC-1066代码</p>
+</li>
+<li><p>1450</p>
+<p>用于发行和交易符合SEC标准的证券的兼容安全令牌</p>
+</li>
+<li><p>1462</p>
+<p>基本安全Token，提供符合证券法规和法律可执行性的要求。</p>
+</li>
+<li><p>1484</p>
+<p>数字身份聚合</p>
+<p>用于聚合数字身份信息的协议，该协议可与现有的，提议的和假设的未来数字身份标准广泛互操作。在区块链上提出了身份管理和聚合框架</p>
+</li>
+<li><p>173</p>
+<p>合约所有权标准</p>
+<p>允许获取合同的所有者地址并将合同所有权转移到不同的地址</p>
+</li>
+<li><p>191</p>
+<p>提出了关于如何处理以太坊合同中的签名数据的规范</p>
+</li>
+<li><p>205</p>
+<p>ENS支持合约abi</p>
+<p>在ENS中存储ABI定义的机制，以便呼叫者轻松查找合同接口</p>
+</li>
+<li><p>725</p>
+<p>代理身份</p>
+<p>密钥管理和执行的代理合同，用于建立区块链身份。</p>
+</li>
+<li><p>777</p>
+<p>Token合约的标准接口和行为</p>
+</li>
+<li><p>801</p>
+<p>A standard interface for canary contracts.完全没懂</p>
+</li>
+<li><p><strong>820</strong></p>
+<p>伪内省注册合约</p>
+<p>该标准定义了一个通用注册表智能合约，其中任何地址（合同或常规帐户）都可以注册它支持的接口以及哪个智能合约负责其实施。</p>
+<p>于165保持向后兼容</p>
+</li>
+<li><p>823</p>
+<p>token交换标准</p>
+<p>Token合同的标准，提供token交换服务，从而促进交叉token支付。</p>
+</li>
+<li><p>831</p>
+<p>以太坊的URI格式</p>
+</li>
+</ul>
+<p>-</p>
+<hr>
+<h3 id="Core"><a href="#Core" class="headerlink" title="Core"></a>Core</h3><ul>
+<li><p>158</p>
+<p>state clear，状态清除。定义了账户被删除的情况</p>
+</li>
+<li><p>155</p>
+<p>简单的重放攻击保护。具体是修改签名或恢复时计算hash时的一些修改(加入链ID)</p>
+</li>
+<li><p>150</p>
+<p>gas花费更改。</p>
+</li>
+</ul>
+<p>包管理</p>
+<p>Token</p>
+<ul>
+<li>可/不可置换</li>
+<li>符合特定要求，如证券法规、地方法律..</li>
+<li>多种Token交叉支付</li>
+</ul>
+<p>Auth</p>
+<p>ENS</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#ERC"><span class="toc-number">1.</span> <span class="toc-text">ERC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Final"><span class="toc-number">2.</span> <span class="toc-text">Final</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Draft"><span class="toc-number">3.</span> <span class="toc-text">Draft</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Core"><span class="toc-number"></span> <span class="toc-text">Core</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth-erc/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&text=eth_erc"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&is_video=false&description=eth_erc"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth_erc&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth-erc/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&title=eth_erc"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth-erc/&name=eth_erc&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

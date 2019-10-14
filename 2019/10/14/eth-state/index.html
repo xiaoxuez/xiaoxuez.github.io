@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="state trie的存储模型state/Trie接口 1234567891011// Trie is a Ethereum Merkle Trie.type Trie interface &amp;#123;	TryGet(key []byte) ([]byte, error)	TryUpdate(key, value []byte) error	TryDelete(key []byte) error">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eth_state">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/10/14/eth-state/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="state trie的存储模型state/Trie接口 1234567891011// Trie is a Ethereum Merkle Trie.type Trie interface &amp;#123;	TryGet(key []byte) ([]byte, error)	TryUpdate(key, value []byte) error	TryDelete(key []byte) error">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eth_state">
+<meta name="twitter:description" content="state trie的存储模型state/Trie接口 1234567891011// Trie is a Ethereum Merkle Trie.type Trie interface &amp;#123;	TryGet(key []byte) ([]byte, error)	TryUpdate(key, value []byte) error	TryDelete(key []byte) error">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>eth_state</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/14/web3j/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/10/14/eth-p2p-udp/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth-state/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&text=eth_state"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&is_video=false&description=eth_state"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth_state&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth-state/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&name=eth_state&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#state-trie的存储模型"><span class="toc-number">1.</span> <span class="toc-text">state trie的存储模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组织模型"><span class="toc-number">2.</span> <span class="toc-text">组织模型</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        eth_state
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-14T14:54:57.000Z" itemprop="datePublished">2019-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="state-trie的存储模型"><a href="#state-trie的存储模型" class="headerlink" title="state trie的存储模型"></a>state trie的存储模型</h4><p>state/Trie接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// Trie is a Ethereum Merkle Trie.</span><br><span class="line">type Trie interface &#123;</span><br><span class="line">	TryGet(key []byte) ([]byte, error)</span><br><span class="line">	TryUpdate(key, value []byte) error</span><br><span class="line">	TryDelete(key []byte) error</span><br><span class="line">	Commit(onleaf trie.LeafCallback) (common.Hash, error)</span><br><span class="line">	Hash() common.Hash</span><br><span class="line">	NodeIterator(startKey []byte) trie.NodeIterator</span><br><span class="line">	GetKey([]byte) []byte // TODO(fjl): remove this when SecureTrie is removed</span><br><span class="line">	Prove(key []byte, fromLevel uint, proofDb ethdb.Putter) error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Trie接口中定义的方法有Get、Put等操作/查询数据的方法，除此之外，Trie作为数据结构，在进行持久化时需要自定义持久化的数据结构，Commit方法则为进行持久化时的操作。</p>
+<p>Trie接口的实现主要是SecureTrie。cachedTrie结构中包含了匿名成员SecureTrie，所以cachedTrie也算Trie接口的实现。SecureTrie位于trie包下，内部是trie/Trie结构体(非接口)的封装，trie/Trie结构体是Trie数据结构的具体实现。</p>
+<p>state/Database接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// Database wraps access to tries and contract code.</span><br><span class="line">type Database interface &#123;</span><br><span class="line">	// OpenTrie opens the main account trie.</span><br><span class="line">	OpenTrie(root common.Hash) (Trie, error)</span><br><span class="line"></span><br><span class="line">	// OpenStorageTrie opens the storage trie of an account.</span><br><span class="line">	OpenStorageTrie(addrHash, root common.Hash) (Trie, error)</span><br><span class="line"></span><br><span class="line">	// CopyTrie returns an independent copy of the given trie.</span><br><span class="line">	CopyTrie(Trie) Trie</span><br><span class="line"></span><br><span class="line">	// ContractCode retrieves a particular contract&apos;s code.</span><br><span class="line">	ContractCode(addrHash, codeHash common.Hash) ([]byte, error)</span><br><span class="line"></span><br><span class="line">	// ContractCodeSize retrieves a particular contracts code&apos;s size.</span><br><span class="line">	ContractCodeSize(addrHash, codeHash common.Hash) (int, error)</span><br><span class="line"></span><br><span class="line">	// TrieDB retrieves the low level trie database used for data storage.</span><br><span class="line">	TrieDB() *trie.Database</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>state/Database接口，提供了从数据库读出数据一系列方法，主要是读出数据并组成Trie树数据结构。同时还提供了获取db的接口以供直接操作db。</p>
+<p>trie.Database是底层数据库的直接封装实现，增删改查一系列方法。这里使用的是leveldb，leveldb采用key-value的形式，相关知识暂时不展开了。</p>
+<p>trie包下的Trie是树的具体实现，Database是数据库的具体实现。</p>
+<p>state包下的Trie接口是接口(= =)..  Database主要是围绕state进行的读取接口。其具体实现也是对trie/Trie和trie/Database的封装。cachingDB另外有一层缓存实现。</p>
+<h4 id="组织模型"><a href="#组织模型" class="headerlink" title="组织模型"></a>组织模型</h4><p>statedb是key-value结构，value类型为stateObject，最后持久化到数据库的只有stateObject中的data，statedb封装了Database和Trie，可直接进行数据操作。从数据库的key-value来看，存储的value为stateObject中的data(Account类型)，组织trie树的key为addr，从数据操作上来看，state可直接进行账户的操作(setBalance、getBalance等等)，其实操作的都是对应stateObject中的data，最后Commit的时候持久化到数据库。中间还涉及别的很多东西，例如缓存、快照等，以供事务处理。</p>
+<p>statedb内部封装的操作是可以直接存储数据库的，stateObject中data类型为account，内部直接封装了value的序列化和反序列化。如果想存储非account类型的数据呢，statedb也提供了相关方法<code>SetState</code>和<code>GetState</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var (</span><br><span class="line">	stateAddr = common.BytesToAddress([]byte&#123;1, 1, 1, 1, 2&#125;)</span><br><span class="line">	key  = common.BytesToHash([]byte(&quot;names_service&quot;))</span><br><span class="line">)</span><br><span class="line">func TestSingleTrie(t *testing.T) &#123;</span><br><span class="line">	db := ethdb.NewMemDatabase()</span><br><span class="line">	state, _ := state.New(common.Hash&#123;&#125;, state.NewDatabase(db))</span><br><span class="line">	state.SetState(stateAddr, key, common.BytesToHash([]byte&#123;0, 0, 0&#125;))</span><br><span class="line">	state.IntermediateRoot(false)</span><br><span class="line">	hash := state.GetState(stateAddr, key)</span><br><span class="line">	if hash != common.BytesToHash([]byte&#123;0, 0, 0&#125;) &#123;</span><br><span class="line">		t.Error(&quot;unexpected err&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>setState的value的类型为hash。也就是说setState只能存储一个哈希值。如果想存储别的东西，可以直接使用trie/database相关接口进行存储，然后将存储的key作为setState的value，查询时先getState获取key，然后再查询value，这样就可以进行索引到存储的value了。如智能合约代码的存储，stateObject.data中只存储了合约代码的hash，合约代码存放在另外的地方。</p>
+<p>trie/Database下提供的直接存储/查询接口为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//查询</span><br><span class="line">func (db *Database) Node(hash common.Hash) ([]byte, error)</span><br><span class="line">//存储</span><br><span class="line">func (db *Database) InsertBlob(hash common.Hash, blob []byte)</span><br></pre></td></tr></table></figure>
+
+<p>智能合约代码的存储/读取就采用了以上两个方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// ContractCode retrieves a particular contract&apos;s code.</span><br><span class="line">func (db *cachingDB) ContractCode(addrHash, codeHash common.Hash) ([]byte, error) &#123;</span><br><span class="line">	code, err := db.db.Node(codeHash)</span><br><span class="line">	if err == nil &#123;</span><br><span class="line">		db.codeSizeCache.Add(codeHash, len(code))</span><br><span class="line">	&#125;</span><br><span class="line">	return code, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (s *StateDB) Commit(deleteEmptyObjects bool) (root common.Hash, err error) &#123;</span><br><span class="line">  ...</span><br><span class="line">     // Write any contract code associated with the state object</span><br><span class="line">     if stateObject.code != nil &amp;&amp; stateObject.dirtyCode &#123;</span><br><span class="line">		  s.db.TrieDB().InsertBlob(common.BytesToHash(stateObject.CodeHash()), stateObject.code)</span><br><span class="line">		  stateObject.dirtyCode = false</span><br><span class="line">	  &#125;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下示例为存储额外的Trie</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">func TestSingleTrie(t *testing.T) &#123;</span><br><span class="line">	db := ethdb.NewMemDatabase()</span><br><span class="line">	state, _ := state.New(common.Hash&#123;&#125;, state.NewDatabase(db))</span><br><span class="line">	state.SetState(stateAddr, key, common.BytesToHash([]byte&#123;0, 0, 0&#125;))</span><br><span class="line">	state.IntermediateRoot(false)</span><br><span class="line">	hash := state.GetState(stateAddr, key)</span><br><span class="line">	if hash != common.BytesToHash([]byte&#123;0, 0, 0&#125;) &#123;</span><br><span class="line">		t.Error(&quot;unexpected err&quot;)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	err = trie.TryUpdate([]byte(&quot;anny&quot;), []byte(&quot;0xccccc&quot;))</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		t.Error(&quot;update err, &quot;, err)</span><br><span class="line">	&#125;</span><br><span class="line">	t.Log(trie.Hash())</span><br><span class="line">	trie.Commit(nil)</span><br><span class="line">	t.Log(trie.Hash())</span><br><span class="line">	err = trie.TryUpdate([]byte(&quot;anny&quot;), []byte(&quot;0xccccb&quot;))</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		t.Error(&quot;update err, &quot;, err)</span><br><span class="line">	&#125;</span><br><span class="line">	err = trie.TryUpdate([]byte(&quot;jim&quot;), []byte(&quot;0xbbbbbc&quot;))</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		t.Error(&quot;update err, &quot;, err)</span><br><span class="line">	&#125;</span><br><span class="line">	trie.Commit(nil)</span><br><span class="line">	t.Log(trie.Hash())</span><br><span class="line">	state.SetState(stateAddr, key, trie.Hash())</span><br><span class="line">	hash = state.GetState(stateAddr, key)</span><br><span class="line">	if hash != trie.Hash() &#123;</span><br><span class="line">		t.Error(&quot;unexpected err&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">	trie1, err := state.Database().OpenStorageTrie(common.Hash&#123;&#125;, hash)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		t.Error(&quot;unexpected err&quot;, err)</span><br><span class="line">	&#125;</span><br><span class="line">	value, err := trie1.TryGet([]byte(&quot;anny&quot;))</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		t.Error(&quot;unexpected err&quot;, err)</span><br><span class="line">	&#125;</span><br><span class="line">	if string(value) != &quot;0xccccb&quot; &#123;</span><br><span class="line">		t.Error(&quot;unexpected err&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#state-trie的存储模型"><span class="toc-number">1.</span> <span class="toc-text">state trie的存储模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组织模型"><span class="toc-number">2.</span> <span class="toc-text">组织模型</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/10/14/eth-state/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&text=eth_state"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&is_video=false&description=eth_state"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=eth_state&body=Check out this article: https://github.com/xiaoxuez/2019/10/14/eth-state/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&title=eth_state"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/10/14/eth-state/&name=eth_state&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

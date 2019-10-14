@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="SDN基本架构 控制层 转发层 应用层 南向接口 北向接口  基本含义借”SDN核心技术剖析和实战指南”书的例子来说：  SDN的架构可以与人的身体做类比：控制层就是人的大脑，负责对人身体的总体管控；转发层的设备是人的四肢，在大脑的控制下进行各种活动；应用层对应的是各种创新的想法，大脑在它们的驱动下对四肢进行指挥以达到其所需的效果；南向接口和北向接口则分别相当于人体内的神经和脑电波，负责各种信号的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="floodlight_sdn">
+<meta property="og:url" content="https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="SDN基本架构 控制层 转发层 应用层 南向接口 北向接口  基本含义借”SDN核心技术剖析和实战指南”书的例子来说：  SDN的架构可以与人的身体做类比：控制层就是人的大脑，负责对人身体的总体管控；转发层的设备是人的四肢，在大脑的控制下进行各种活动；应用层对应的是各种创新的想法，大脑在它们的驱动下对四肢进行指挥以达到其所需的效果；南向接口和北向接口则分别相当于人体内的神经和脑电波，负责各种信号的">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-14T08:32:56.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="floodlight_sdn">
+<meta name="twitter:description" content="SDN基本架构 控制层 转发层 应用层 南向接口 北向接口  基本含义借”SDN核心技术剖析和实战指南”书的例子来说：  SDN的架构可以与人的身体做类比：控制层就是人的大脑，负责对人身体的总体管控；转发层的设备是人的四肢，在大脑的控制下进行各种活动；应用层对应的是各种创新的想法，大脑在它们的驱动下对四肢进行指挥以达到其所需的效果；南向接口和北向接口则分别相当于人体内的神经和脑电波，负责各种信号的">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>floodlight_sdn</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/14/elastic/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/elastic-template/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&text=floodlight_sdn"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&is_video=false&description=floodlight_sdn"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=floodlight_sdn&body=Check out this article: https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&name=floodlight_sdn&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SDN基本架构"><span class="toc-number">1.</span> <span class="toc-text">SDN基本架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SDN-交换机"><span class="toc-number">1.0.1.</span> <span class="toc-text">SDN 交换机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#南向接口"><span class="toc-number">1.0.2.</span> <span class="toc-text">南向接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#北向接口"><span class="toc-number">1.0.3.</span> <span class="toc-text">北向接口</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        floodlight_sdn
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-10-14T13:56:22.000Z" itemprop="datePublished">2017-10-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/enjoy/">enjoy</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="SDN基本架构"><a href="#SDN基本架构" class="headerlink" title="SDN基本架构"></a>SDN基本架构</h2><ul>
+<li>控制层</li>
+<li>转发层</li>
+<li>应用层</li>
+<li>南向接口</li>
+<li>北向接口</li>
+</ul>
+<p>基本含义借”SDN核心技术剖析和实战指南”书的例子来说：</p>
+<blockquote>
+<p>SDN的架构可以与人的身体做类比：控制层就是人的大脑，负责对人身体的总体管控；转发层的设备是人的四肢，在大脑的控制下进行各种活动；应用层对应的是各种创新的想法，大脑在它们的驱动下对四肢进行指挥以达到其所需的效果；南向接口和北向接口则分别相当于人体内的神经和脑电波，负责各种信号的上传下达</p>
+</blockquote>
+<p>故由上到下的顺序是 应用层 -&gt; 控制层 -&gt; 转发层，南北也因此命名，北向接口为控制层提供给应用层的接口，南向接口为控制层提供给转发层的接口。</p>
+<h4 id="SDN-交换机"><a href="#SDN-交换机" class="headerlink" title="SDN 交换机"></a>SDN 交换机</h4><p>交换机属于转发层，负责具体数据转发处理的设备。</p>
+<blockquote>
+<p>其工作原理都是在收到数据包时，将数据包中的某些特征域与设备自身存储的一些表项进行比对，当发现匹配时则按照表项的要求进行相应处理。</p>
+</blockquote>
+<p>言而言之交换机的工作就是对数据包进行匹配和处理，但匹配和处理的定义并非在交换机中实现，而是由控制器统一下发，统称<strong>流表</strong>。简要介绍一下OpenFlow流表的组成: 包头域 + 计数器 + 动作，包头域包括一系列进行匹配的参数，如入端口、源MAC地址，目的MAC地址等，计数器则用于统计数据流量的相关信息，动作用于指示交换机经匹配后的数据包如何处理，如转发。</p>
+<h4 id="南向接口"><a href="#南向接口" class="headerlink" title="南向接口"></a>南向接口</h4><blockquote>
+<p>SDN交换机需要在远程控制器的管控下工作，与之相关的设备状态和控制指令都需要经由SDN的南向接口传达。当前，最知名的南向接口莫过于ONF倡导的OpenFlow协议。</p>
+</blockquote>
+<h4 id="北向接口"><a href="#北向接口" class="headerlink" title="北向接口"></a>北向接口</h4><blockquote>
+<p>SDN北向接口是通过控制器向上层业务应用开放的接口，其目标是使得业务应用能够便利地调用底层的网络资源和能力。</p>
+</blockquote>
+<blockquote>
+<p>例如REST API就是上层业务应用的开发者比较喜欢的接口形式</p>
+</blockquote>
+<p>上面的概念下面将进一步讨论，但主要记录的是Builder设计模式的易用性和不可变对象的production(Buidler和production都是设计模式），production的对象的使用，代替了强制类型安全编码的原始类型，并且产生的是更多的可读性代码，内置的通配形式，以及最后没有必要去处理消息的长度。(这段话的对比是Pre-v1.0和Floodlight v1.0, v1.1, v1.2，可见readme中这段话的前面代码对比)</p>
+<p>所有的连接到Floodloght的switches都包含一个switch描述Openflow版本的工厂。可以有多种switch,所有都是不同版本的Openflow，在那些swicth中，controller会幕后处理低级协议差异。从模块和应用开发人员的角度来看，switch是暴露出来的IOFSwitch, IOFSwitch的方法之一getOFFactory能返回OpenFlowJ-Loxi工厂，适合switch描述的OpenFlow版本。一旦你有了正确的工厂，你就可以通过公共的OpenFlowJ-Loxi暴露的API创建OpenFlow类型和概念。</p>
+<p>因此，你在编写FlowMods和其他类型的时候不需要切换Api。例如，假设你想构建一个FlowMod，发送到一个switch上，OFSwitchManager已知的每一个switch都有一个相同版本的OpenFlow工厂的引用。这个引用在于协商switch和controller之间最初的握手。故上述整体过程是，从你的switch引用工厂，创建buidler，构建FlowMod, 并写到switch.忽略OpenFlow版本的话，所有OpenFlow对象的构造器是相同的API，但是你需要知道你可以使用的每一个OpenFlow版本，否则，例如你告诉一个OpenFlow1.0的switch去执行一些类似添加组的操作，而这个操作在1.0中并不支持，OpenFlowJ-Loxi库会使用一个UnsupportedOperationException友好提醒你。</p>
+<p>介绍其他一些微妙的为了变得很好变化。例如，许多常见的类型，如交换机交换机datapath ids, openflow ports, ip mac 地址被定义到OpenFlowJ-Loxi库中，通过DatapathId, OFPort, IPv4Address/IPv6Address, and MacAddress。你可以搜索org.projectfloodlight.openflow.types，能发现很多常见的可以被定义到单一位置的类型，像上面的buidlers中的produced对象，所有的类型都是不可变的。</p>
+<p>更多新的API在Floodlight v1.2中，参阅OpenFlowJ-Loxi文档和例子</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SDN基本架构"><span class="toc-number">1.</span> <span class="toc-text">SDN基本架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SDN-交换机"><span class="toc-number">1.0.1.</span> <span class="toc-text">SDN 交换机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#南向接口"><span class="toc-number">1.0.2.</span> <span class="toc-text">南向接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#北向接口"><span class="toc-number">1.0.3.</span> <span class="toc-text">北向接口</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&text=floodlight_sdn"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&is_video=false&description=floodlight_sdn"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=floodlight_sdn&body=Check out this article: https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&title=floodlight_sdn"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2017/10/14/floodlight-sdn/&name=floodlight_sdn&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/categories/">categories</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
