@@ -81,7 +81,7 @@ Commands:
 >
 >  Your site is published at https://xiaoxuez.github.io/
 
-就是github提供的服务，将github仓库部署到https://username.github.io这样的域名下。
+就是github提供的服务，将github仓库部署到`https://username.github.io`这样的域名下。
 
 <font size=2>这样就不用自己买服务器，自己部署服务了。</font>
 
