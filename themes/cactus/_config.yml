@@ -5,8 +5,6 @@
 # Link to a page that gives an overview of all your projects.
 # This can be an external link (e.g., to you GitHub profile) or to another
 # page within your website.
-projects_url: https://github.com/xiaoxuez/xiaoxuez.github.io
-
 # Set the page direction to RTL or LTR. default is LTR. (if you set it 'rtl', the 'vazir' font will be loaded.)
 direction: ltr
 # Configure the navigation menu.
@@ -15,19 +13,14 @@ direction: ltr
 # languages/*.yml
 nav:
   home: /
-  categories: /categories/
-  projects: projects_url
   search: /search/
+  Categories: /categories/
 
 # Links to your social media accounts.
 # The keys should correspond to Fontawesome icon names
 # (see https://fontawesome.com/icons?d=gallery&s=brands);
 # only 'mail' is an exception.
 social_links:
-  github: https://github.com/xiaoxuez/xiaoxuez.github.io
-  twitter: /
-  facebook: /
-  linkedin: /
   mail: mailto:xiaoxuez@163.com
 
 # Customize the overview with displaying a tagcloud on the index page.
