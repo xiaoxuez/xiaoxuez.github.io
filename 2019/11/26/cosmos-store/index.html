@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Cosmos state 在使用时有用到查询存储的值的api，这个api不仅返回了key对应的value，还返回了proof。使用proof可证明这个value的确存储在链上。这是怎么证明的呢？ 翻了下源码，大概了解到是怎么证明的了。随手也记录一下。 首先，在cosms-sdk中的设计是插件式，可以据情况使用x/包下的插件。 在存储上的话，使用的是store/rootmulti/store.go.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cosmos-store">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/11/26/cosmos-store/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Cosmos state 在使用时有用到查询存储的值的api，这个api不仅返回了key对应的value，还返回了proof。使用proof可证明这个value的确存储在链上。这是怎么证明的呢？ 翻了下源码，大概了解到是怎么证明的了。随手也记录一下。 首先，在cosms-sdk中的设计是插件式，可以据情况使用x/包下的插件。 在存储上的话，使用的是store/rootmulti/store.go.">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-26T08:42:12.994Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cosmos-store">
+<meta name="twitter:description" content="Cosmos state 在使用时有用到查询存储的值的api，这个api不仅返回了key对应的value，还返回了proof。使用proof可证明这个value的确存储在链上。这是怎么证明的呢？ 翻了下源码，大概了解到是怎么证明的了。随手也记录一下。 首先，在cosms-sdk中的设计是插件式，可以据情况使用x/包下的插件。 在存储上的话，使用的是store/rootmulti/store.go.">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>cosmos-store</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/11/25/cosmos-ibc-store/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/11/26/cosmos-store/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&text=cosmos-store"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&is_video=false&description=cosmos-store"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cosmos-store&body=Check out this article: https://github.com/xiaoxuez/2019/11/26/cosmos-store/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&name=cosmos-store&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cosmos-state"><span class="toc-number">1.</span> <span class="toc-text">Cosmos state</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#源码分析"><span class="toc-number">1.1.</span> <span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ival"><span class="toc-number">1.1.1.</span> <span class="toc-text">ival</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#rootmulti"><span class="toc-number">1.1.2.</span> <span class="toc-text">rootmulti</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        cosmos-store
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-11-26T06:34:13.000Z" itemprop="datePublished">2019-11-26</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/cosmos/">cosmos</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="Cosmos-state"><a href="#Cosmos-state" class="headerlink" title="Cosmos state"></a>Cosmos state</h3><p> 在使用时有用到查询存储的值的api，这个api不仅返回了key对应的value，还返回了proof。使用proof可证明这个value的确存储在链上。这是怎么证明的呢？</p>
+<p>翻了下源码，大概了解到是怎么证明的了。随手也记录一下。</p>
+<p>首先，在cosms-sdk中的设计是插件式，可以据情况使用<code>x/</code>包下的插件。</p>
+<p>在存储上的话，使用的是<code>store/rootmulti/store.go</code>..  ，根据包名猜测下是会有多颗树，然后每颗一个root，多个root又组成一颗树。根据上面的插件，所以就是据情况多个插件，多颗树吧。</p>
+<h4 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h4><p><code>store/rootmulti/store.go</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">type Store struct &#123;</span><br><span class="line">		db           dbm.DB  //用于持久化存储的db</span><br><span class="line">		lastCommitID types.CommitID</span><br><span class="line">		pruningOpts  types.PruningOptions</span><br><span class="line">		storesParams map[types.StoreKey]storeParams //1</span><br><span class="line">		stores       map[types.StoreKey]types.CommitKVStore //2</span><br><span class="line">		keysByName   map[string]types.StoreKey  //3</span><br><span class="line">		lazyLoading  bool</span><br><span class="line"></span><br><span class="line">		traceWriter  io.Writer</span><br><span class="line">		traceContext types.TraceContext</span><br><span class="line"></span><br><span class="line">		interBlockCache types.MultiStorePersistentCache</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主要看到1、2、3处为map结构。3的话比较明显是key是string类型，value是封装的某Key类型，这个某Key类型刚好是1和2的 key，注意到1的value类型是storeParams，好像只是参数，不是我想要的树结构。但是2的类型<code>types.CommitKVStore</code>，看起来有点像。<code>types.CommitKVStore</code>是接口类型，实现有<code>store/transient/store.go</code>和<code>store/iavl/store.go</code>，这里iavl好像很熟悉…gaia中对store实例化默认选择的是iavl。那么<code>ival</code>就是我想找的答案啦。</p>
+<h5 id="ival"><a href="#ival" class="headerlink" title="ival"></a>ival</h5><p><code>store/iavl/store.go</code>里有我想找的tree结构，但…时间限制..我没看实现🤦‍♀️</p>
+<p>简单而言，我选择从测试入手… 首先是这里面的tree的存储是带有版本的..相当于会根据版本存储</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">//store/iavl/store_test.go</span><br><span class="line"></span><br><span class="line">var (</span><br><span class="line">	treeData = map[string]string&#123;</span><br><span class="line">		&quot;hello&quot;: &quot;goodbye&quot;,</span><br><span class="line">		&quot;aloha&quot;: &quot;shalom&quot;,</span><br><span class="line">	&#125;</span><br><span class="line">	nMoreData = 0</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func newAlohaTree(t *testing.T, db dbm.DB) (*iavl.MutableTree, types.CommitID) &#123;</span><br><span class="line">	tree := iavl.NewMutableTree(db, cacheSize)</span><br><span class="line">	for k, v := range treeData &#123;</span><br><span class="line">		tree.Set([]byte(k), []byte(v))  //&quot;hello&quot; =&gt; &quot;goodbye&quot;; &quot;aloha&quot; =&gt;&quot;shalom&quot;</span><br><span class="line">	&#125;</span><br><span class="line">	for i := 0; i &lt; nMoreData; i++ &#123;</span><br><span class="line">		key := cmn.RandBytes(12)</span><br><span class="line">		value := cmn.RandBytes(50)</span><br><span class="line">		tree.Set(key, value)</span><br><span class="line">	&#125;</span><br><span class="line">	hash, ver, err := tree.SaveVersion()</span><br><span class="line">	require.Nil(t, err)</span><br><span class="line">	return tree, types.CommitID&#123;Version: ver, Hash: hash&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func TestGetImmutable(t *testing.T) &#123;</span><br><span class="line">	db := dbm.NewMemDB()</span><br><span class="line">	tree, cID := newAlohaTree(t, db)   //初始化tree并且放入一些key-value对，并且saveVersion一次</span><br><span class="line">																		//version=1</span><br><span class="line">	store := UnsafeNewStore(tree, 10, 10)</span><br><span class="line">	//	将tree中的key=&quot;hello&quot;的value由&quot;goodbye&quot;更改为&quot;adios&quot;</span><br><span class="line">	require.True(t, tree.Set([]byte(&quot;hello&quot;), []byte(&quot;adios&quot;)))  															</span><br><span class="line">	hash, ver, err := tree.SaveVersion()  //ver再次更新，此时version=2</span><br><span class="line">	cID = types.CommitID&#123;Version: ver, Hash: hash&#125;  //hash =&gt; root</span><br><span class="line">	require.Nil(t, err)</span><br><span class="line">	_, err = store.GetImmutable(cID.Version + 1)</span><br><span class="line">	require.Error(t, err)   //查询version=3的存储树，当然是没有的啦，err信息为找不到</span><br><span class="line"></span><br><span class="line">	newStore, err := store.GetImmutable(cID.Version - 1)  //查询version=1的存储树，</span><br><span class="line">	require.NoError(t, err)                           //此时hello的value为goodbye</span><br><span class="line">	require.Equal(t, newStore.Get([]byte(&quot;hello&quot;)), []byte(&quot;goodbye&quot;))</span><br><span class="line"></span><br><span class="line">	newStore, err = store.GetImmutable(cID.Version)   //查询version=2的存储树</span><br><span class="line">	require.NoError(t, err)													//此时hello的value已更新为adios</span><br><span class="line">	require.Equal(t, newStore.Get([]byte(&quot;hello&quot;)), []byte(&quot;adios&quot;))</span><br><span class="line"></span><br><span class="line">  //abci Query接口实现，查询key=hello，version=2的value，并且返回证据</span><br><span class="line">	res := newStore.Query(abci.RequestQuery&#123;Data: []byte(&quot;hello&quot;), Height: cID.Version, Path: &quot;/key&quot;, Prove: true&#125;)</span><br><span class="line">	require.Equal(t, res.Value, []byte(&quot;adios&quot;))</span><br><span class="line">	require.NotNil(t, res.Proof)</span><br><span class="line"></span><br><span class="line">	require.Panics(t, func() &#123; newStore.Set(nil, nil) &#125;)</span><br><span class="line">	require.Panics(t, func() &#123; newStore.Delete(nil) &#125;)</span><br><span class="line">	require.Panics(t, func() &#123; newStore.Commit() &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="rootmulti"><a href="#rootmulti" class="headerlink" title="rootmulti"></a>rootmulti</h5><p>然后再回来看<code>rootmulti/store</code></p>
+<p>同样，还是看测试<code>store/rootmulti/store_test.go</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">func TestHashStableWithEmptyCommit(t *testing.T) &#123;</span><br><span class="line">	var db dbm.DB = dbm.NewMemDB()</span><br><span class="line">	ms := newMultiStoreWithMounts(db)</span><br><span class="line">	err := ms.LoadLatestVersion()</span><br><span class="line">	require.Nil(t, err)</span><br><span class="line"></span><br><span class="line">	commitID := types.CommitID&#123;&#125;</span><br><span class="line">	checkStore(t, ms, commitID, commitID)</span><br><span class="line"></span><br><span class="line">	k, v := []byte(&quot;wind&quot;), []byte(&quot;blows&quot;)</span><br><span class="line">  //key=store1下的一棵树store1</span><br><span class="line">	store1 := ms.getStoreByName(&quot;store1&quot;).(types.KVStore)</span><br><span class="line">	//store1设置k-v</span><br><span class="line">	store1.Set(k, v)</span><br><span class="line"></span><br><span class="line"> //ms.Commit, 会调用store1.SaveVersion方法</span><br><span class="line">	cID := ms.Commit()</span><br><span class="line">	require.Equal(t, int64(1), cID.Version)</span><br><span class="line">	hash := cID.Hash</span><br><span class="line">	// make an empty commit, it should update version, but not affect hash</span><br><span class="line">	cID = ms.Commit()</span><br><span class="line">	require.Equal(t, int64(2), cID.Version)</span><br><span class="line">	require.Equal(t, hash, cID.Hash)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更多测试可在``store/rootmulti/store_test.go`中。</p>
+<p>结论是，首先会添加多个key值，每个key一个树，然后这些树的roothash作为rootmulti树的叶子节点，组成树，计算出来的root-hash会作为apphash存储在区块头中。那些小树的叶子节点的值就是存储的具体的内容啦。</p>
+<p>证明key-value确实在区块头的方式是，首先证明key-value在某颗小树上(store-key下)，其次计算出小树的roothash，再使用roothash计算出apphash，与区块头的apphash对比即可证明。</p>
+<p>在使用的时候，选择的区块高度，证明为到这个区块为止，这个数据是存在的。</p>
+<p>最后结论草草结尾，有时间再细化。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cosmos-state"><span class="toc-number">1.</span> <span class="toc-text">Cosmos state</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#源码分析"><span class="toc-number">1.1.</span> <span class="toc-text">源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ival"><span class="toc-number">1.1.1.</span> <span class="toc-text">ival</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#rootmulti"><span class="toc-number">1.1.2.</span> <span class="toc-text">rootmulti</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/11/26/cosmos-store/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&text=cosmos-store"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&is_video=false&description=cosmos-store"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cosmos-store&body=Check out this article: https://github.com/xiaoxuez/2019/11/26/cosmos-store/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&title=cosmos-store"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/11/26/cosmos-store/&name=cosmos-store&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
