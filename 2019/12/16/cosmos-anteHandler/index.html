@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Cosmos-anteHandler 12345678910111213141516171819// NewAnteHandler returns an AnteHandler that checks and increments sequence// numbers, checks signatures &amp;amp; account numbers, and deducts fees from t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cosmos-anteHandler">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Cosmos-anteHandler 12345678910111213141516171819// NewAnteHandler returns an AnteHandler that checks and increments sequence// numbers, checks signatures &amp;amp; account numbers, and deducts fees from t">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/cosmos-anteHandler.png">
+<meta property="og:updated_time" content="2020-07-27T06:22:44.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cosmos-anteHandler">
+<meta name="twitter:description" content="Cosmos-anteHandler 12345678910111213141516171819// NewAnteHandler returns an AnteHandler that checks and increments sequence// numbers, checks signatures &amp;amp; account numbers, and deducts fees from t">
+<meta name="twitter:image" content="https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/cosmos-anteHandler.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>cosmos-anteHandler</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/12/18/tendermint-node/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/09/cosmos-struct/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&text=cosmos-anteHandler"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&is_video=false&description=cosmos-anteHandler"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cosmos-anteHandler&body=Check out this article: https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&name=cosmos-anteHandler&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cosmos-anteHandler"><span class="toc-number">1.</span> <span class="toc-text">Cosmos-anteHandler</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        cosmos-anteHandler
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-16T10:35:17.000Z" itemprop="datePublished">2019-12-16</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/cosmos/">cosmos</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="Cosmos-anteHandler"><a href="#Cosmos-anteHandler" class="headerlink" title="Cosmos-anteHandler"></a>Cosmos-anteHandler</h3><p><img src="./cosmos-anteHandler.png" alt="流程图"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// NewAnteHandler returns an AnteHandler that checks and increments sequence</span><br><span class="line">// numbers, checks signatures &amp; account numbers, and deducts fees from the first</span><br><span class="line">// signer.</span><br><span class="line">func NewAnteHandler(ak keeper.AccountKeeper, supplyKeeper types.SupplyKeeper, sigGasConsumer SignatureVerificationGasConsumer) sdk.AnteHandler &#123;</span><br><span class="line">	return sdk.ChainAnteDecorators(</span><br><span class="line">		NewSetUpContextDecorator(), // outermost AnteDecorator. SetUpContext must be called first</span><br><span class="line">		NewMempoolFeeDecorator(),</span><br><span class="line">		NewValidateBasicDecorator(),</span><br><span class="line">		NewValidateMemoDecorator(ak),</span><br><span class="line">		NewConsumeGasForTxSizeDecorator(ak),</span><br><span class="line">		NewSetPubKeyDecorator(ak), // SetPubKeyDecorator must be called before all signature verification decorators</span><br><span class="line">		NewValidateSigCountDecorator(ak),</span><br><span class="line">		NewDeductFeeDecorator(ak, supplyKeeper),</span><br><span class="line">		NewSigGasConsumeDecorator(ak, sigGasConsumer),</span><br><span class="line">		NewSigVerificationDecorator(ak),</span><br><span class="line">		NewIncrementSequenceDecorator(ak), // innermost AnteDecorator</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>anteHandler</code>是流式处理的handler，作用在checkTx/DeliverTx</p>
+<p>来看看主要负责些什么。</p>
+<ul>
+<li><p><code>NewSetUpContextDecorator</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">return ctx.WithGasMeter</span><br><span class="line">//设置后续使用的ctx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>NewMempoolFeeDecorator</code></p>
+<p>检查fee中的gasPrice是否大于设置的最小gasprice</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">minGasPrices := ctx.MinGasPrices()</span><br><span class="line">//requiredFees为minGasPrices的封装</span><br><span class="line">if !feeCoins.IsAnyGTE(requiredFees) &#123;</span><br><span class="line">				return ctx, sdkerrors.Wrapf(sdkerrors.ErrInsufficientFee, &quot;insufficient fees; got: %s required: %s&quot;, feeCoins, requiredFees)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>NewValidateBasicDecorator</code></p>
+<p>检查Tx的fee是不是都小于最大值、签名有没有之类的。</p>
+</li>
+<li><p><code>NewValidateMemoDecorator</code></p>
+<p>检查memo是否超过最大长度</p>
+</li>
+<li><p><code>NewConsumeGasForTxSizeDecorator</code></p>
+<p>根据TxBytes * per byte price计算gas</p>
+<p><code>simulate</code>为<code>true</code>时，再加上验签的gas</p>
+</li>
+<li><p><code>NewSetPubKeyDecorator</code></p>
+<p>从签名中取出公钥，从Msg.GetSigners取出地址，验证公钥对应的地址是否与msg中地址相同，不同则报错。(用于验证如转账签名者必须是FromAddress)</p>
+<p>从签名中取出公钥地址，根据地址读取account，若没有account，报错。</p>
+<p>假如读出account的公钥未曾赋值，则赋值公钥并存储</p>
+</li>
+<li><p><code>NewValidateSigCountDecorator</code></p>
+<p>检查签名，如果公钥是多重签名的公钥，则检查多重的个数是否大于最大限制值</p>
+</li>
+<li><p><code>NewDeductFeeDecorator</code></p>
+<p>扣除fee，目前的版本是选择从sig签名数组里的第0个人的账户来扣除这笔手续费。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func (tx StdTx) FeePayer() sdk.AccAddress &#123;</span><br><span class="line">	if tx.GetSigners() != nil &#123;</span><br><span class="line">		return tx.GetSigners()[0]</span><br><span class="line">	&#125;</span><br><span class="line">	return sdk.AccAddress&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外，扣除的手续费是到module中去了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">err := supplyKeeper.SendCoinsFromAccountToModule(ctx, acc.GetAddress(), types.FeeCollectorName, fees)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>NewSigGasConsumeDecorator</code></p>
+<p>计算验签时的gas</p>
+</li>
+<li><p><code>NewSigVerificationDecorator</code></p>
+<p>签名验证，使用tx中的Msg及fee和数据库里的account number及sequence进行封装签名用的消息</p>
+</li>
+<li><p><code>NewIncrementSequenceDecorator</code></p>
+<p>增加account的sequence</p>
+</li>
+</ul>
+<hr>
+<p>所以CheckTx是不修改任何状态的，直到出块后方才修改。那么，如果在出块前，同一个地址连发两笔交易，要通过CheckTx，那么sequence必须要一样，因为检查验签时使用的sequence是一样的(数据库中的sequence)，如果交易内容不同，hash不同的情况下，就能通过CheckTx，加入到交易池中，直到被打包进块，只是两笔交易必然有一笔会执行失败，成为<code>invalidTx</code>.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cosmos-anteHandler"><span class="toc-number">1.</span> <span class="toc-text">Cosmos-anteHandler</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&text=cosmos-anteHandler"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&is_video=false&description=cosmos-anteHandler"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cosmos-anteHandler&body=Check out this article: https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&title=cosmos-anteHandler"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/12/16/cosmos-anteHandler/&name=cosmos-anteHandler&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

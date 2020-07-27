@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Cosmos abci记录一下cosmos-sdk与tendermint-abci的衔接。 tendermint rpc请求的路由在rpc/core/routes.go 123456789101112131415161718192021222324252627282930var Routes = map[string]*rpc.RPCFunc&amp;#123;	// subscribe/unsubscr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cosmos-abci">
+<meta property="og:url" content="https://github.com/xiaoxuez/2019/11/27/cosmos-abci/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Cosmos abci记录一下cosmos-sdk与tendermint-abci的衔接。 tendermint rpc请求的路由在rpc/core/routes.go 123456789101112131415161718192021222324252627282930var Routes = map[string]*rpc.RPCFunc&amp;#123;	// subscribe/unsubscr">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-27T06:22:44.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cosmos-abci">
+<meta name="twitter:description" content="Cosmos abci记录一下cosmos-sdk与tendermint-abci的衔接。 tendermint rpc请求的路由在rpc/core/routes.go 123456789101112131415161718192021222324252627282930var Routes = map[string]*rpc.RPCFunc&amp;#123;	// subscribe/unsubscr">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>cosmos-abci</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/12/05/cosmos-staking/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/11/26/cosmos-store/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&text=cosmos-abci"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&is_video=false&description=cosmos-abci"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cosmos-abci&body=Check out this article: https://github.com/xiaoxuez/2019/11/27/cosmos-abci/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&name=cosmos-abci&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cosmos-abci"><span class="toc-number">1.</span> <span class="toc-text">Cosmos abci</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tendermint"><span class="toc-number">1.1.</span> <span class="toc-text">tendermint</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cosmos-sdk"><span class="toc-number">1.2.</span> <span class="toc-text">cosmos-sdk</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#另起一行"><span class="toc-number"></span> <span class="toc-text">另起一行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#这里由更新验证者为契机，查看相关的代码，捋下结构。"><span class="toc-number">1.</span> <span class="toc-text">这里由更新验证者为契机，查看相关的代码，捋下结构。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#更新设置验证者的方式"><span class="toc-number">1.1.</span> <span class="toc-text">更新设置验证者的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#genesis里配置验证者的传递"><span class="toc-number">1.1.1.</span> <span class="toc-text">genesis里配置验证者的传递</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#staking"><span class="toc-number">1.1.2.</span> <span class="toc-text">staking</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        cosmos-abci
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-11-27T19:34:24.000Z" itemprop="datePublished">2019-11-27</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/cosmos/">cosmos</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="Cosmos-abci"><a href="#Cosmos-abci" class="headerlink" title="Cosmos abci"></a>Cosmos abci</h3><p>记录一下cosmos-sdk与tendermint-abci的衔接。</p>
+<h4 id="tendermint"><a href="#tendermint" class="headerlink" title="tendermint"></a>tendermint</h4><ul>
+<li><p>rpc请求的路由在<code>rpc/core/routes.go</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">var Routes = map[string]*rpc.RPCFunc&#123;</span><br><span class="line">	// subscribe/unsubscribe are reserved for websocket events.</span><br><span class="line">	&quot;subscribe&quot;:       rpc.NewWSRPCFunc(Subscribe, &quot;query&quot;),</span><br><span class="line">	&quot;unsubscribe&quot;:     rpc.NewWSRPCFunc(Unsubscribe, &quot;query&quot;),</span><br><span class="line">	&quot;unsubscribe_all&quot;: rpc.NewWSRPCFunc(UnsubscribeAll, &quot;&quot;),</span><br><span class="line"></span><br><span class="line">	// info API</span><br><span class="line">	&quot;health&quot;:               rpc.NewRPCFunc(Health, &quot;&quot;),</span><br><span class="line">	&quot;status&quot;:               rpc.NewRPCFunc(Status, &quot;&quot;),</span><br><span class="line">	&quot;net_info&quot;:             rpc.NewRPCFunc(NetInfo, &quot;&quot;),</span><br><span class="line">	&quot;blockchain&quot;:           rpc.NewRPCFunc(BlockchainInfo, &quot;minHeight,maxHeight&quot;),</span><br><span class="line">	&quot;genesis&quot;:              rpc.NewRPCFunc(Genesis, &quot;&quot;),</span><br><span class="line">	&quot;block&quot;:                rpc.NewRPCFunc(Block, &quot;height&quot;),</span><br><span class="line">	&quot;block_results&quot;:        rpc.NewRPCFunc(BlockResults, &quot;height&quot;),</span><br><span class="line">	&quot;commit&quot;:               rpc.NewRPCFunc(Commit, &quot;height&quot;),</span><br><span class="line">	&quot;tx&quot;:                   rpc.NewRPCFunc(Tx, &quot;hash,prove&quot;),</span><br><span class="line">	&quot;tx_search&quot;:            rpc.NewRPCFunc(TxSearch, &quot;query,prove,page,per_page&quot;),</span><br><span class="line">	&quot;validators&quot;:           rpc.NewRPCFunc(Validators, &quot;height&quot;),</span><br><span class="line">	&quot;dump_consensus_state&quot;: rpc.NewRPCFunc(DumpConsensusState, &quot;&quot;),</span><br><span class="line">	&quot;consensus_state&quot;:      rpc.NewRPCFunc(ConsensusState, &quot;&quot;),</span><br><span class="line">	&quot;consensus_params&quot;:     rpc.NewRPCFunc(ConsensusParams, &quot;height&quot;),</span><br><span class="line">	&quot;unconfirmed_txs&quot;:      rpc.NewRPCFunc(UnconfirmedTxs, &quot;limit&quot;),</span><br><span class="line">	&quot;num_unconfirmed_txs&quot;:  rpc.NewRPCFunc(NumUnconfirmedTxs, &quot;&quot;),</span><br><span class="line"></span><br><span class="line">	// tx broadcast API</span><br><span class="line">	&quot;broadcast_tx_commit&quot;: rpc.NewRPCFunc(BroadcastTxCommit, &quot;tx&quot;),</span><br><span class="line">	&quot;broadcast_tx_sync&quot;:   rpc.NewRPCFunc(BroadcastTxSync, &quot;tx&quot;),</span><br><span class="line">	&quot;broadcast_tx_async&quot;:  rpc.NewRPCFunc(BroadcastTxAsync, &quot;tx&quot;),</span><br><span class="line">//...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收到交易会通过<code>CheckTx</code>进入交易池，在<code>mempool.clist_mempool.go</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">func (mem *CListMempool) CheckTx(tx types.Tx, cb func(*abci.Response)) (err error) &#123;</span><br><span class="line">	return mem.CheckTxWithInfo(tx, cb, TxInfo&#123;SenderID: UnknownPeerID&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (mem *CListMempool) CheckTxWithInfo(tx types.Tx, cb func(*abci.Response), txInfo TxInfo) (err error) &#123;</span><br><span class="line">	mem.proxyMtx.Lock()</span><br><span class="line">	// use defer to unlock mutex because application (*local client*) might panic</span><br><span class="line">	defer mem.proxyMtx.Unlock()</span><br><span class="line"></span><br><span class="line">	var (</span><br><span class="line">		memSize  = mem.Size()</span><br><span class="line">		txsBytes = mem.TxsBytes()</span><br><span class="line">		txSize   = len(tx)</span><br><span class="line">	)</span><br><span class="line">  //...省略多行代码</span><br><span class="line">  //CheckTxAsync最终调用的是abci.CheckTx</span><br><span class="line">	reqRes := mem.proxyAppConn.CheckTxAsync(abci.RequestCheckTx&#123;Tx: tx&#125;)</span><br><span class="line">	//设置回调来决定要不要添加到交易池中</span><br><span class="line">	reqRes.SetCallback(mem.reqResCb(tx, txInfo.SenderID, txInfo.SenderP2PID, cb))</span><br><span class="line"></span><br><span class="line">	return nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//设置的回调，即当abci.CheckTx返回时，会回调这个方法，重要的是调用resCbFirstTime</span><br><span class="line">func (mem *CListMempool) reqResCb(</span><br><span class="line">	tx []byte,peerID uint16,peerP2PID p2p.ID,	externalCb func(*abci.Response),</span><br><span class="line">) func(res *abci.Response) &#123;</span><br><span class="line">	return func(res *abci.Response) &#123;</span><br><span class="line">	 //...</span><br><span class="line">		mem.resCbFirstTime(tx, peerID, peerP2PID, res)</span><br><span class="line">	//..</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//resCbFirstTime会决定交易会不会进入到交易池中</span><br><span class="line">func (mem *CListMempool) resCbFirstTime(</span><br><span class="line">	tx []byte, peerID uint16, peerP2PID p2p.ID, res *abci.Response) &#123;</span><br><span class="line">	switch r := res.Value.(type) &#123;</span><br><span class="line">	case *abci.Response_CheckTx:</span><br><span class="line">		var postCheckErr error</span><br><span class="line">		if mem.postCheck != nil &#123;</span><br><span class="line">			postCheckErr = mem.postCheck(tx, r.CheckTx)</span><br><span class="line">		&#125;</span><br><span class="line">		//abci.CheckTx方法返回错误就不会添加到交易池中</span><br><span class="line">		if (r.CheckTx.Code == abci.CodeTypeOK) &amp;&amp; postCheckErr == nil &#123;</span><br><span class="line">			memTx := &amp;mempoolTx&#123;</span><br><span class="line">				height:    mem.height,</span><br><span class="line">				gasWanted: r.CheckTx.GasWanted,</span><br><span class="line">				tx:        tx,</span><br><span class="line">			&#125;</span><br><span class="line">			memTx.senders.Store(peerID, true)</span><br><span class="line">			mem.addTx(memTx)</span><br><span class="line">    &#125;</span><br><span class="line">    //...</span><br><span class="line">	default:</span><br><span class="line">		// ignore other messages</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>state/execution.go</code>中的<code>CreateProposal</code>方法会将交易池中的交易取出来进行打包组成区块</p>
+</li>
+<li><p><code>state/execution.go</code>中区块组成后，执行交易在这里<code>execBlockOnProxyApp</code>方法里。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">func execBlockOnProxyApp(logger log.Logger, proxyAppConn proxy.AppConnConsensus, block *types.Block, stateDB dbm.DB) (*ABCIResponses, error) &#123;</span><br><span class="line">	var validTxs, invalidTxs = 0, 0</span><br><span class="line"></span><br><span class="line">	txIndex := 0</span><br><span class="line">	abciResponses := NewABCIResponses(block)</span><br><span class="line"></span><br><span class="line">	//设置回调，当abci.DeliverTx执行完后，统计交易成功和失败</span><br><span class="line">	// Execute transactions and get hash.</span><br><span class="line">	proxyCb := func(req *abci.Request, res *abci.Response) &#123;</span><br><span class="line">		if r, ok := res.Value.(*abci.Response_DeliverTx); ok &#123;</span><br><span class="line">			// TODO: make use of res.Log</span><br><span class="line">			// TODO: make use of this info</span><br><span class="line">			// Blocks may include invalid txs.</span><br><span class="line">			txRes := r.DeliverTx</span><br><span class="line">			if txRes.Code == abci.CodeTypeOK &#123;</span><br><span class="line">				validTxs++</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				logger.Debug(&quot;Invalid tx&quot;, &quot;code&quot;, txRes.Code, &quot;log&quot;, txRes.Log)</span><br><span class="line">				invalidTxs++</span><br><span class="line">			&#125;</span><br><span class="line">			abciResponses.DeliverTx[txIndex] = txRes</span><br><span class="line">			txIndex++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	proxyAppConn.SetResponseCallback(proxyCb)</span><br><span class="line"></span><br><span class="line">	commitInfo, byzVals := getBeginBlockValidatorInfo(block, stateDB)</span><br><span class="line"></span><br><span class="line">  //abci.BeginBlock在这里会被调用</span><br><span class="line">	// Begin block</span><br><span class="line">	var err error</span><br><span class="line">	abciResponses.BeginBlock, err = proxyAppConn.BeginBlockSync(abci.RequestBeginBlock&#123;</span><br><span class="line">		Hash:                block.Hash(),</span><br><span class="line">		Header:              types.TM2PB.Header(&amp;block.Header),</span><br><span class="line">		LastCommitInfo:      commitInfo,</span><br><span class="line">		ByzantineValidators: byzVals,</span><br><span class="line">	&#125;)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		logger.Error(&quot;Error in proxyAppConn.BeginBlock&quot;, &quot;err&quot;, err)</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">  //abci.DeliverTx在这里会被调用，但注意的是，就算DeliverTx结果返回错误，这里也不会影响交易入块，记录在链上的交易会包含失败的结果</span><br><span class="line">	// Run txs of block.</span><br><span class="line">	for _, tx := range block.Txs &#123;</span><br><span class="line">		proxyAppConn.DeliverTxAsync(abci.RequestDeliverTx&#123;Tx: tx&#125;)</span><br><span class="line">		if err := proxyAppConn.Error(); err != nil &#123;</span><br><span class="line">			return nil, err</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//abci.EndBlock在这里会被调用</span><br><span class="line">	// End block.</span><br><span class="line">	abciResponses.EndBlock, err = proxyAppConn.EndBlockSync(abci.RequestEndBlock&#123;Height: block.Height&#125;)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		logger.Error(&quot;Error in proxyAppConn.EndBlock&quot;, &quot;err&quot;, err)</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	logger.Info(&quot;Executed block&quot;, &quot;height&quot;, block.Height, &quot;validTxs&quot;, validTxs, &quot;invalidTxs&quot;, invalidTxs)</span><br><span class="line"></span><br><span class="line">	return abciResponses, nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上代码<code>proxyAppConn</code>的实现之一为<code>abci/client/local_client.go</code>。</p>
+<p><code>local_client</code>中主要是使用以下这个接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">type Application interface &#123;</span><br><span class="line">	// Info/Query Connection</span><br><span class="line">	Info(RequestInfo) ResponseInfo                // Return application info</span><br><span class="line">	SetOption(RequestSetOption) ResponseSetOption // Set application option</span><br><span class="line">	Query(RequestQuery) ResponseQuery             // Query for state</span><br><span class="line"></span><br><span class="line">	// Mempool Connection</span><br><span class="line">	CheckTx(RequestCheckTx) ResponseCheckTx // Validate a tx for the mempool</span><br><span class="line"></span><br><span class="line">	// Consensus Connection</span><br><span class="line">	InitChain(RequestInitChain) ResponseInitChain    // Initialize blockchain w validators/other info from TendermintCore</span><br><span class="line">	BeginBlock(RequestBeginBlock) ResponseBeginBlock // Signals the beginning of a block</span><br><span class="line">	DeliverTx(RequestDeliverTx) ResponseDeliverTx    // Deliver a tx for full processing</span><br><span class="line">	EndBlock(RequestEndBlock) ResponseEndBlock       // Signals the end of a block, returns changes to the validator set</span><br><span class="line">	Commit() ResponseCommit                          // Commit the state and return the application Merkle root hash</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个是abci的接口了。<code>cosmos-sdk</code>实现的就实现这个接口</p>
+</li>
+</ul>
+<h4 id="cosmos-sdk"><a href="#cosmos-sdk" class="headerlink" title="cosmos-sdk"></a><code>cosmos-sdk</code></h4><p>  在<code>baseapp/abci.go</code>里是对<code>Application</code>的实现。</p>
+<p>  然后交易的处理都在<code>baseapp/baseapp.go</code>里。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">func (app *BaseApp) runTx(mode runTxMode, txBytes []byte, tx sdk.Tx) (result sdk.Result) &#123;</span><br><span class="line">	//..省略代码n行</span><br><span class="line"></span><br><span class="line">	var msgs = tx.GetMsgs()</span><br><span class="line">	// x/xx/types/msg会实现这个方法</span><br><span class="line">	if err := validateBasicTxMsgs(msgs); err != nil &#123;</span><br><span class="line">		return err.Result()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	if app.anteHandler != nil &#123;</span><br><span class="line">		var anteCtx sdk.Context</span><br><span class="line">		var msCache sdk.CacheMultiStore</span><br><span class="line"></span><br><span class="line">		// Cache wrap context before anteHandler call in case it aborts.</span><br><span class="line">		// This is required for both CheckTx and DeliverTx.</span><br><span class="line">		// Ref: https://github.com/cosmos/cosmos-sdk/issues/2772</span><br><span class="line">		//</span><br><span class="line">		// NOTE: Alternatively, we could require that anteHandler ensures that</span><br><span class="line">		// writes do not happen if aborted/failed.  This may have some</span><br><span class="line">		// performance benefits, but it&apos;ll be more difficult to get right.</span><br><span class="line">		anteCtx, msCache = app.cacheTxContext(ctx, txBytes)</span><br><span class="line"></span><br><span class="line">   	//这个方法也在外面定义</span><br><span class="line">		newCtx, err := app.anteHandler(anteCtx, tx, mode == runTxModeSimulate)</span><br><span class="line">		if !newCtx.IsZero() &#123;</span><br><span class="line">			// At this point, newCtx.MultiStore() is cache-wrapped, or something else</span><br><span class="line">			// replaced by the ante handler. We want the original multistore, not one</span><br><span class="line">			// which was cache-wrapped for the ante handler.</span><br><span class="line">			//</span><br><span class="line">			// Also, in the case of the tx aborting, we need to track gas consumed via</span><br><span class="line">			// the instantiated gas meter in the ante handler, so we update the context</span><br><span class="line">			// prior to returning.</span><br><span class="line">			ctx = newCtx.WithMultiStore(ms)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// GasMeter expected to be set in AnteHandler</span><br><span class="line">		gasWanted = ctx.GasMeter().Limit()</span><br><span class="line"></span><br><span class="line">		if err != nil &#123;</span><br><span class="line">			res := sdk.ResultFromError(err)</span><br><span class="line">			res.GasWanted = gasWanted</span><br><span class="line">			res.GasUsed = ctx.GasMeter().GasConsumed()</span><br><span class="line">			return res</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		msCache.Write()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// Create a new Context based off of the existing Context with a cache-wrapped</span><br><span class="line">	// MultiStore in case message processing fails. At this point, the MultiStore</span><br><span class="line">	// is doubly cached-wrapped.</span><br><span class="line">	runMsgCtx, msCache := app.cacheTxContext(ctx, txBytes)</span><br><span class="line">	//最后是这个方法</span><br><span class="line">	result = app.runMsgs(runMsgCtx, msgs, mode)</span><br><span class="line">	result.GasWanted = gasWanted</span><br><span class="line"></span><br><span class="line">	// Safety check: don&apos;t write the cache state unless we&apos;re in DeliverTx.</span><br><span class="line">	if mode != runTxModeDeliver &#123;</span><br><span class="line">		return result</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// only update state if all messages pass</span><br><span class="line">	if result.IsOK() &#123;</span><br><span class="line">		msCache.Write()</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>插件化里，上面牵涉到3个会调插件的地方</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">type Msg interface &#123;</span><br><span class="line"></span><br><span class="line">	// Return the message type.</span><br><span class="line">	// Must be alphanumeric or empty.</span><br><span class="line">	Route() string</span><br><span class="line"></span><br><span class="line">	// Returns a human-readable string for the message, intended for utilization</span><br><span class="line">	// within tags</span><br><span class="line">	Type() string</span><br><span class="line"></span><br><span class="line">	// ValidateBasic does a simple validation check that</span><br><span class="line">	// doesn&apos;t require access to any other information.</span><br><span class="line">	ValidateBasic() Error</span><br><span class="line"></span><br><span class="line">	// Get the canonical byte representation of the Msg.</span><br><span class="line">	GetSignBytes() []byte</span><br><span class="line"></span><br><span class="line">	// Signers returns the addrs of signers that must sign.</span><br><span class="line">	// CONTRACT: All signatures must be present to be valid.</span><br><span class="line">	// CONTRACT: Returns addrs in some deterministic order.</span><br><span class="line">	GetSigners() []AccAddress</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在x/xx/types/msg.go下会实现这个接口，在CheckTx或者DeliverTx的时候都会调用<code>ValidateBasic</code>方法</p>
+<p> 其次是，anteHandler，如果外面初始化时赋值了，CheckTx或者DeliverTx时就会执行</p>
+<p>最后是，runMsgs，runMsg里其实是根据Tx消息的路由，找到对应的Handler进行处理，在x/xx/Handler.go会有具体处理，路由是在实例化app时进行app.AddRouter进行添加进去的。如下gaia代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// RegisterRoutes registers all module routes and module querier routes</span><br><span class="line">func (m *Manager) RegisterRoutes(router sdk.Router, queryRouter sdk.QueryRouter) &#123;</span><br><span class="line">	for _, module := range m.Modules &#123;</span><br><span class="line">		if module.Route() != &quot;&quot; &#123;</span><br><span class="line">			router.AddRoute(module.Route(), module.NewHandler())</span><br><span class="line">		&#125;</span><br><span class="line">		if module.QuerierRoute() != &quot;&quot; &#123;</span><br><span class="line">			queryRouter.AddRoute(module.QuerierRoute(), module.NewQuerierHandler())</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到最后一句，查询路由也是在这里添加的。所以在查询，也就是调用<code>Query</code>的时候，就会走对应的路由。</p>
+<h2 id="另起一行"><a href="#另起一行" class="headerlink" title="另起一行"></a>另起一行</h2><h3 id="这里由更新验证者为契机，查看相关的代码，捋下结构。"><a href="#这里由更新验证者为契机，查看相关的代码，捋下结构。" class="headerlink" title="这里由更新验证者为契机，查看相关的代码，捋下结构。"></a>这里由更新验证者为契机，查看相关的代码，捋下结构。</h3><h4 id="更新设置验证者的方式"><a href="#更新设置验证者的方式" class="headerlink" title="更新设置验证者的方式"></a>更新设置验证者的方式</h4><ul>
+<li>genesis里进行配置</li>
+<li>发送CreateValidator交易添加验证者，<code>staking</code>模块会处理这个交易，并且在<code>abci.EndBlock</code>调用时，<code>staking</code>模块返回需要更新的验证者集合。</li>
+</ul>
+<h5 id="genesis里配置验证者的传递"><a href="#genesis里配置验证者的传递" class="headerlink" title="genesis里配置验证者的传递"></a>genesis里配置验证者的传递</h5><p><code>cosmos</code>启动时调用<code>tendermint</code>的node代码，传入相关配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//cosmos/server/start.go</span><br><span class="line">func startInProcess(ctx *Context, appCreator AppCreator) (*node.Node, error) &#123;</span><br><span class="line">	// create &amp; start tendermint node</span><br><span class="line">	tmNode, err := node.NewNode(</span><br><span class="line">		cfg,</span><br><span class="line">		pvm.LoadOrGenFilePV(cfg.PrivValidatorKeyFile(), cfg.PrivValidatorStateFile()),</span><br><span class="line">		nodeKey,</span><br><span class="line">		proxy.NewLocalClientCreator(app),</span><br><span class="line">		node.DefaultGenesisDocProviderFunc(cfg),</span><br><span class="line">		node.DefaultDBProvider,</span><br><span class="line">		node.DefaultMetricsProvider(cfg.Instrumentation),</span><br><span class="line">		ctx.Logger.With(&quot;module&quot;, &quot;node&quot;),</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//tendermint/node/node.go</span><br><span class="line">func NewNode(config *cfg.Config, privValidator types.PrivValidator,</span><br><span class="line">	nodeKey *p2p.NodeKey, clientCreator proxy.ClientCreator,</span><br><span class="line">	genesisDocProvider GenesisDocProvider, dbProvider DBProvider, metricsProvider MetricsProvider, logger log.Logger, options ...Option) (*Node, error) &#123;</span><br><span class="line"></span><br><span class="line">	blockStore, stateDB, err := initDBs(config, dbProvider)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//state是链的相关状态，包括版本，上一个区块iD，当前验证者集合，下一个验证者集合等</span><br><span class="line">	//genDoc是genesis中包含的链的状态，包括验证者集合等</span><br><span class="line">	//state和genDoc都与db交互</span><br><span class="line">	state, genDoc, err := LoadStateFromDBOrGenesisDocProvider(stateDB, genesisDocProvider)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return nil, err</span><br><span class="line">	&#125;</span><br><span class="line"> //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>tendermint</code>中，<code>state</code>存储在db中的key为<code>stateKey</code>，保存了链的当前相关状态。</p>
+<p>在<code>cosmos</code>的<code>staking</code>中也应该存储了验证者集合，一会想得起来我就去看看怎么查询。</p>
+<h5 id="staking"><a href="#staking" class="headerlink" title="staking"></a>staking</h5><p><code>staking</code>是cosmos实现用来选择验证者集合。在<code>staking</code>的<code>handler.go</code>中可以查看相关操作。</p>
+<p>其中通过发送<code>CreateValidator</code>交易，新建验证者，并设置相关参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> //handleMsgCreateValidator</span><br><span class="line">validator := NewValidator(msg.ValidatorAddress, msg.PubKey, msg.Description)</span><br><span class="line">commission := NewCommissionWithTime(</span><br><span class="line">	msg.Commission.Rate, msg.Commission.MaxRate,</span><br><span class="line">	msg.Commission.MaxChangeRate, ctx.BlockHeader().Time,</span><br><span class="line">)</span><br><span class="line">//设置佣金</span><br><span class="line">validator, err := validator.SetInitialCommission(commission)</span><br><span class="line">if err != nil &#123;</span><br><span class="line">	return err.Result()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">validator.MinSelfDelegation = msg.MinSelfDelegation</span><br></pre></td></tr></table></figure>
+
+<p>另外，更新验证者是<code>abci.EndBlock</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Called every block, update validator set</span><br><span class="line">func EndBlocker(ctx sdk.Context, k keeper.Keeper) []abci.ValidatorUpdate &#123;</span><br><span class="line">	validatorUpdates := k.ApplyAndReturnValidatorSetUpdates(ctx)</span><br><span class="line">	return validatorUpdates</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (k Keeper) ApplyAndReturnValidatorSetUpdates(ctx sdk.Context) (updates []abci.ValidatorUpdate) &#123;</span><br><span class="line">	//根据powerIndex逆序排名，power越大，排名越靠前，也就是取前maxValidators位作为验证者</span><br><span class="line">	iterator := sdk.KVStoreReversePrefixIterator(store, types.ValidatorsByPowerIndexKey)</span><br><span class="line">	defer iterator.Close()</span><br><span class="line">	for count := 0; iterator.Valid() &amp;&amp; count &lt; int(maxValidators); iterator.Next() &#123;</span><br><span class="line">		..</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cosmos-abci"><span class="toc-number">1.</span> <span class="toc-text">Cosmos abci</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tendermint"><span class="toc-number">1.1.</span> <span class="toc-text">tendermint</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cosmos-sdk"><span class="toc-number">1.2.</span> <span class="toc-text">cosmos-sdk</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#另起一行"><span class="toc-number"></span> <span class="toc-text">另起一行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#这里由更新验证者为契机，查看相关的代码，捋下结构。"><span class="toc-number">1.</span> <span class="toc-text">这里由更新验证者为契机，查看相关的代码，捋下结构。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#更新设置验证者的方式"><span class="toc-number">1.1.</span> <span class="toc-text">更新设置验证者的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#genesis里配置验证者的传递"><span class="toc-number">1.1.1.</span> <span class="toc-text">genesis里配置验证者的传递</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#staking"><span class="toc-number">1.1.2.</span> <span class="toc-text">staking</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&text=cosmos-abci"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&is_video=false&description=cosmos-abci"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cosmos-abci&body=Check out this article: https://github.com/xiaoxuez/2019/11/27/cosmos-abci/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&title=cosmos-abci"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2019/11/27/cosmos-abci/&name=cosmos-abci&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

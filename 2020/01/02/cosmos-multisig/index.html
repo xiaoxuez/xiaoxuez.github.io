@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Cosmos 多重签名创建多签账户1234gaiacli keys add \  p1p2p3 \  --multisig-threshold=2 \  --multisig=p1,p2,p3  123456789101112131415161718192021222324252627var pks []crypto.PubKey//参与多签的公钥multisigThreshold := vipe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cosmos-multisig">
+<meta property="og:url" content="https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Cosmos 多重签名创建多签账户1234gaiacli keys add \  p1p2p3 \  --multisig-threshold=2 \  --multisig=p1,p2,p3  123456789101112131415161718192021222324252627var pks []crypto.PubKey//参与多签的公钥multisigThreshold := vipe">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-27T06:22:44.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cosmos-multisig">
+<meta name="twitter:description" content="Cosmos 多重签名创建多签账户1234gaiacli keys add \  p1p2p3 \  --multisig-threshold=2 \  --multisig=p1,p2,p3  123456789101112131415161718192021222324252627var pks []crypto.PubKey//参与多签的公钥multisigThreshold := vipe">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>cosmos-multisig</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/07/27/binance-tss/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/19/cosmos-proposer/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&text=cosmos-multisig"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&is_video=false&description=cosmos-multisig"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cosmos-multisig&body=Check out this article: https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&name=cosmos-multisig&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cosmos-多重签名"><span class="toc-number">1.</span> <span class="toc-text">Cosmos 多重签名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建多签账户"><span class="toc-number">1.1.</span> <span class="toc-text">创建多签账户</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        cosmos-multisig
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-02T14:33:08.000Z" itemprop="datePublished">2020-01-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/cosmos/">cosmos</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Cosmos-多重签名"><a href="#Cosmos-多重签名" class="headerlink" title="Cosmos 多重签名"></a>Cosmos 多重签名</h2><h3 id="创建多签账户"><a href="#创建多签账户" class="headerlink" title="创建多签账户"></a>创建多签账户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gaiacli keys add \</span><br><span class="line">  p1p2p3 \</span><br><span class="line">  --multisig-threshold=2 \</span><br><span class="line">  --multisig=p1,p2,p3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">var pks []crypto.PubKey</span><br><span class="line">//参与多签的公钥</span><br><span class="line">multisigThreshold := viper.GetInt(flagMultiSigThreshold)</span><br><span class="line">if err := validateMultisigThreshold(multisigThreshold, len(multisigKeys)); err != nil &#123;</span><br><span class="line">	return err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for _, keyname := range multisigKeys &#123;</span><br><span class="line">	k, err := kb.Get(keyname)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return err</span><br><span class="line">	&#125;</span><br><span class="line">	pks = append(pks, k.GetPubKey())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Handle --nosort</span><br><span class="line">//按地址进行排序</span><br><span class="line">if !viper.GetBool(flagNoSort) &#123;</span><br><span class="line">	sort.Slice(pks, func(i, j int) bool &#123;</span><br><span class="line">		return bytes.Compare(pks[i].Address(), pks[j].Address()) &lt; 0</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">pk := multisig.NewPubKeyMultisigThreshold(multisigThreshold, pks)</span><br><span class="line">if _, err := kb.CreateMulti(name, pk); err != nil &#123;</span><br><span class="line">	return err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实是增加了公钥类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">type PubKeyMultisigThreshold struct &#123;</span><br><span class="line">	K       uint            `json:&quot;threshold&quot;`</span><br><span class="line">	PubKeys []crypto.PubKey `json:&quot;pubkeys&quot;`</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var _ crypto.PubKey = PubKeyMultisigThreshold&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在验签的时候，是调用公钥的方法进行验签。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">func (pk PubKeyMultisigThreshold) VerifyBytes(msg []byte, marshalledSig []byte) bool &#123;</span><br><span class="line">	var sig Multisignature</span><br><span class="line">	err := cdc.UnmarshalBinaryBare(marshalledSig, &amp;sig)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">	size := sig.BitArray.Size()</span><br><span class="line">	// ensure bit array is the correct size</span><br><span class="line">	if len(pk.PubKeys) != size &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">	// ensure size of signature list</span><br><span class="line">	if len(sig.Sigs) &lt; int(pk.K) || len(sig.Sigs) &gt; size &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">	// ensure at least k signatures are set</span><br><span class="line">	if sig.BitArray.NumTrueBitsBefore(size) &lt; int(pk.K) &#123;</span><br><span class="line">		return false</span><br><span class="line">	&#125;</span><br><span class="line">	// index in the list of signatures which we are concerned with.</span><br><span class="line">	sigIndex := 0</span><br><span class="line">	for i := 0; i &lt; size; i++ &#123;</span><br><span class="line">		if sig.BitArray.GetIndex(i) &#123;</span><br><span class="line">			if !pk.PubKeys[i].VerifyBytes(msg, sig.Sigs[sigIndex]) &#123;</span><br><span class="line">				return false</span><br><span class="line">			&#125;</span><br><span class="line">			sigIndex++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以多签是线下完成的。</p>
+<p>将多个人的签名会整合到一个签名中。</p>
+<p>使用多签签署交易时，命令行如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gaiacli tx send cosmos1570v2fq3twt0f0x02vhxpuzc9jc4yl30q2qned 1000000uatom \</span><br><span class="line">  --from=&lt;multisig_address&gt; \</span><br><span class="line">  --generate-only &gt; unsignedTx.json</span><br></pre></td></tr></table></figure>
+
+<p>先产生交易存于文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gaiacli tx sign \</span><br><span class="line">  unsignedTx.json \</span><br><span class="line">  --multisig=&lt;multisig_address&gt; \</span><br><span class="line">  --from=p1 \</span><br><span class="line">  --output-document=p1signature.json</span><br></pre></td></tr></table></figure>
+
+<p>p1单独签署交易，签名信息保存于文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gaiacli tx sign \</span><br><span class="line">  unsignedTx.json \</span><br><span class="line">  --multisig=&lt;multisig_address&gt; \</span><br><span class="line">  --from=p2 \</span><br><span class="line">  --output-document=p2signature.json</span><br></pre></td></tr></table></figure>
+
+<p>p2单独签署交易，签名信息保存于文件中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gaiacli tx multisign \</span><br><span class="line">  unsignedTx.json \</span><br><span class="line">  p1p2p3 \</span><br><span class="line">  p1signature.json p2signature.json &gt; signedTx.json</span><br></pre></td></tr></table></figure>
+
+<p>将p1的签名与p2的签名进行整合，整合完成后的签名数据保存于文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gaiacli tx broadcast signedTx.json</span><br></pre></td></tr></table></figure>
+
+<p>最后发送交易。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cosmos-多重签名"><span class="toc-number">1.</span> <span class="toc-text">Cosmos 多重签名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建多签账户"><span class="toc-number">1.1.</span> <span class="toc-text">创建多签账户</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&text=cosmos-multisig"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&is_video=false&description=cosmos-multisig"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=cosmos-multisig&body=Check out this article: https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&title=cosmos-multisig"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2020/01/02/cosmos-multisig/&name=cosmos-multisig&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

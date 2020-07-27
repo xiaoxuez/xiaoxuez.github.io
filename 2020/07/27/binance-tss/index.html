@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Tss源码分析Binance tss库是提供多签的库。这里将简单过下源码。 在ecdsa包下的结构为 1234.├── keygen├── resharing└── signing  keygen为创建多签私钥提供支持； resharding为修改多签中的参与者，重新分配计算私钥(共享公钥不会发生改变)提供支持； signing 为多签提供支持； 再打开这三个包下的文件结构还蛮清晰的，结构都类似；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="binance-tss">
+<meta property="og:url" content="https://github.com/xiaoxuez/2020/07/27/binance-tss/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Tss源码分析Binance tss库是提供多签的库。这里将简单过下源码。 在ecdsa包下的结构为 1234.├── keygen├── resharing└── signing  keygen为创建多签私钥提供支持； resharding为修改多签中的参与者，重新分配计算私钥(共享公钥不会发生改变)提供支持； signing 为多签提供支持； 再打开这三个包下的文件结构还蛮清晰的，结构都类似；">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-27T06:22:44.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="binance-tss">
+<meta name="twitter:description" content="Tss源码分析Binance tss库是提供多签的库。这里将简单过下源码。 在ecdsa包下的结构为 1234.├── keygen├── resharing└── signing  keygen为创建多签私钥提供支持； resharding为修改多签中的参与者，重新分配计算私钥(共享公钥不会发生改变)提供支持； signing 为多签提供支持； 再打开这三个包下的文件结构还蛮清晰的，结构都类似；">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>binance-tss</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/01/02/cosmos-multisig/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2020/07/27/binance-tss/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&text=binance-tss"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&is_video=false&description=binance-tss"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=binance-tss&body=Check out this article: https://github.com/xiaoxuez/2020/07/27/binance-tss/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&name=binance-tss&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tss源码分析"><span class="toc-number">1.</span> <span class="toc-text">Tss源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#大体结构"><span class="toc-number">1.1.</span> <span class="toc-text">大体结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#首先tss-GenerateTestPartyIDs"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">首先tss.GenerateTestPartyIDs</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#其次"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">其次</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多个参与者"><span class="toc-number">1.2.</span> <span class="toc-text">多个参与者</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        binance-tss
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-07-27T10:42:55.000Z" itemprop="datePublished">2020-07-27</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/binance/">binance</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Tss源码分析"><a href="#Tss源码分析" class="headerlink" title="Tss源码分析"></a>Tss源码分析</h2><p><a href="https://github.com/binance-chain/tss-lib">Binance tss库</a>是提供多签的库。这里将简单过下源码。</p>
+<p>在<code>ecdsa</code>包下的结构为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── keygen</span><br><span class="line">├── resharing</span><br><span class="line">└── signing</span><br></pre></td></tr></table></figure>
+
+<p><code>keygen</code>为创建多签私钥提供支持；</p>
+<p><code>resharding</code>为修改多签中的参与者，重新分配计算私钥(共享公钥不会发生改变)提供支持；</p>
+<p><code>signing</code> 为多签提供支持；</p>
+<p>再打开这三个包下的文件结构还蛮清晰的，结构都类似；分别都包含<code>message.go</code>、<code>local_party.go</code>、<code>round_*</code>等文件。</p>
+<h3 id="大体结构"><a href="#大体结构" class="headerlink" title="大体结构"></a>大体结构</h3><p>先说结论</p>
+<ul>
+<li>每个参与者都需要一个partyID来标识身份，并且，算法开始前，需要拿到所有参与者的partyID，并按Key进行排序</li>
+<li>实现由party和round定义，party统计数据，并调用round。round发出去信息并根据收到别的参与者的消息进行计算变换状态</li>
+</ul>
+<p>同样，以测试<code>Keygen.local_party_test.go</code>举例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">func TestStartRound1Paillier(t *testing.T) &#123;</span><br><span class="line">	setUp(&quot;debug&quot;)</span><br><span class="line"></span><br><span class="line">	pIDs := tss.GenerateTestPartyIDs(1)</span><br><span class="line">	p2pCtx := tss.NewPeerContext(pIDs)</span><br><span class="line">	threshold := 1</span><br><span class="line">	params := tss.NewParameters(p2pCtx, pIDs[0], len(pIDs), threshold)</span><br><span class="line"></span><br><span class="line">	out := make(chan tss.Message, len(pIDs))</span><br><span class="line">	lp := NewLocalParty(params, out, nil).(*LocalParty)</span><br><span class="line">	if err := lp.Start(); err != nil &#123;</span><br><span class="line">		assert.FailNow(t, err.Error())</span><br><span class="line">	&#125;</span><br><span class="line">	&lt;-out</span><br><span class="line"></span><br><span class="line">	// Paillier modulus 2048 (two 1024-bit primes)</span><br><span class="line">	// round up to 256, it was used to be flaky, sometimes comes back with 1 byte less</span><br><span class="line">	len1 := len(lp.data.PaillierSK.LambdaN.Bytes())</span><br><span class="line">	len2 := len(lp.data.PaillierSK.PublicKey.N.Bytes())</span><br><span class="line">	if len1%2 != 0 &#123;</span><br><span class="line">		len1 = len1 + (256 - (len1 % 256))</span><br><span class="line">	&#125;</span><br><span class="line">	if len2%2 != 0 &#123;</span><br><span class="line">		len2 = len2 + (256 - (len2 % 256))</span><br><span class="line">	&#125;</span><br><span class="line">	assert.Equal(t, 2048/8, len1)</span><br><span class="line">	assert.Equal(t, 2048/8, len2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是一个参与者为1，阈值为1的生成私钥数据测试；</p>
+<h5 id="首先tss-GenerateTestPartyIDs"><a href="#首先tss-GenerateTestPartyIDs" class="headerlink" title="首先tss.GenerateTestPartyIDs"></a>首先<code>tss.GenerateTestPartyIDs</code></h5><p>多个人参与的多重签名，之前看到的别的多签简单点来说就是将一个私钥分给多个人，每个人拥有一部分参数，那么就像玩拼图一样，这些人应该是有序的，拆分的时候就按顺序分给每个人，组装的时候同样按照顺序进行组装；所以这里也类似，参与者们都是有顺序的。</p>
+<p><code>GenerateTestPartyIDs</code>方法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">func GenerateTestPartyIDs(count int, startAt ...int) SortedPartyIDs &#123;</span><br><span class="line">	ids := make(UnSortedPartyIDs, 0, count)</span><br><span class="line">	key := common.MustGetRandomInt(256)</span><br><span class="line">	frm := 0</span><br><span class="line">	i := 0 // default `i`</span><br><span class="line">	if len(startAt) &gt; 0 &#123;</span><br><span class="line">		frm = startAt[0]</span><br><span class="line">		i = startAt[0]</span><br><span class="line">	&#125;</span><br><span class="line">	for ; i &lt; count+frm; i++ &#123;</span><br><span class="line">		ids = append(ids, &amp;PartyID&#123;</span><br><span class="line">			MessageWrapper_PartyID: &amp;MessageWrapper_PartyID&#123;</span><br><span class="line">				Id:      fmt.Sprintf(&quot;%d&quot;, i+1),  </span><br><span class="line">				Moniker: fmt.Sprintf(&quot;P[%d]&quot;, i+1), //为了辅助人为识别是哪个参与者</span><br><span class="line">				Key:     new(big.Int).Sub(key, big.NewInt(int64(count)-int64(i))).Bytes(),</span><br><span class="line">			&#125;,</span><br><span class="line">			Index: i,</span><br><span class="line">			// this key makes tests more deterministic</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	return SortPartyIDs(ids, startAt...)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法返回的<code>SortedPartyIDs</code>是PartyID有序数组(按照Key的大小进行排序)，{PartyID实例}.Index其实就是该实例所在的顺序；</p>
+<h5 id="其次"><a href="#其次" class="headerlink" title="其次"></a>其次</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//前面组装了多个参与者pIDs，并由pIDs组装context，再由context组装params, params还包括m参与者n阈值的参数，out为输出channel</span><br><span class="line">lp := NewLocalParty(params, out, nil).(*LocalParty)</span><br><span class="line">if err := lp.Start(); err != nil &#123;</span><br><span class="line">	assert.FailNow(t, err.Error())</span><br><span class="line">&#125;</span><br><span class="line">&lt;-out</span><br></pre></td></tr></table></figure>
+
+<p><code>Start()</code>方法，为<code>tss/Party</code>的实现,主要重写的方法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">type Party interface &#123;</span><br><span class="line">	Start() *Error</span><br><span class="line">	//更新接收到的来自参与者的消息</span><br><span class="line">	UpdateFromBytes(wireBytes []byte, from *PartyID, isBroadcast bool) (ok bool, err *Error)</span><br><span class="line">	//更新接收到的来自参与者的消息</span><br><span class="line">	Update(msg ParsedMessage) (ok bool, err *Error)</span><br><span class="line">	Running() bool</span><br><span class="line">	WaitingFor() []*PartyID</span><br><span class="line">	ValidateMessage(msg ParsedMessage) (bool, *Error)</span><br><span class="line">	StoreMessage(msg ParsedMessage) (bool, *Error)</span><br><span class="line">	FirstRound() Round </span><br><span class="line">	WrapError(err error, culprits ...*PartyID) *Error</span><br><span class="line">	PartyID() *PartyID</span><br><span class="line">	String() string</span><br><span class="line"></span><br><span class="line">	// Private lifecycle methods</span><br><span class="line">	...	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>tss</code>包下<code>Party</code>定义的同文件，定义了<code>BaseStart</code>方法，大家实现的Party的<code>Start</code>方法都是调用的<code>BaseStart</code>方法，在<code>BaseStart</code>方法中，设置了初始运行的为<code>FirstRound</code>返回的Round；</p>
+<p>Round同样为接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">type Round interface &#123;</span><br><span class="line">	Params() *Parameters</span><br><span class="line">	Start() *Error</span><br><span class="line">	Update() (bool, *Error)</span><br><span class="line">	RoundNumber() int</span><br><span class="line">	CanAccept(msg ParsedMessage) bool</span><br><span class="line">	CanProceed() bool</span><br><span class="line">	NextRound() Round </span><br><span class="line">	WaitingFor() []*PartyID</span><br><span class="line">	WrapError(err error, culprits ...*PartyID) *Error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这类似于状态机，一个接一个..<code>Start</code>方法计算出某些数据，发向别的参与者，然后等待接收到足够的来自别的参与者的信息后，便进入<code>NextRound</code>。在<code>keygen</code>的round4中，实现的NextRound如下，当NextRound返回的值==nil 时，便就结束了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func (round *round4) NextRound() tss.Round &#123;</span><br><span class="line">	return nil // finished!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多个参与者"><a href="#多个参与者" class="headerlink" title="多个参与者"></a>多个参与者</h3><p>看一下多个参与者如何进行。这里以signing包下的local_party_test中的测试来举例。</p>
+<p>代码较多，就直接将说明注释在代码里。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line">func TestE2EConcurrent(t *testing.T) &#123;</span><br><span class="line">	setUp(&quot;info&quot;)</span><br><span class="line">	threshold := testThreshold</span><br><span class="line"></span><br><span class="line">	//从先前产生的testParticipants个私钥文件中读出testThreshold+1个私钥来参与</span><br><span class="line">	//参与多签的私钥存储于数组keys中，参与多签的partiyId存储于signPIDS中</span><br><span class="line">	keys, signPIDs, err := keygen.LoadKeygenTestFixturesRandomSet(testThreshold+1, testParticipants)</span><br><span class="line">	assert.NoError(t, err, &quot;should load keygen fixtures&quot;)</span><br><span class="line">	assert.Equal(t, testThreshold+1, len(keys))</span><br><span class="line">	assert.Equal(t, testThreshold+1, len(signPIDs))</span><br><span class="line"></span><br><span class="line">	// PHASE: signing</span><br><span class="line">	// use a shuffled selection of the list of parties for this test</span><br><span class="line">	p2pCtx := tss.NewPeerContext(signPIDs)</span><br><span class="line">	parties := make([]*LocalParty, 0, len(signPIDs))</span><br><span class="line"></span><br><span class="line">	errCh := make(chan *tss.Error, len(signPIDs))</span><br><span class="line">	//消息通道</span><br><span class="line">	outCh := make(chan tss.Message, len(signPIDs))</span><br><span class="line">	//多签结束通道</span><br><span class="line">	endCh := make(chan SignatureData, len(signPIDs))</span><br><span class="line">	//接收消息的Update</span><br><span class="line">	updater := test.SharedPartyUpdater</span><br><span class="line">	//要签名的数据</span><br><span class="line">	hash, _ := hex.DecodeString(msg)</span><br><span class="line"></span><br><span class="line">	//启动testThreshold+1的参与者</span><br><span class="line">	for i := 0; i &lt; len(signPIDs); i++ &#123;</span><br><span class="line">		fmt.Println(&quot;parameters party id: &quot;, signPIDs[i])</span><br><span class="line">		params := tss.NewParameters(p2pCtx, signPIDs[i], len(signPIDs), threshold)</span><br><span class="line">		P := NewLocalParty(new(big.Int).SetBytes(hash), params, keys[i], outCh, endCh).(*LocalParty)</span><br><span class="line">		//将参与者的party存储，后续接收到信息时，需传递给对应的party</span><br><span class="line">		parties = append(parties, P)</span><br><span class="line">		go func(P *LocalParty) &#123;</span><br><span class="line">			if err := P.Start(); err != nil &#123;</span><br><span class="line">				errCh &lt;- err</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;(P)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	var ended int32</span><br><span class="line">signing:</span><br><span class="line">	for &#123;</span><br><span class="line">		// fmt.Printf(&quot;ACTIVE GOROUTINES: %d\n&quot;, runtime.NumGoroutine())</span><br><span class="line">		select &#123;</span><br><span class="line">		case err := &lt;-errCh:</span><br><span class="line">			common.Logger.Errorf(&quot;Error: %s&quot;, err)</span><br><span class="line">			assert.FailNow(t, err.Error())</span><br><span class="line">			break signing</span><br><span class="line"></span><br><span class="line">		case msg := &lt;-outCh:</span><br><span class="line">		  //有消息发出，这里消息有两种，一种是广播，需将消息传递给出自己之外的参与者；一种是定向，需将消息传递给定向的那个参与者</span><br><span class="line">			dest := msg.GetTo()</span><br><span class="line">			fmt.Println(msg.Type(), &quot; from &quot;,  msg.GetFrom(), &quot; to &quot;, msg.GetTo())</span><br><span class="line">			//如果to == nill,就说明是广播消息</span><br><span class="line">			if dest == nil &#123;</span><br><span class="line">				for _, P := range parties &#123;</span><br><span class="line">					if P.PartyID().Index == msg.GetFrom().Index &#123;</span><br><span class="line">						continue</span><br><span class="line">					&#125;</span><br><span class="line">					//将消息传递给对应party</span><br><span class="line">					go updater(P, msg, errCh)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				if dest[0].Index == msg.GetFrom().Index &#123;</span><br><span class="line">					t.Fatalf(&quot;party %d tried to send a message to itself (%d)&quot;, dest[0].Index, msg.GetFrom().Index)</span><br><span class="line">				&#125;</span><br><span class="line">				//定向将消息传递给对应的party</span><br><span class="line">				go updater(parties[dest[0].Index], msg, errCh)</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		case sig := &lt;-endCh:</span><br><span class="line">			//到这里签名有结果了，多签就完成了，签名的数据分别是R、S</span><br><span class="line">			fmt.Println(&quot;R=&gt;&quot;,new(big.Int).SetBytes(sig.R))</span><br><span class="line">			fmt.Println(&quot;S=&gt;&quot;, new(big.Int).SetBytes(sig.S))</span><br><span class="line">			// fmt.Println(&quot;sig=&gt;&quot;, hex.EncodeToString(sig.Signature))</span><br><span class="line">			//后面就是校验了</span><br><span class="line">			//因为是本地启动了多个协程作为参与者，且是使用的相同的channel，所以endCh会收到每一个参与者的多签结果</span><br><span class="line">			atomic.AddInt32(&amp;ended, 1)</span><br><span class="line">			fmt.Println(&quot;==&gt; end&quot;)</span><br><span class="line">			//当所以的参与者都完成了签名</span><br><span class="line">		 if atomic.LoadInt32(&amp;ended) == int32(len(signPIDs)) &#123;</span><br><span class="line">				t.Logf(&quot;Done. Received save data from %d participants&quot;, ended)</span><br><span class="line">				R := parties[0].temp.bigR</span><br><span class="line">				r := parties[0].temp.rx</span><br><span class="line">				fmt.Printf(&quot;sign result: R(%s, %s), r=%s\n&quot;, R.X().String(), R.Y().String(), r.String())</span><br><span class="line"></span><br><span class="line">				modN := common.ModInt(tss.EC().Params().N)</span><br><span class="line"></span><br><span class="line">				// BEGIN check s correctness</span><br><span class="line">				sumS := big.NewInt(0)</span><br><span class="line">				for _, p := range parties &#123;</span><br><span class="line">					sumS = modN.Add(sumS, p.temp.si)</span><br><span class="line">				&#125;</span><br><span class="line">				//这里计算出来的sumS和sig.S是相同的值，</span><br><span class="line">				fmt.Printf(&quot;S: %s\n&quot;, sumS.String())</span><br><span class="line">				fmt.Println(&quot;pub&quot;, keys[0].ECDSAPub.X(), keys[0].ECDSAPub.Y())</span><br><span class="line"></span><br><span class="line">				// END check s correctness</span><br><span class="line"></span><br><span class="line">				// 以ecdsa来校验签名的正确性</span><br><span class="line">				pkX, pkY := keys[0].ECDSAPub.X(), keys[0].ECDSAPub.Y()</span><br><span class="line">				pk := ecdsa.PublicKey&#123;</span><br><span class="line">					Curve: tss.EC(),</span><br><span class="line">					X:     pkX,</span><br><span class="line">					Y:     pkY,</span><br><span class="line">				&#125;</span><br><span class="line">				ok := ecdsa.Verify(&amp;pk, hash, R.X(), sumS)</span><br><span class="line">				assert.True(t, ok, &quot;ecdsa verify must pass&quot;)</span><br><span class="line">				t.Log(&quot;ECDSA signing test done.&quot;)</span><br><span class="line">				// END ECDSA verify</span><br><span class="line">			if atomic.LoadInt32(&amp;ended) == int32(len(signPIDs)) &#123;</span><br><span class="line">				break signing</span><br><span class="line">			&#125;</span><br><span class="line">			 &#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，这个示例中产生的S，有时候需要稍微处理一下才能适用于币安链。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">r := new(big.Int).SetBytes(msg.R)</span><br><span class="line">s := new(big.Int).SetBytes(msg.S)</span><br><span class="line">if s.Cmp(HalfN) == 1 &#123;</span><br><span class="line">	s = s.Sub(btcec.S256().N, s)</span><br><span class="line">&#125;</span><br><span class="line">signature := btcec.Signature&#123;R: r, S: s&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外，在<code>tss.LocalPartySaveData</code>结构中的公钥转<code>secp256k1</code> 公钥的方式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//key keygen.LocalPartySaveData</span><br><span class="line">y := key.ECDSAPub.Y()</span><br><span class="line">x := key.ECDSAPub.X()</span><br><span class="line">var pubkey [33]byte</span><br><span class="line">copy(pubkey[1:], x.Bytes())</span><br><span class="line">if y.And(y, big.NewInt(1)).Cmp(big.NewInt(0)) &gt; 1 &#123;</span><br><span class="line">	pubkey[0] = 2</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	pubkey[0] = 3</span><br><span class="line">&#125;</span><br><span class="line">//secp256k1.PubKeySecp256k1(pubkey)</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tss源码分析"><span class="toc-number">1.</span> <span class="toc-text">Tss源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#大体结构"><span class="toc-number">1.1.</span> <span class="toc-text">大体结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#首先tss-GenerateTestPartyIDs"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">首先tss.GenerateTestPartyIDs</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#其次"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">其次</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多个参与者"><span class="toc-number">1.2.</span> <span class="toc-text">多个参与者</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2020/07/27/binance-tss/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&text=binance-tss"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&is_video=false&description=binance-tss"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=binance-tss&body=Check out this article: https://github.com/xiaoxuez/2020/07/27/binance-tss/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&title=binance-tss"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2020/07/27/binance-tss/&name=binance-tss&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
