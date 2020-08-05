@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Defi Compound就CToken.sol实现的借贷合约的中基本运算进行简单源码分析。 此处不包括Comptroller相关逻辑，Comptroller合约主要是用于校验用户的操作，比如是否有足够的抵押品进行借贷等等，（借贷即挖矿的实现中，分发comp代币也在Comptroller合约里） 简单参数 reserveFactor, 值在[0, 1]之间，提供流动性可获得利率=还款利率 * re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="defi-compond">
+<meta property="og:url" content="https://github.com/xiaoxuez/2020/08/05/defi-compond/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Defi Compound就CToken.sol实现的借贷合约的中基本运算进行简单源码分析。 此处不包括Comptroller相关逻辑，Comptroller合约主要是用于校验用户的操作，比如是否有足够的抵押品进行借贷等等，（借贷即挖矿的实现中，分发comp代币也在Comptroller合约里） 简单参数 reserveFactor, 值在[0, 1]之间，提供流动性可获得利率=还款利率 * re">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-08-05T03:24:38.556Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="defi-compond">
+<meta name="twitter:description" content="Defi Compound就CToken.sol实现的借贷合约的中基本运算进行简单源码分析。 此处不包括Comptroller相关逻辑，Comptroller合约主要是用于校验用户的操作，比如是否有足够的抵押品进行借贷等等，（借贷即挖矿的实现中，分发comp代币也在Comptroller合约里） 简单参数 reserveFactor, 值在[0, 1]之间，提供流动性可获得利率=还款利率 * re">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>defi-compond</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2020/07/27/binance-tss/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2020/08/05/defi-compond/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&text=defi-compond"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&is_video=false&description=defi-compond"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=defi-compond&body=Check out this article: https://github.com/xiaoxuez/2020/08/05/defi-compond/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&name=defi-compond&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defi-Compound"><span class="toc-number">1.</span> <span class="toc-text">Defi Compound</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单参数"><span class="toc-number">1.1.</span> <span class="toc-text">简单参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局变量"><span class="toc-number">1.2.</span> <span class="toc-text">全局变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#存款-铸币"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">存款/铸币</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#赎回"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">赎回</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#借款"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">借款</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#还款"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">还款</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#清算"><span class="toc-number">1.2.0.5.</span> <span class="toc-text">清算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算示例"><span class="toc-number">1.3.</span> <span class="toc-text">计算示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#理解公式"><span class="toc-number">1.4.</span> <span class="toc-text">理解公式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#存储利息的理解"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">存储利息的理解</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        defi-compond
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-08-05T11:22:38.000Z" itemprop="datePublished">2020-08-05</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Defi-Compound"><a href="#Defi-Compound" class="headerlink" title="Defi Compound"></a>Defi Compound</h2><p>就CToken.sol实现的借贷合约的中基本运算进行简单源码分析。</p>
+<p>此处不包括Comptroller相关逻辑，Comptroller合约主要是用于校验用户的操作，比如是否有足够的抵押品进行借贷等等，（借贷即挖矿的实现中，分发comp代币也在Comptroller合约里）</p>
+<h3 id="简单参数"><a href="#简单参数" class="headerlink" title="简单参数"></a>简单参数</h3><ul>
+<li><code>reserveFactor</code>, 值在[0, 1]之间，提供流动性可获得利率=还款利率 * <code>reserveFactor</code></li>
+</ul>
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><ul>
+<li><code>borrowIndex</code>,  当前区块高度的借款利率</li>
+<li><code>totalBorrows</code>, 所有借款(含借款利息)</li>
+<li><code>totalReserves</code>, 所有流动性存款获得的利息吗？</li>
+<li><code>accrualBlockNumber</code>,  更新到区块高度</li>
+</ul>
+<p>在进行存储/赎回/借款/还款/清算…的第一步，就是更新这几个变量，这几个变量的值将会影响到利息等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//更新的算法</span><br><span class="line"> blockDelta = currentBlockNumber - accrualBlockNumber</span><br><span class="line"></span><br><span class="line">//(区块间隔内)总借款利率 = 区块间隔 * 当前借款利率；相当于是每个区块收取利率。这里就是这段区块内收取的总利率</span><br><span class="line"> simpleInterestFactor = borrowRate * blockDelta</span><br><span class="line"></span><br><span class="line">//区块间隔内累计借款利息 = (区块间隔内)总借款利率 * 总共借款；这段区块内收取的总利息</span><br><span class="line"> interestAccumulated = simpleInterestFactor * totalBorrows</span><br><span class="line"> </span><br><span class="line"> //总共借款 += 区块间隔内累计借款利息</span><br><span class="line"> totalBorrows = interestAccumulated + totalBorrows</span><br><span class="line"> </span><br><span class="line"> //总共存储利息 += 区块间隔内累计借款利息 * 存储利率 </span><br><span class="line"> totalReserves = interestAccumulated * reserveFactor + totalReserves</span><br><span class="line"> </span><br><span class="line"> //借款利率 += (区块间隔内)总借款利率 * borrowIndex</span><br><span class="line"> borrowIndex = simpleInterestFactor * borrowIndex + borrowIndex</span><br><span class="line"> </span><br><span class="line"> //更新区块高度</span><br><span class="line"> accrualBlockNumber = currentBlockNumber</span><br></pre></td></tr></table></figure>
+
+<h5 id="存款-铸币"><a href="#存款-铸币" class="headerlink" title="存款/铸币"></a>存款/铸币</h5><ul>
+<li><p>更新全局变量</p>
+</li>
+<li><p>兑换率计算(兑换率的理解可见下方存储利息的理解处)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exchangeRate = (totalCash + totalBorrows - totalReserves) / totalSupply</span><br><span class="line">//totalCash，资金池合约拥有的原币种数量</span><br><span class="line">//totalSupply,资金池合约发行的币种数量</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>假设存款/铸币数量为x,  调用对应的方法将x对应的资产转移到本合约，</p>
+</li>
+<li><p>其次铸币给到对应的用户地址，铸币的数量为<code>x / exchangeRate</code></p>
+</li>
+<li><p>更新<code>totalSupply</code> +=  铸币的数量</p>
+</li>
+</ul>
+<h5 id="赎回"><a href="#赎回" class="headerlink" title="赎回"></a>赎回</h5><ul>
+<li>更新全局变量</li>
+<li>兑换率计算<code>exchangeRate = (totalCash + totalBorrows - totalReserves) / totalSupply</code></li>
+<li>假设传入的是本资金池的代币数量<code>redeemTokensIn</code>，那么要赎回的原资产数量为<code>redeemAmount = redeemTokensIn * exchangeRateCurrent</code></li>
+<li>调用相关方法原资产从本合约转移到用户地址</li>
+<li>假设传入的是原资产数量<code>redeemAmountIn</code>，要么对应到本合约资产代币数量为<code>redeemTokensIn = redeemAmountIn / exchangeRate</code>;要计算本合约资产代币数量，是为了修改<code>totalSupply</code>等</li>
+<li>更新<code>totalSupply</code> -= 赎回的本合约代币数量(<code>redeemTokensIn</code>); 更新用户账户余额 -= 赎回的本合约代币数量(<code>redeemTokensIn</code>);</li>
+</ul>
+<p>通过兑换率的计算方式，可以简单推测，</p>
+<ul>
+<li>当存入后，假设资金池总存入不变，totalBorrows增多，那么赎回时收获的利息就会增多</li>
+</ul>
+<h5 id="借款"><a href="#借款" class="headerlink" title="借款"></a>借款</h5><ul>
+<li><p>更新全局变量</p>
+</li>
+<li><p>更新借款人的总欠款=（如已有欠款，欠款+利息） + 新借款数量</p>
+</li>
+<li><p>更新借款人的<code>interestIndex</code>为<code>borrowIndex</code></p>
+</li>
+<li><p>更新全局总借款<code>totalBorrows</code> +=  新借款数量</p>
+</li>
+<li><p>调用相关方法将借款数量资产从本合约转出到用户地址</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//查询借款人总共应还款数量如下</span><br><span class="line">//update BorrowIndex to current index</span><br><span class="line">recentBorrowBalance = borrower.borrowBalance * market.borrowIndex / borrower.borrowIndex</span><br><span class="line">//欠款总额 * 全局borrowIndex / 借款时的borrowIndex</span><br><span class="line">//当全局borrowIndex相对借时涨了，那么欠款也会增加；如果跌了，那么欠款也会减少</span><br></pre></td></tr></table></figure>
+
+<h5 id="还款"><a href="#还款" class="headerlink" title="还款"></a>还款</h5><ul>
+<li>更新全局变量</li>
+<li>总欠款数量利息为<code>borrower.borrowBalance * market.borrowIndex / borrower.borrowIndex</code></li>
+<li>调用相关方法将还款数量资产从用户地址转入到本合约</li>
+<li>更新用户剩余欠款，更新<code>totalBorrows</code> -= 还款数量</li>
+</ul>
+<h5 id="清算"><a href="#清算" class="headerlink" title="清算"></a>清算</h5><p>由清算人触发清算</p>
+<ul>
+<li>更新全局变量</li>
+<li>清算人将从自己的账户中偿还清算借款人的所有债务</li>
+<li>将债务对应的借款人抵押品，转移到清算人账户中</li>
+</ul>
+<p>※清算条件</p>
+<p>这里假设用户在eth资金池中存款x个ceth（存款可直接作为抵押品），在dai资金池中借出y个dai；</p>
+<p>这里提到<code>抵押因子</code>为可贷价值为<code>原抵押价值 * 抵押因子</code>, <code>抵押因子</code>的值在0到1之间；</p>
+<ul>
+<li><p>遍历用户参与compound的所有资产，例子中为eth和dai两种</p>
+</li>
+<li><p>分别统计存款可贷价值总和，和欠款(包括利息)价值总和</p>
+<ul>
+<li>存款可贷价值的计算方式为<code>price * 抵押因子 * 兑换率 * 用户拥有的ctoken</code></li>
+<li>欠款价值的计算方式为<code>price *  欠款</code></li>
+</ul>
+</li>
+<li><p>所以用户的存款可贷价值总和为 <code>eth价格 * 抵押因子 * ceth兑换率 * x</code>; 欠款价值总和为<code>dai价格 * (y+利息)</code></p>
+</li>
+<li><p>当用户的存款可贷价值总和 &lt; 欠款价值总和时，将清算用户的抵押品(存款) (一个交易只能清算一种抵押品)</p>
+</li>
+</ul>
+<h3 id="计算示例"><a href="#计算示例" class="headerlink" title="计算示例"></a>计算示例</h3><p>假设当前为世界最初状态，一切都还没开始，没有存款，没有借款，那么相关参数的值如下</p>
+<ul>
+<li><code>exchangeRate</code> ，假设兑换率初始值为2(当<code>totalSupply</code>=0时，使用初始值)</li>
+<li><code>borrowIndex</code>，初始值为1 (代码设置)</li>
+<li><code>totalBorrows</code>，所有借款为0，<code>totalReserves</code>也为0 </li>
+<li><code>borrowRate</code>，假设借贷率为0.05(按块计算)</li>
+<li><code>reserveFactor</code>，按照之前的假设，reverse为平台收取的费用，假设<code>reserveFactor</code>利率为0.1</li>
+</ul>
+<ol>
+<li>现在，用户A存入100eth, 可获得xeth的数量为<code>100 / 兑换率</code>，在用户A存入之前，当前是初始状态，<code>totalSupply</code>=0，所以兑换率为2。那么用户A存入100eth时可获得<code>100 / 2 = 50xeth</code>;  同时，<code>totalSupply</code>将为 <code>0 + 50 = 50</code>，<code>totalCash</code>更新为100</li>
+</ol>
+<p>根据兑换率的计算公式为<code>(totalCash + totalBorrows - totalReserves) / totalSupply</code>，（<code>totalCash</code>为存储原资产eth的总和，<code>totalSupply</code>为此合约币xeth铸币总和）。假设没有借款时，<code>totalBorrows</code> ,<code>totalReserves</code>都为0， 假设用户A赎回50xeth将获得的eth为<code>50 * 兑换率</code>, 而兑换率<code>（100 + 0 - 0) / 50= 2</code>, 所以A将获得100eth；用户A发现没有发生借款，就没得利息，用户A此时并不打算赎回，他想等赚到利息了再赎回。</p>
+<p>​        假设当前区块高度为10，<code>borrowIndex</code>按照公式<code>borrowRate * blockDelta * borrowIndex + borrowIndex</code>将更新为<code>（10 * 0.05） * 1 + 1 = 1.5</code></p>
+<ol start="2">
+<li><p>用户B在区块高度100处，借走了50个eth; 在此之前没有另外的借款，所以根据公式，<code>totalBorrows</code>,<code>totalReserves</code>维持不变，分别为0,0; <code>borrowIndex</code>按照公式<code>borrowRate * blockDelta * borrowIndex + borrowIndex</code>将更新为<code>90 * 0.05 * 1.5 + 1.5 = 8.25</code>, 然后在B借走50的时，B借50时的<code>borrowIndex</code>为8.25, <code>totalBorrows</code>将更新为<code>50</code>。</p>
+</li>
+<li><p>在区块高度200处，我们来计算所有的利息；假设在此期间也并没有发生任何借款/还款/存款/赎回等操作。</p>
+<p>首先将更新全局变量们；距离区块高度100到现在为止，经历了100个区块；</p>
+<p>这100个区块的每货币借贷的利率为<code>100 * borrowRate = 100 * 0.05= 5</code></p>
+<p>总共有50个借贷的货币，那么50个货币产生的利息为<code>50 * 5 = 250</code></p>
+<p><code>totalBorrows = totalBorrows + 利息</code>，<code>totalBorrows</code>将更新为<code>50 + 250 = 300</code></p>
+<p><code>totalReserves = totalReserves + reserveFactor * 利息</code>，  <code>totalReserves</code>将更新为<code>0 + 250 * 0.1 = 25</code></p>
+<p><code>borrowIndex</code>按照公式将更新为<code>5 * 8.25 + 8.25 = 49.5</code>（复利？）</p>
+</li>
+</ol>
+<p>   用户B在此时要偿还债务，他欠款利息为<code>欠款总额 * 全局borrowIndex / 借款时的borrowIndex</code>，按照公式套入计算为<code>50 * 49.5 / 8.25 = 300</code>。也就是说B将偿还<code>300 + 50 = 350eth</code>才能还清债务。</p>
+<pre><code>用户A在此时选择赎回，此时的兑换率为`(100 + 300 - 25)/50=7.5`; 那么A将获得`50xeth * 7.5= 375eth`</code></pre><p>   然后我们再来看看结论，在B还清债务后，池子里总共有<code>50 + 350 = 400</code>个eth，A赎回时拿走<code>375</code>个<code>eth</code>; <code>xeth</code>完全销毁，池子里剩余<code>400 - 375 = 25</code>eth, 刚好就是<code>totalReserves</code>的数量。完全吻合。</p>
+<p>   虽然计算过程很复杂，甚至有点看不懂，但感觉巨神奇。</p>
+<h3 id="理解公式"><a href="#理解公式" class="headerlink" title="理解公式"></a>理解公式</h3><h5 id="存储利息的理解"><a href="#存储利息的理解" class="headerlink" title="存储利息的理解"></a>存储利息的理解</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exchangeRate = (totalCash + totalBorrows - totalReserves) / totalSupply</span><br></pre></td></tr></table></figure>
+
+<p>为了说明方便，我们假设这是供应eth资金池，供应eth, 产生ceth。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//存入eth n个，可获得m个ceth，其中</span><br><span class="line">m = n / exchangeRate</span><br><span class="line"></span><br><span class="line">//赎回时，可获得的eth = m * exchangeRate</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>首先</p>
+<p>假设初始exchangeRate=2，那么A存入100eth,将获得50ceth(100 / 2);此后，<code>exchangeRate =100/50</code></p>
+<p>假设C再存入100eth，那么C将获得的ceth为50(100 / 2),此后，<code>exchangeRate = (100 + 100)/ (50 + 50)</code></p>
+<p>可以看到，当<code>x / y = z;</code>时，<code>(x + nz)/(y + n)</code>还是等于z; 可以通过简单的数学公式来验算；</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x / y = z;</span><br><span class="line">x = y * z;</span><br><span class="line">x + m = (y + n)*z //当分子分母分别加上 m n，要达到左右依旧相等，那么m = nz</span><br></pre></td></tr></table></figure>
+
+<p><strong>结论：</strong>也就是说，存入eth后，<code>exchangeRate</code>将不会发生变化，只有借贷产生利息，才会影响<code>exchangeRate</code>的值</p>
+<p>其中，<code>totalCash</code> + <code>totalBorrows</code>  = <code>资金池中存入的总供应</code> + <code>借贷产生的利息</code></p>
+<p>那么<code>(totalCash + totalBorrows - totalReserves)</code>为除了市场(合约本身/中间商)收取的<code>Reserves</code>之外，所有的eth总量(包括借出去的和借利息)；</p>
+<ol start="2">
+<li><p>其次 </p>
+<p>假设，当存入n个eth时<code>exchangeRate = (eth总供应 + 利息）/ ceth总量</code>; 获得m个ceth</p>
+<p>当赎回<code>exchangeRate1 = (eth总供应1 + 利息1）/ ceth总量1</code>，现在要赎回m个ceth,可获得的eth为？      </p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//可获得的eth为</span><br><span class="line">m * exchangeRate1 = m *  (eth总供应1 + 利息1）/ ceth总量1</span><br><span class="line">									= n / [(eth总供应 + 利息）/ ceth总量] * [(eth总供应1 + 利息1）/ ceth总量1]</span><br><span class="line">									= n * [ceth总量 / (eth总供应 + 利息)] * [(eth总供应1 + 利息1）/ ceth总量1]</span><br><span class="line">									//根据1的结论，可变式为</span><br><span class="line">									= n * [ceth总量 / (eth总供应 + 利息)] * &#123;[(eth总供应 + 利息) / ceth总量] + [(利息1 - 利息) / ceth总量1]&#125;</span><br><span class="line">								  = n + n * [ceth总量 / (eth总供应 + 利息)] * [(利息1 - 利息) / ceth总量1]</span><br><span class="line">								  = n + m * [(利息1 - 利息) / ceth总量1</span><br></pre></td></tr></table></figure>
+
+<p><strong>结论：</strong>也就是说，当赎回时，<font color="red">至少可获得当时存入的n个eth，以及获得从存入时到赎回这期间产生的利息，利息的分配方式乘以拥有的m个ceth占ceth总量的比例</font>；</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defi-Compound"><span class="toc-number">1.</span> <span class="toc-text">Defi Compound</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单参数"><span class="toc-number">1.1.</span> <span class="toc-text">简单参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局变量"><span class="toc-number">1.2.</span> <span class="toc-text">全局变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#存款-铸币"><span class="toc-number">1.2.0.1.</span> <span class="toc-text">存款/铸币</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#赎回"><span class="toc-number">1.2.0.2.</span> <span class="toc-text">赎回</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#借款"><span class="toc-number">1.2.0.3.</span> <span class="toc-text">借款</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#还款"><span class="toc-number">1.2.0.4.</span> <span class="toc-text">还款</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#清算"><span class="toc-number">1.2.0.5.</span> <span class="toc-text">清算</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算示例"><span class="toc-number">1.3.</span> <span class="toc-text">计算示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#理解公式"><span class="toc-number">1.4.</span> <span class="toc-text">理解公式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#存储利息的理解"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">存储利息的理解</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2020/08/05/defi-compond/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&text=defi-compond"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&is_video=false&description=defi-compond"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=defi-compond&body=Check out this article: https://github.com/xiaoxuez/2020/08/05/defi-compond/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&title=defi-compond"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2020/08/05/defi-compond/&name=defi-compond&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
