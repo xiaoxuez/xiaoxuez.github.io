@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="Defi Compound就CToken.sol实现的借贷合约的中基本运算进行简单源码分析。 此处不包括Comptroller相关逻辑，Comptroller合约主要是用于校验用户的操作，比如是否有足够的抵押品进行借贷等等，（借贷即挖矿的实现中，分发comp代币也在Comptroller合约里） 简单参数 reserveFactor, 值在[0, 1]之间，提供流动性可获得利率=还款利率 * re">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-08-05T03:24:38.556Z">
+<meta property="og:updated_time" content="2020-08-11T06:51:49.820Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="defi-compond">
 <meta name="twitter:description" content="Defi Compound就CToken.sol实现的借贷合约的中基本运算进行简单源码分析。 此处不包括Comptroller相关逻辑，Comptroller合约主要是用于校验用户的操作，比如是否有足够的抵押品进行借贷等等，（借贷即挖矿的实现中，分发comp代币也在Comptroller合约里） 简单参数 reserveFactor, 值在[0, 1]之间，提供流动性可获得利率=还款利率 * re">
@@ -197,7 +197,7 @@
 
 <h5 id="还款"><a href="#还款" class="headerlink" title="还款"></a>还款</h5><ul>
 <li>更新全局变量</li>
-<li>总欠款数量利息为<code>borrower.borrowBalance * market.borrowIndex / borrower.borrowIndex</code></li>
+<li>总欠款数量为<code>borrower.borrowBalance * market.borrowIndex / borrower.borrowIndex</code></li>
 <li>调用相关方法将还款数量资产从用户地址转入到本合约</li>
 <li>更新用户剩余欠款，更新<code>totalBorrows</code> -= 还款数量</li>
 </ul>
@@ -249,8 +249,8 @@
 <p><code>borrowIndex</code>按照公式将更新为<code>5 * 8.25 + 8.25 = 49.5</code>（复利？）</p>
 </li>
 </ol>
-<p>   用户B在此时要偿还债务，他欠款利息为<code>欠款总额 * 全局borrowIndex / 借款时的borrowIndex</code>，按照公式套入计算为<code>50 * 49.5 / 8.25 = 300</code>。也就是说B将偿还<code>300 + 50 = 350eth</code>才能还清债务。</p>
-<pre><code>用户A在此时选择赎回，此时的兑换率为`(100 + 300 - 25)/50=7.5`; 那么A将获得`50xeth * 7.5= 375eth`</code></pre><p>   然后我们再来看看结论，在B还清债务后，池子里总共有<code>50 + 350 = 400</code>个eth，A赎回时拿走<code>375</code>个<code>eth</code>; <code>xeth</code>完全销毁，池子里剩余<code>400 - 375 = 25</code>eth, 刚好就是<code>totalReserves</code>的数量。完全吻合。</p>
+<p>   用户B在此时要偿还债务，他欠款总额为<code>欠款总额 * 全局borrowIndex / 借款时的borrowIndex</code>，按照公式套入计算为<code>50 * 49.5 / 8.25 = 300</code>。也就是说B将偿还<code>300eth</code>才能还清债务。</p>
+<pre><code>用户A在此时选择赎回，此时的兑换率为`(50 + 300 - 25)/50=6.5`; 那么A将获得`50xeth * 6.5= 325eth`</code></pre><p>   然后我们再来看看结论，在B还清债务后，池子里总共有<code>50 + 300 = 350</code>个eth，A赎回时拿走<code>325</code>个<code>eth</code>; <code>xeth</code>完全销毁，池子里剩余<code>350 - 325 = 25</code>eth, 刚好就是<code>totalReserves</code>的数量。完全吻合。</p>
 <p>   虽然计算过程很复杂，甚至有点看不懂，但感觉巨神奇。</p>
 <h3 id="理解公式"><a href="#理解公式" class="headerlink" title="理解公式"></a>理解公式</h3><h5 id="存储利息的理解"><a href="#存储利息的理解" class="headerlink" title="存储利息的理解"></a>存储利息的理解</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exchangeRate = (totalCash + totalBorrows - totalReserves) / totalSupply</span><br></pre></td></tr></table></figure>
 
