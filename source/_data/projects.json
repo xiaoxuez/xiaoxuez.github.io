@@ -2,16 +2,6 @@
 	{
 		"name":"源",
 		"url":"https://github.com/xiaoxuez/xiaoxuez.github.io/tree/master",
-		"desc":"本站github地址💀, 欢迎交流讨论"
-	},
-	{
-		"name":"更多笔记",
-		"url":"https://github.com/xiaoxuez/note/tree/master/text",
-		"desc":"未迁移到本博客的笔记..2019年前的大部分笔记都未迁移过来🙈"
-	},
-	{
-		"name":"go-hello-world",
-		"url": "https://github.com/xiaoxuez/go-hello-world/tree/master/algorithm/",
-		"desc":""
+		"desc":"本站github地址, 欢迎交流讨论"
 	}
 ]
