@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="aragon这个DAO的工具来说，还是很好用的。各方面都封装得很好； 主要由kernel + acl + apps组成； kernel简单来说， kernel负责存储各个app的地址（app-id =&amp;gt; address），app的部署方式为(proxy delegatecall), app的proxy中的delegatecall(implement, msg.data)中的implement">
+<meta property="og:type" content="article">
+<meta property="og:title" content="aragon">
+<meta property="og:url" content="https://github.com/xiaoxuez/2020/12/17/aragon/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="aragon这个DAO的工具来说，还是很好用的。各方面都封装得很好； 主要由kernel + acl + apps组成； kernel简单来说， kernel负责存储各个app的地址（app-id =&amp;gt; address），app的部署方式为(proxy delegatecall), app的proxy中的delegatecall(implement, msg.data)中的implement">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-12-17T07:30:11.816Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="aragon">
+<meta name="twitter:description" content="aragon这个DAO的工具来说，还是很好用的。各方面都封装得很好； 主要由kernel + acl + apps组成； kernel简单来说， kernel负责存储各个app的地址（app-id =&amp;gt; address），app的部署方式为(proxy delegatecall), app的proxy中的delegatecall(implement, msg.data)中的implement">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>aragon</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/12/17/chainlink/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/11/12/defi-aragon/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2020/12/17/aragon/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2020/12/17/aragon/&text=aragon"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2020/12/17/aragon/&is_video=false&description=aragon"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=aragon&body=Check out this article: https://github.com/xiaoxuez/2020/12/17/aragon/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2020/12/17/aragon/&name=aragon&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#aragon"><span class="toc-number">1.</span> <span class="toc-text">aragon</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kernel"><span class="toc-number">1.1.</span> <span class="toc-text">kernel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#acl"><span class="toc-number">2.</span> <span class="toc-text">acl</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#app"><span class="toc-number">2.1.</span> <span class="toc-text">app</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本的部署示例"><span class="toc-number">3.</span> <span class="toc-text">基本的部署示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#详细的部署示例"><span class="toc-number">3.1.</span> <span class="toc-text">详细的部署示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#script分析"><span class="toc-number">4.</span> <span class="toc-text">script分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dot-Voting-app-选项脚本分析"><span class="toc-number">5.</span> <span class="toc-text">Dot Voting app 选项脚本分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#示例1"><span class="toc-number">5.1.</span> <span class="toc-text">示例1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例2"><span class="toc-number">5.2.</span> <span class="toc-text">示例2</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#编码时，会按照参数顺序依次编码，遇到动态类型，就编码位置偏移索引值，遇到非动态类型，就编码数据，最后，将动态类型的数据再依次编码。"><span class="toc-number">5.2.1.</span> <span class="toc-text">编码时，会按照参数顺序依次编码，遇到动态类型，就编码位置偏移索引值，遇到非动态类型，就编码数据，最后，将动态类型的数据再依次编码。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例3"><span class="toc-number">5.3.</span> <span class="toc-text">示例3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例4"><span class="toc-number">5.4.</span> <span class="toc-text">示例4</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        aragon
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-12-17T15:20:12.000Z" itemprop="datePublished">2020-12-17</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/eth/">eth</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="aragon"><a href="#aragon" class="headerlink" title="aragon"></a>aragon</h3><p>这个DAO的工具来说，还是很好用的。各方面都封装得很好；</p>
+<p>主要由kernel + acl + apps组成；</p>
+<h4 id="kernel"><a href="#kernel" class="headerlink" title="kernel"></a>kernel</h4><p>简单来说， kernel负责存储各个app的地址（app-id =&gt; address），app的部署方式为(proxy delegatecall), app的proxy中的<code>delegatecall(implement, msg.data)</code>中的implement将会到kernel中读取对应app-id的base逻辑的合约地址。</p>
+<h3 id="acl"><a href="#acl" class="headerlink" title="acl"></a>acl</h3><p>acl负责完成权限管理。app的一切修改数据的操作都需要具有对应的权限才可以。如一个transfer方法的签名为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function transfer(address _token, address _to, uint256 _value)</span><br><span class="line">        external</span><br><span class="line">        authP(TRANSFER_ROLE, arr(_token, _to, _value))</span><br><span class="line">				&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>authP</code>便是权限查询。</p>
+<p>一个权限 Permission 主要由下面几个概念来组成</p>
+<ul>
+<li><code>manager</code>管理者，管理者可将该权限授予某实体地址，以及取消某实体地址的该权限</li>
+<li><code>role</code> 权限名称，如<code>TRANSFER_ROLE</code></li>
+<li><code>app</code>，该权限作用的app</li>
+<li><code>entity</code>,拥有该权限的实体</li>
+</ul>
+<p>创建一个permission时，就需要包含这几个信息；如 <code>app = vault, role = TRANSFER_ROLE</code>，则代表该权限是要使用(transfer)vault中的资产权限；创建(create)完成一个permission后，manager可通过<code>grant</code>来对权限进行授予或取消；</p>
+<h4 id="app"><a href="#app" class="headerlink" title="app"></a>app</h4><p>更详细的<a href="https://hack.aragon.org/docs/guides-custom-deploy#adding-a-vault-and-finance-instance" target="_blank" rel="noopener">文档</a>👈。这里列出基本的几个</p>
+<ul>
+<li><p>Token Manager</p>
+<p>可使用token来分组，配置不同会有3种场景</p>
+<ul>
+<li><p><code>Membership</code>， token不可转让，每地址只能拥有1枚</p>
+</li>
+<li><p><code>Reputation</code> ，token不可转让，每地址没有数量限制</p>
+</li>
+<li><p><code>Equity</code>，token可转让，每地址没有数量限制</p>
+<p>Token manager 使用的token是<a href="https://github.com/Giveth/minime">minime</a>, 这个是具有额外功能的erc20, 额外功能包括，克隆方便，保存着地址资产历史，可根据区块高度来查询余额；</p>
+</li>
+</ul>
+</li>
+<li><p>Voting</p>
+<p>通过token进行投票。</p>
+<p>创建voting app可以设置的参数包括</p>
+<ul>
+<li><code>minime token</code></li>
+<li>投票通过的百分比</li>
+<li>最小参与投票的百分比</li>
+<li>投票期时长</li>
+</ul>
+</li>
+<li><p>Vault 以及 Finance</p>
+<p>vault保管着一些资产，但vault没提供用户接口，需要通过Finance的用户接口来交互操作，Finance中负责提供预算，在一个阶段可提供一笔预算，通过投票可使用这笔预算，预算中的资产将由Vault支付</p>
+</li>
+<li><p>Agent</p>
+<p>这是Vault的子类，保管着资产，并且提供与其他合约交互的接口，比如可以将这些资产放到其他的defi合约里赚取收益什么的。</p>
+</li>
+</ul>
+<h3 id="基本的部署示例"><a href="#基本的部署示例" class="headerlink" title="基本的部署示例"></a>基本的部署示例</h3><p>这里将部署一个投票app，当投票通过后，使用vault中资产的例子。</p>
+<ol>
+<li><p>部署Kernel和ACL</p>
+</li>
+<li><p>执行<code>kernel.initialize(acl, rootAddress)</code>来配置kernel中的acl实例和操作地址，该方法中会执行<code>acl.initialize(rootAddress)</code>以及<code>createPermission(rootAddress, aclAddress, CREATE_PERMISSIONS_ROLE, rootAddress)</code>创建权限管理；</p>
+<p>初始化时的rootAddress将会具有以及管理createPermission的权限。</p>
+</li>
+<li><p>部署Voting app，投票通过后，将会调用vault中的transfer方法，所以voting要具有对应的权限。</p>
+</li>
+<li><p>上面提到rootAddress有管理createPermission的权限，所以首先使用rootAddress将createPermission授权给voting，之后voting再创建transfer权限。</p>
+<blockquote>
+<p>Grant the Voting app the ability to call <code>createPermission()</code>: <code>grantPermission(votingAppAddress, aclAddress, CREATE_PERMISSIONS_ROLE)</code> (must be executed by <code>rootAddress</code>)</p>
+</blockquote>
+</li>
+<li><p>部署Vault 合约，该合约具有transfer方法</p>
+</li>
+<li><p>所以现在voting就要创建自己去执行vault的transfer方法的权限</p>
+<blockquote>
+<p>Create a new vote via the Voting app to create the <code>TRANSFER_ROLE</code> permission: <code>createPermission(votingAppAddress, vaultAppAddress, TRANSFER_ROLE, votingAppAddress)</code></p>
+</blockquote>
+</li>
+<li><p>当投票通过后，voting就可以调用vault中任何由 TRANSFER_ROLE 权限修饰的方法了，在这个例子中，只有<code>transfer</code>方法</p>
+</li>
+<li><p>Vault中的资产就被Voting控制了，当用户想使用Vault的资产时，在Voting app上创建一个新的执行Vault的transfer的vote，当投票通过时，transfer将会被执行</p>
+</li>
+<li><p>voting app可以取消transfer的权限</p>
+</li>
+</ol>
+<h4 id="详细的部署示例"><a href="#详细的部署示例" class="headerlink" title="详细的部署示例"></a>详细的部署示例</h4><p>模板Reputation部署过程(in templates)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//create token =&gt; in MiniMeTokenFactory.createCloneToken</span><br><span class="line">MiniMeToken newToken = new MiniMeToken(...)</span><br><span class="line">newToken.changeController(msg.sender);</span><br><span class="line"></span><br><span class="line">//create dao kernal acl..</span><br><span class="line">Kernel dao = Kernel(new KernelProxy(baseKernel));</span><br><span class="line">dao.initialize(baseACL, _root); //kernel的initialize,上述2步骤</span><br><span class="line"></span><br><span class="line">//初始化Vault资金池，如果使用了Agent就使用支持Agent的合约</span><br><span class="line">Vault agentOrVault = _useAgentAsVault ? _installDefaultAgentApp(_dao) : _installVaultApp(_dao);</span><br><span class="line"></span><br><span class="line">//创建Finance app</span><br><span class="line">Finance finance = _installFinanceApp(_dao, agentOrVault, _financePeriod == 0 ? DEFAULT_FINANCE_PERIOD : _financePeriod);</span><br><span class="line"></span><br><span class="line">//创建Token Manager app</span><br><span class="line">TokenManager tokenManager = _installTokenManagerApp(_dao, token, TOKEN_TRANSFERABLE, TOKEN_MAX_PER_ACCOUNT);</span><br><span class="line"></span><br><span class="line">//创建Voting app</span><br><span class="line">Voting voting = _installVotingApp(_dao, token, _votingSettings);</span><br><span class="line"></span><br><span class="line">//给初始化时的地址mint币，因为整个系统都是基于权限，所以会先创建mint权限给当前，挖完再取消掉权限</span><br><span class="line">_mintTokens(_acl, tokenManager, _holders, _stakes);</span><br><span class="line"></span><br><span class="line">//创建相关的权限</span><br><span class="line">_setupPermissions(_acl, agentOrVault, voting, finance, tokenManager, _useAgentAsVault);</span><br></pre></td></tr></table></figure>
+
+<p>上面创建相关的权限的细节在这里👇</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">function _setupPermissions(</span><br><span class="line">    ACL _acl,</span><br><span class="line">    Vault _agentOrVault,</span><br><span class="line">    Voting _voting,</span><br><span class="line">    Finance _finance,</span><br><span class="line">    TokenManager _tokenManager,</span><br><span class="line">    bool _useAgentAsVault</span><br><span class="line">)</span><br><span class="line">    internal</span><br><span class="line">&#123;</span><br><span class="line">    if (_useAgentAsVault) &#123;</span><br><span class="line">    		//创建voting app具有transfer vault 资产的权限</span><br><span class="line">        _createAgentPermissions(_acl, Agent(_agentOrVault), _voting, _voting);</span><br><span class="line">    &#125;</span><br><span class="line">    //设置finance具有transfer vault 资产的权限</span><br><span class="line">    _createVaultPermissions(_acl, _agentOrVault, _finance, _voting);</span><br><span class="line"></span><br><span class="line">    //设置由voting来触发finance中EXECUTE_PAYMENTS_ROLE、MANAGE_PAYMENTS_ROLE权限</span><br><span class="line">    _createFinancePermissions(_acl, _finance, _voting, _voting);</span><br><span class="line"></span><br><span class="line">    //设置voting具有在finance中创建payment的权限，CREATE_PAYMENTS_ROLE权限</span><br><span class="line">    _createFinanceCreatePaymentsPermission(_acl, _finance, _voting, address(this));</span><br><span class="line"></span><br><span class="line">    //设置voting 具有evmscriptsregistery中的REGISTRY_MANAGER_ROLE、REGISTRY_ADD_EXECUTOR_ROLE权限</span><br><span class="line">    _createEvmScriptsRegistryPermissions(_acl, _voting, _voting);</span><br><span class="line"></span><br><span class="line">    //设置voting具有voting的MODIFY_QUORUM_ROLE、MODIFY_SUPPORT_ROLE权限</span><br><span class="line">    //以及_tokenManager具有voting的CREATE_VOTES_ROLE权限</span><br><span class="line">    _createVotingPermissions(_acl, _voting, _voting, _tokenManager, _voting);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //创建voting app 具有mint和burn token的权限,也就是投票通过后可以mint 和burn token</span><br><span class="line">    _createTokenManagerPermissions(_acl, _tokenManager, _voting, _voting);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="script分析"><a href="#script分析" class="headerlink" title="script分析"></a>script分析</h3><ul>
+<li><p>example来自一个由vote发起的普通new vote<a href="https://rinkeby.etherscan.io/tx/0xd707800483616e85adabe969a675b1e8833148f6505d05c3c3b1e398e1b9ef71" target="_blank" rel="noopener">交易</a>；这是通过aragon网页创建的一个普通投票，内容填写的是”mint”</p>
+<p>使用forward进行new vote时，首先要编码要调用的script为new vote，其次，new vote的签名为<code>function _newVote(bytes _executionScript, string _metadata)</code>, 需要传入vote通过后的执行script</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//对data数据进行解析</span><br><span class="line"></span><br><span class="line">0x</span><br><span class="line">d948d468 //forward</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000020</span><br><span class="line">00000000000000000000000000000000000000000000000000000000000000e0</span><br><span class="line">//script</span><br><span class="line">00000001 //executorId ，rinkeby测试网上的id好像只有1</span><br><span class="line">dcc728ad010792caef6b73ab04633a22c4a9eef4 //execute  contract address，这里是vote的合约地址</span><br><span class="line">000000c4 // call data length, 后面的数据的长度</span><br><span class="line">d5db2c80 //execute method signature， vote中要调用方法的签名，这里对应是newVote方法</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000040</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000080</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000004</span><br><span class="line">//script</span><br><span class="line">00000001 //executorId</span><br><span class="line">0000000000000000000000000000000000000000</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">46d696e74 //new vote的第二个参数,ascii为mint(字符)</span><br><span class="line">00000000000000000000000000000000000000000000000000000000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>example再看一个通过token manager创建的new vote，当投票通过后，将会给地址转账, <a href="https://rinkeby.etherscan.io/tx/0xf9678d1697a5310e57431fe554dbbf613c1f5a7646107831891fffbe0278bb5f" target="_blank" rel="noopener">交易</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">0x</span><br><span class="line">d948d468 //forward</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000020</span><br><span class="line">00000000000000000000000000000000000000000000000000000000000000c0</span><br><span class="line">00000001 //executorId</span><br><span class="line">dcc728ad010792caef6b73ab04633a22c4a9eef4 //vote的合约地址</span><br><span class="line">000000a4 //call data length</span><br><span class="line">d948d468 //newVote方法</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000020</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000060</span><br><span class="line">//new vote 方法参数1，执行脚本</span><br><span class="line">00000001  //executorId</span><br><span class="line">ab3eca07408b8aa4db5915b2a12b193b25716c8c //execute contract address token manager的proxy</span><br><span class="line">00000044 //call data length</span><br><span class="line">40c10f19 //方法签名 mint(address,uint256)</span><br><span class="line">000000000000000000000000</span><br><span class="line">b7e84ea36c789dd576ffe46419245ea28a1e0e88 //地址</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000001  //数量1</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="Dot-Voting-app-选项脚本分析"><a href="#Dot-Voting-app-选项脚本分析" class="headerlink" title="Dot Voting app 选项脚本分析"></a>Dot Voting app 选项脚本分析</h3><p>首先简单恶补一下方法数据参数(abi)编码规则。dot app的代码分析可跳到示例4</p>
+<ul>
+<li>任何数据的单元都为32字节</li>
+<li>数据类型分为动态类型和非动态类型，string, array等非固定长度的数据类型为动态类型；动态类型需额外存储数据长度</li>
+<li>abi编码为方法签名(4字节)+数据，以下省略方法签名</li>
+</ul>
+<h4 id="示例1"><a href="#示例1" class="headerlink" title="示例1"></a>示例1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function slice(uint32[2])</span><br></pre></td></tr></table></figure>
+
+<p>测试数据为 <code>[2]uint32{1, 2}</code></p>
+<p>分析，<code>uint32[2]</code> 虽然是个数组，但是数组长度固定，数组中的数据长度也固定，所以不需要额外的数据来表示长度。</p>
+<p>编码结果(hex)为<code>00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000002</code></p>
+<p>可以看到1和2的编码长度单元都是32bytes(hex长度64)</p>
+<p>后续为了方便查看，我以32bytes换行展示。</p>
+<h4 id="示例2"><a href="#示例2" class="headerlink" title="示例2"></a>示例2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function slice(uint32[])</span><br></pre></td></tr></table></figure>
+
+<p>测试数据为 <code>[]uint32{1, 2}</code></p>
+<p>分析，这里做了一点小改动，将数组改成了任意长度。所以这里类型更改为动态类型，需要额外的数据来表示长度。</p>
+<p>编码结果(hex)为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0000000000000000000000000000000000000000000000000000000000000020</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000002</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000001</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000002</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，数据中多了<code>0x20</code>和<code>0x02</code>, <code>0x02</code>可以理解是数据的长度为2，那么<code>0x20</code> 代表什么呢。</p>
+<p>存在动态类型的编码时，会增加动态类型数据的位置偏移索引值，这个<code>0x20</code>就代表数据开始于当前位置再往后偏移<code>0x20</code>的位置，也就是向后偏移32bytes，是不是就刚好是数据1开始的位置。</p>
+<p><code>0x20</code>是怎么得出来的呢。</p>
+<h5 id="编码时，会按照参数顺序依次编码，遇到动态类型，就编码位置偏移索引值，遇到非动态类型，就编码数据，最后，将动态类型的数据再依次编码。"><a href="#编码时，会按照参数顺序依次编码，遇到动态类型，就编码位置偏移索引值，遇到非动态类型，就编码数据，最后，将动态类型的数据再依次编码。" class="headerlink" title="编码时，会按照参数顺序依次编码，遇到动态类型，就编码位置偏移索引值，遇到非动态类型，就编码数据，最后，将动态类型的数据再依次编码。"></a>编码时，会按照参数顺序依次编码，遇到动态类型，就编码位置偏移索引值，遇到非动态类型，就编码数据，最后，将动态类型的数据再依次编码。</h5><p>那么位置偏移索引值怎么计算呢？</p>
+<p>按照上面说的，先将非动态类型的数据编码后，最后编码动态类型的数据，并且遇到动态类型，会编码一个位置索引值(32bytes)，所以<code>第一个动态类型的位置索引值 = 动态类型参数的个数 * 32 + 非动态类型数据的具体长度（以32为单元的长度）</code>。如果存在第二个动态类型参数呢，<code>第二个动态类型的位置索引值 = 第一个动态类型的位置索引值 + 第一个动态类型数据的具体长度</code>。</p>
+<p>简单看一下代码</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Pack performs the operation Go format -&gt; Hexdata</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(arguments Arguments)</span> <span class="title">Pack</span><span class="params">(args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">	<span class="comment">// Make sure arguments match up and pack them</span></span><br><span class="line">	abiArgs := arguments</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(args) != <span class="built_in">len</span>(abiArgs) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">"argument count mismatch: %d for %d"</span>, <span class="built_in">len</span>(args), <span class="built_in">len</span>(abiArgs))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// variable input is the output appended at the end of packed</span></span><br><span class="line">	<span class="comment">// output. This is used for strings and bytes types input.</span></span><br><span class="line">	<span class="keyword">var</span> variableInput []<span class="keyword">byte</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// input offset is the bytes offset for packed output</span></span><br><span class="line">	inputOffset := <span class="number">0</span>  <span class="comment">//按照参数类型计算数据长度，也就是位置索引值</span></span><br><span class="line">	<span class="keyword">for</span> _, abiArg := <span class="keyword">range</span> abiArgs &#123;</span><br><span class="line">		inputOffset += getTypeSize(abiArg.Type) <span class="comment">//如果类型是动态，TypeSize为32</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> ret []<span class="keyword">byte</span></span><br><span class="line">	<span class="keyword">for</span> i, a := <span class="keyword">range</span> args &#123;</span><br><span class="line">		input := abiArgs[i]</span><br><span class="line">		<span class="comment">// pack the input  编码数据</span></span><br><span class="line">		packed, err := input.Type.pack(reflect.ValueOf(a))</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// check for dynamic types  数据如果是动态类型</span></span><br><span class="line">		<span class="keyword">if</span> isDynamicType(input.Type) &#123;</span><br><span class="line">			<span class="comment">// set the offset  将位置索引值编码</span></span><br><span class="line">			ret = <span class="built_in">append</span>(ret, packNum(reflect.ValueOf(inputOffset))...)</span><br><span class="line">			<span class="comment">// calculate next offset  位置索引值偏移到该动态数据后面，如果存在下一个动态数据，位置就在这</span></span><br><span class="line">			inputOffset += <span class="built_in">len</span>(packed)</span><br><span class="line">			<span class="comment">// append to variable input  动态类型的数据先放在一个数组里</span></span><br><span class="line">			variableInput = <span class="built_in">append</span>(variableInput, packed...)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">// append the packed value to the input 先编码非动态类型数据</span></span><br><span class="line">			ret = <span class="built_in">append</span>(ret, packed...)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// append the variable input at the end of the packed input 最后append动态类型数据</span></span><br><span class="line">	ret = <span class="built_in">append</span>(ret, variableInput...)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种编码方式倒是很神奇，通过读取位置索引值，就能索引到数据真正的地方。</p>
+<h4 id="示例3"><a href="#示例3" class="headerlink" title="示例3"></a>示例3</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function slice(uint32[] a, uint32 b)</span><br></pre></td></tr></table></figure>
+
+<p>测试数据为<code>[]uint32{1, 2}, 2</code></p>
+<p>编码结果(hex)为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0000000000000000000000000000000000000000000000000000000000000040 //类型占位和偏移</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000002</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000002</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000001</span><br><span class="line">0000000000000000000000000000000000000000000000000000000000000002</span><br></pre></td></tr></table></figure>
+
+<p>按照编码规则，</p>
+<ul>
+<li>首先遇到动态数组，所以需要所有类型占位和，有两个参数，第一个是动态数组，所以占位是32, 第二个是uint32，占位也是32，所以占位和为64。也就是0x40</li>
+<li>其次，编码动态数组的数据长度，长度为2</li>
+<li>然后，编码第二个参数，2</li>
+<li>最后，将动态数据编码，1和2</li>
+</ul>
+<p>按照占位和偏移的含义，0x40也就是数组数据开始的地方，向后偏移64 bytes，也就刚好是数组数据1开始的位置。</p>
+<p>下面举个多动态数组的例子，也就是DOT Voting的例子吧</p>
+<h4 id="示例4"><a href="#示例4" class="headerlink" title="示例4"></a>示例4</h4><p>Dot  voting的数据结构中，提供多选项，每个选项的信息可包含一个地址，一个描述性的info，两个id。（id两级我有点不太理解是做什么用的…，以及signal数组也不太清楚</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function setSignal(</span><br><span class="line">        address[] _addr, //选项地址数组</span><br><span class="line">        uint256[] _signal,</span><br><span class="line">        uint256[] _infoIndices, //每个info信息长度</span><br><span class="line">        string _candidateInfo,  //多个info拼接在一起，按长度可截取出来</span><br><span class="line">        string description,</span><br><span class="line">        uint256[] _level1Id,</span><br><span class="line">        uint256[] _level2Id</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>按照aragon的结构，和Voting一样，交易数据为调用某合约的forward方法，通过执行器调用对应合约的对应方法。</p>
+<p>我在aragon上发起了一个<a href="https://rinkeby.client.aragon.org/#/kuafuzhuri1/0x01b79e559f9c2c9b6b50bd24330add6ddac6e78f/vote/1/" target="_blank" rel="noopener">投票</a>，描述为Test Voting, 三个选项，分别为A B C。然后这笔<a href="https://rinkeby.etherscan.io/tx/0x0fa97113007d5f4d4d0b50cbf5e5373a8755d8758def883e59c5d666a7956c6a" target="_blank" rel="noopener">交易</a>的data如下，以这个数据为例介绍。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">//这里先按照上面介绍的编码形式简单看看数据</span><br><span class="line">MethodID: 0xd948d468 //forward(bytes s)</span><br><span class="line">[0]:  0000000000000000000000000000000000000000000000000000000000000020 //s索引位置为32bytes</span><br><span class="line">[1]:  00000000000000000000000000000000000000000000000000000000000004c0 //bytes的长度</span><br><span class="line">[2]:  0000000101b79e559f9c2c9b6b50bd24330add6ddac6e78f000004a4d5db2c80 // 这里是特定编码 exec</span><br><span class="line">					//00000001 + 调用合约01b79e559f9c2c9b6b50bd24330add6ddac6e78f + 调用方法 d5db2c80，后面就是调用方法的参数，这里是调用dot vote的newVote(bytes _executionScript, string _metadata)</span><br><span class="line">[3]:  0000000000000000000000000000000000000000000000000000000000000040 //两个参数都是动态类型，故总索引值为32 + 32</span><br><span class="line">[4]:  0000000000000000000000000000000000000000000000000000000000000460 //第二个动态类型位置</span><br><span class="line">[5]:  0000000000000000000000000000000000000000000000000000000000000400 //参数1的长度</span><br><span class="line">[6]:  0000000101b79e559f9c2c9b6b50bd24330add6ddac6e78f000003e400000000 // 参数1又是一个exec script,同上，调用方法是 00000000 ?</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**后面就是具体的要解析出多选项的数据了，参照编码方法为function setSignal(</span><br><span class="line">        address[] _addr,</span><br><span class="line">        uint256[] _signal,</span><br><span class="line">        uint256[] _infoIndices,</span><br><span class="line">        string _candidateInfo,</span><br><span class="line">        string description,</span><br><span class="line">        uint256[] _level1Id,</span><br><span class="line">        uint256[] _level2Id</span><br><span class="line">    )**/</span><br><span class="line">[7]:  00000000000000000000000000000000000000000000000000000000000000e0 //参数1位置，7个动态7*32</span><br><span class="line">[8]:  0000000000000000000000000000000000000000000000000000000000000160 //参数2位置</span><br><span class="line">[9]:  00000000000000000000000000000000000000000000000000000000000001e0 //参数3位置</span><br><span class="line">[10]: 0000000000000000000000000000000000000000000000000000000000000260 //参数4位置</span><br><span class="line">[11]: 00000000000000000000000000000000000000000000000000000000000002a0 // ...</span><br><span class="line">[12]: 00000000000000000000000000000000000000000000000000000000000002e0 // ...</span><br><span class="line">[13]: 0000000000000000000000000000000000000000000000000000000000000360 // 参数7位置（位置结束</span><br><span class="line">[14]: 0000000000000000000000000000000000000000000000000000000000000003 //参数1长度（address）</span><br><span class="line">[15]: 0000000000000000000000000000000000000000000000000000000000000000 //address&#123;0&#125;</span><br><span class="line">[16]: 0000000000000000000000000000000000000000000000000000000000000001 //address&#123;1&#125;</span><br><span class="line">[17]: 0000000000000000000000000000000000000000000000000000000000000002 //address&#123;2&#125;</span><br><span class="line">[18]: 0000000000000000000000000000000000000000000000000000000000000003 //参数2长度</span><br><span class="line">[19]: 0000000000000000000000000000000000000000000000000000000000000000 // 参数2数据[0, 0, 0]</span><br><span class="line">[20]: 0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">[21]: 0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">[22]: 0000000000000000000000000000000000000000000000000000000000000003 //参数3长度</span><br><span class="line">[23]: 0000000000000000000000000000000000000000000000000000000000000001 //参数3数据[1, 1, 1]</span><br><span class="line">[24]: 0000000000000000000000000000000000000000000000000000000000000001</span><br><span class="line">[25]: 0000000000000000000000000000000000000000000000000000000000000001</span><br><span class="line">[26]: 0000000000000000000000000000000000000000000000000000000000000003 //参数4长度为3bytes</span><br><span class="line">[27]: 4142430000000000000000000000000000000000000000000000000000000000 //参数4数据[41,42,43]，即A,B,C</span><br><span class="line">[28]: 000000000000000000000000000000000000000000000000000000000000000b  //参数5长度为b</span><br><span class="line">[29]: 5465737420566f74696e67000000000000000000000000000000000000000000 //参数5数据Test Voting</span><br><span class="line">[30]: 0000000000000000000000000000000000000000000000000000000000000003 //参数6为[0,0,0]</span><br><span class="line">[31]: 0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">[32]: 0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">[33]: 0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">[34]: 0000000000000000000000000000000000000000000000000000000000000003 //参数7位[0,0,0]</span><br><span class="line">[35]: 0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">[36]: 0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">[37]: 0000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line"></span><br><span class="line">//new vote的第二个参数_metadata编码， 数据Test Voting</span><br><span class="line">[38]: 000000000000000000000000000000000000000000000000000000000000000b</span><br><span class="line">[39]: 5465737420566f74696e67000000000000000000000000000000000000000000</span><br></pre></td></tr></table></figure>
+
+<p>然后看看合约代码怎么解析出选项的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">//_executionScript为上述6到39</span><br><span class="line">function _extractOptions(bytes _executionScript, uint256 _actionId) internal &#123;</span><br><span class="line">    Action storage actionInstance = actions[_actionId];</span><br><span class="line">    //calldataLength 0x03e4, 0x4 为0x00000001, 0x14为合约地址</span><br><span class="line">    uint256 calldataLength = uint256(_executionScript.uint32At(0x4 + 0x14));</span><br><span class="line">    //startOffset为7开始的位置</span><br><span class="line">    uint256 startOffset = 0x04 + 0x14 + 0x04; //0x04 calldata length</span><br><span class="line"></span><br><span class="line">    //OPTION_ADDR_PARAM_LOC = 1,firstParamOffset 为0xe0 + 0x20, 即14开始的位置，对应address数据</span><br><span class="line">    uint256 firstParamOffset = _goToParamOffset(OPTION_ADDR_PARAM_LOC, _executionScript);</span><br><span class="line"></span><br><span class="line">    //DESCRIPTION_PARAM_LOC = 5,fifthParamOffset为28开始的位置，对应descript数据</span><br><span class="line">    uint256 fifthParamOffset = _goToParamOffset(DESCRIPTION_PARAM_LOC, _executionScript);</span><br><span class="line"></span><br><span class="line">    uint256 currentOffset = firstParamOffset;</span><br><span class="line">    require(startOffset + calldataLength == _executionScript.length); // solium-disable-line error-reason</span><br><span class="line"></span><br><span class="line">   //optionLength为address数组的长度</span><br><span class="line">    uint256 optionLength = _executionScript.uint256At(currentOffset);</span><br><span class="line"></span><br><span class="line">   //currentOffset向后偏移32, 指向address数组开始的位置</span><br><span class="line">    currentOffset = currentOffset + 0x20;</span><br><span class="line"></span><br><span class="line">    //开始解析多选项</span><br><span class="line">    _iterateExtraction(_actionId, _executionScript, currentOffset, optionLength);</span><br><span class="line"></span><br><span class="line">   //解析description</span><br><span class="line">    uint256 descriptionStart = fifthParamOffset + 0x20;</span><br><span class="line">    uint256 descriptionEnd = descriptionStart + (_executionScript.uint256At(fifthParamOffset));</span><br><span class="line">    actionInstance.description = substring(_executionScript, descriptionStart, descriptionEnd);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//将多选项解析出来，  _currentOffset指向address数组开始的位置，_optionLength为address数组的长度</span><br><span class="line">function _iterateExtraction(uint256 _actionId, bytes _executionScript, uint256 _currentOffset, uint256 _optionLength) internal &#123;</span><br><span class="line">    uint256 currentOffset = _currentOffset;</span><br><span class="line">    address currentOption;</span><br><span class="line">    string memory info;</span><br><span class="line">    uint256 infoEnd;</span><br><span class="line">    bytes32 externalId1;</span><br><span class="line">    bytes32 externalId2;</span><br><span class="line">    uint256 idOffset;</span><br><span class="line">    //OPTION_INFO_PARAM_LOC=4, infoStart为参数4数据开始的位置再后偏移32位(长度)，也就是27的位置</span><br><span class="line">    uint256 infoStart = _goToParamOffset(OPTION_INFO_PARAM_LOC,_executionScript) + 0x20;</span><br><span class="line"></span><br><span class="line">    emit OptionQty(_optionLength);</span><br><span class="line">    //以address数组的长度作为遍历次数，长度即为多选的长度</span><br><span class="line">    for (uint256 i = 0 ; i &lt; _optionLength; i++) &#123;</span><br><span class="line">        //以32作为单元存储长度20的地址，前12都是0补齐，所以skip 12，将地址读出来</span><br><span class="line">        currentOption = _executionScript.addressAt(currentOffset + 0x0C);</span><br><span class="line">        emit Address(currentOption);</span><br><span class="line"></span><br><span class="line">        //infoEnd = 参数4数据真实的位置 + 参数3的第i个值（参数3为info长度</span><br><span class="line">        infoEnd = infoStart + _executionScript.uint256At(currentOffset + (0x20 * 2 * (_optionLength + 1) ));</span><br><span class="line">        //单个选择项的info=_candidateInfo，按_infoIndices数组对应的值作为长度进行截取</span><br><span class="line">        info = substring(_executionScript, infoStart, infoEnd);</span><br><span class="line"></span><br><span class="line">        currentOffset = currentOffset + 0x20;</span><br><span class="line"></span><br><span class="line">        infoStart = infoEnd;</span><br><span class="line">        //后面就是按索引值取对应的externalId了</span><br><span class="line">        idOffset = _goToParamOffset(EX_ID1_PARAM_LOC, _executionScript) + 0x20 * (i + 1);</span><br><span class="line">        externalId1 = bytes32(_executionScript.uint256At(idOffset));</span><br><span class="line">        idOffset = _goToParamOffset(EX_ID2_PARAM_LOC, _executionScript) + 0x20 * (i + 1);</span><br><span class="line">        externalId2 = bytes32(_executionScript.uint256At(idOffset));</span><br><span class="line"></span><br><span class="line">        addOption(_actionId, info, currentOption, externalId1, externalId2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#aragon"><span class="toc-number">1.</span> <span class="toc-text">aragon</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kernel"><span class="toc-number">1.1.</span> <span class="toc-text">kernel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#acl"><span class="toc-number">2.</span> <span class="toc-text">acl</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#app"><span class="toc-number">2.1.</span> <span class="toc-text">app</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本的部署示例"><span class="toc-number">3.</span> <span class="toc-text">基本的部署示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#详细的部署示例"><span class="toc-number">3.1.</span> <span class="toc-text">详细的部署示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#script分析"><span class="toc-number">4.</span> <span class="toc-text">script分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dot-Voting-app-选项脚本分析"><span class="toc-number">5.</span> <span class="toc-text">Dot Voting app 选项脚本分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#示例1"><span class="toc-number">5.1.</span> <span class="toc-text">示例1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例2"><span class="toc-number">5.2.</span> <span class="toc-text">示例2</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#编码时，会按照参数顺序依次编码，遇到动态类型，就编码位置偏移索引值，遇到非动态类型，就编码数据，最后，将动态类型的数据再依次编码。"><span class="toc-number">5.2.1.</span> <span class="toc-text">编码时，会按照参数顺序依次编码，遇到动态类型，就编码位置偏移索引值，遇到非动态类型，就编码数据，最后，将动态类型的数据再依次编码。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例3"><span class="toc-number">5.3.</span> <span class="toc-text">示例3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例4"><span class="toc-number">5.4.</span> <span class="toc-text">示例4</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://github.com/xiaoxuez/2020/12/17/aragon/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://github.com/xiaoxuez/2020/12/17/aragon/&text=aragon"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://github.com/xiaoxuez/2020/12/17/aragon/&is_video=false&description=aragon"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=aragon&body=Check out this article: https://github.com/xiaoxuez/2020/12/17/aragon/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://github.com/xiaoxuez/2020/12/17/aragon/&title=aragon"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://github.com/xiaoxuez/2020/12/17/aragon/&name=aragon&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 zoie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
