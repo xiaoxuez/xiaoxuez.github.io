@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Blog">
 <meta property="og:description" content="流动性池子兑换系列 Uniswap 初始化池子时设定x y币种的数量，之后将按照x * y = k，乘积不变的方式进行兑换；价格的波动主要因为兑换时手续费的产生； 例如当前x10个，y20个，k=10 * 20 =200； 用户A要兑换y, 没有手续费的情况下，使用x 5个可兑换的y = 20 - (200 / 15) = 6.77777，兑换后x 15个，y 13.33333个，相乘还是200">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-17T07:37:17.600Z">
+<meta property="og:updated_time" content="2021-01-14T07:26:22.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="eth-contracts-projects">
 <meta name="twitter:description" content="流动性池子兑换系列 Uniswap 初始化池子时设定x y币种的数量，之后将按照x * y = k，乘积不变的方式进行兑换；价格的波动主要因为兑换时手续费的产生； 例如当前x10个，y20个，k=10 * 20 =200； 用户A要兑换y, 没有手续费的情况下，使用x 5个可兑换的y = 20 - (200 / 15) = 6.77777，兑换后x 15个，y 13.33333个，相乘还是200">
@@ -70,6 +70,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" href="/2021/01/13/zksnark-tornado/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" href="/2020/12/17/chainlink/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -98,7 +100,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#流动性池子兑换系列"><span class="toc-number">1.</span> <span class="toc-text">流动性池子兑换系列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复合资产"><span class="toc-number">2.</span> <span class="toc-text">复合资产</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Farm"><span class="toc-number">3.</span> <span class="toc-text">Farm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余DEFI"><span class="toc-number">4.</span> <span class="toc-text">其余DEFI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跨链"><span class="toc-number">5.</span> <span class="toc-text">跨链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DAO"><span class="toc-number">6.</span> <span class="toc-text">DAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">7.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保险"><span class="toc-number">8.</span> <span class="toc-text">保险</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#yearn-vs-harvest"><span class="toc-number">8.1.</span> <span class="toc-text">yearn vs harvest</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#流动性池子兑换系列"><span class="toc-number">1.</span> <span class="toc-text">流动性池子兑换系列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复合资产"><span class="toc-number">2.</span> <span class="toc-text">复合资产</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Farm"><span class="toc-number">3.</span> <span class="toc-text">Farm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余DEFI"><span class="toc-number">4.</span> <span class="toc-text">其余DEFI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跨链"><span class="toc-number">5.</span> <span class="toc-text">跨链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DAO"><span class="toc-number">6.</span> <span class="toc-text">DAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">7.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保险"><span class="toc-number">8.</span> <span class="toc-text">保险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">9.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#yearn-vs-harvest"><span class="toc-number">9.1.</span> <span class="toc-text">yearn vs harvest</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -251,6 +253,12 @@
 <h3 id="保险"><a href="#保险" class="headerlink" title="保险"></a>保险</h3><ul>
 <li>Cover</li>
 </ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><p>Tornado </p>
+<p>以太坊链上的匿名转账协议,使用智能合约接受各用户的 ETH 存款起到混币功能，用户可以通过指定不同地址提币来实现匿名转账。</p>
+<p>​    </p>
+</li>
+</ul>
 <hr>
 <p>阶段性工作</p>
 <h4 id="yearn-vs-harvest"><a href="#yearn-vs-harvest" class="headerlink" title="yearn vs harvest"></a>yearn vs harvest</h4><p>例如DAI yfi的Vault策略是</p>
@@ -284,7 +292,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#流动性池子兑换系列"><span class="toc-number">1.</span> <span class="toc-text">流动性池子兑换系列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复合资产"><span class="toc-number">2.</span> <span class="toc-text">复合资产</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Farm"><span class="toc-number">3.</span> <span class="toc-text">Farm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余DEFI"><span class="toc-number">4.</span> <span class="toc-text">其余DEFI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跨链"><span class="toc-number">5.</span> <span class="toc-text">跨链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DAO"><span class="toc-number">6.</span> <span class="toc-text">DAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">7.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保险"><span class="toc-number">8.</span> <span class="toc-text">保险</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#yearn-vs-harvest"><span class="toc-number">8.1.</span> <span class="toc-text">yearn vs harvest</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#流动性池子兑换系列"><span class="toc-number">1.</span> <span class="toc-text">流动性池子兑换系列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复合资产"><span class="toc-number">2.</span> <span class="toc-text">复合资产</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Farm"><span class="toc-number">3.</span> <span class="toc-text">Farm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余DEFI"><span class="toc-number">4.</span> <span class="toc-text">其余DEFI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跨链"><span class="toc-number">5.</span> <span class="toc-text">跨链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DAO"><span class="toc-number">6.</span> <span class="toc-text">DAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">7.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#保险"><span class="toc-number">8.</span> <span class="toc-text">保险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">9.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#yearn-vs-harvest"><span class="toc-number">9.1.</span> <span class="toc-text">yearn vs harvest</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -316,7 +324,7 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2020 zoie
+    Copyright &copy; 2021 zoie
   </div>
   <div class="footer-right">
     <nav>
