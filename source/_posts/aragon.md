@@ -379,14 +379,14 @@ function slice(uint32[] a, uint32 b)
 
 #### 示例4
 
-Dot  voting的数据结构中，提供多选项，每个选项的信息可包含一个地址，一个描述性的info，两个id。（id两级我有点不太理解是做什么用的...，以及signal数组也不太清楚
+Dot  voting的数据结构中，提供多选项，每个选项的信息可包含一个地址，一个描述性的info，两个id。（id两级我有点不太理解是做什么用的...
 
 
 
 ```
 function setSignal(
         address[] _addr, //选项地址数组
-        uint256[] _signal,
+        uint256[] _signal,  //选票结束后，执行脚本时赋值为选项对应的票数(未达到选票条件的选项票数为0)
         uint256[] _infoIndices, //每个info信息长度
         string _candidateInfo,  //多个info拼接在一起，按长度可截取出来
         string description,
@@ -537,3 +537,5 @@ function _iterateExtraction(uint256 _actionId, bytes _executionScript, uint256 _
 ```
 
 
+
+选票结束并执行后，会将不符合票数条件的票数置为0，并执行script脚本，
